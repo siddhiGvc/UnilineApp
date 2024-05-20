@@ -9,6 +9,7 @@ import LoginLogs from 'src/sections/Reports/loginLogs';
 import SSNReport from 'src/sections/Reports/ssnReport';
 import FaultReport from 'src/sections/Reports/faultReport';
 import { ProductsView } from 'src/sections/MachineData/view';
+import { UserView } from 'src/sections/macAddressTable/view';
 import SelfMap from 'src/sections/Reports/LoginMaps/selfMap';
 import ViewMap from 'src/sections/Reports/LoginMaps/viewMap';
 import DailyReports from 'src/sections/Reports/dailyReports';
@@ -72,7 +73,8 @@ export default function Router() {
         { path: 'svLogs', element: <SvLogs/>},
         { path: 'lockLogs', element: <LockLogs/>},
         { path: 'selfMap', element: <SelfMap/>},
-        { path: 'viewMap', element: <ViewMap/>}
+        { path: 'viewMap', element: <ViewMap/>},
+        { path: 'MacTable', element: <UserView/>}
       ],
     },
     {
