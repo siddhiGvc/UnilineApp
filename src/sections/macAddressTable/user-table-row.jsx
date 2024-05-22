@@ -22,6 +22,7 @@ import Typography from '@mui/material/Typography';
 import { SaveFaultReport } from 'src/_mock/faultReportData';
 
 import Label from 'src/components/label';
+// import { color } from '@mui/system';
 // import { Alerts } from 'src/components/Alerts';
 
 // import Iconify from 'src/components/iconify';
@@ -56,6 +57,11 @@ export default function UserTableRow({
   const [message,setMessage]=useState("");
   const [type,setType]=useState("");
 
+  const [pin,setPin]=useState("");
+  const [pulse,setPulse]=useState("");
+
+
+
   const showAlertMessage = () => {
     setShowAlert(true);
 
@@ -66,9 +72,9 @@ export default function UserTableRow({
 };
 
 // view mwnu open function
-  // const handleOpenMenu = (event) => {
-  //   setOpen(event.currentTarget);
-  // };
+  const handleOpenMenu = (event) => {
+    setOpen(event.currentTarget);
+  };
 
   // view menu clsoe function
   const handleCloseMenu = () => {
@@ -93,6 +99,7 @@ export default function UserTableRow({
   };
 
   const [isChecked, setIsChecked] = useState(m.INHoutput===1);
+  const [isFota, setIsFota] = useState(true);
  
 
 const handleChange = () => {
@@ -112,7 +119,78 @@ const handleChange = () => {
   setIsChecked(!isChecked);
 };
 
+const sendFota=()=>{
+  const obj={
+    MacId:m.MacID,
+    outPutValue:!isFota,
+    socketNumber:m.SocketNumber
+
+  }
+  fetch(`http://165.232.180.111:8080/kwikpay/sendFota`,{
+    method:'POST',
+    headers:{
+      'Content-type':'application/json'
+    },
+    body:JSON.stringify(obj)
+  })
+   setIsFota(!isFota);
+
+}
  
+const sendReset=()=>{
+  const obj={
+    MacId:m.MacID,
+  
+    socketNumber:m.SocketNumber
+
+  }
+  fetch(`http://165.232.180.111:8080/kwikpay/reset`,{
+    method:'POST',
+    headers:{
+      'Content-type':'application/json'
+    },
+    body:JSON.stringify(obj)
+  })
+   
+
+}
+
+const sendV=()=>{
+  const obj={
+    MacId:m.MacID,
+    Pin:pin,
+    Pulse:pulse,
+    socketNumber:m.SocketNumber
+
+  }
+  fetch(`http://165.232.180.111:8080/kwikpay/sendV`,{
+    method:'POST',
+    headers:{
+      'Content-type':'application/json'
+    },
+    body:JSON.stringify(obj)
+  })
+   
+
+}
+
+const sendTC=()=>{
+  const obj={
+    MacId:m.MacID,
+   
+    socketNumber:m.SocketNumber
+
+  }
+  fetch(`http://165.232.180.111:8080/kwikpay/sendTC`,{
+    method:'POST',
+    headers:{
+      'Content-type':'application/json'
+    },
+    body:JSON.stringify(obj)
+  })
+   
+
+}
 
 
   // submit form of technician form 
@@ -209,37 +287,11 @@ const handleChange = () => {
         <TableCell>
            <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label>
         </TableCell>
-        <TableCell>
-           <Typography>
-
-           {m.INHinput===0 ?<span color='red'>{m.INHinput}</span>:<span color='green'>{m.INHinput}</span>}
-           </Typography>
-           
-        </TableCell>
-        <TableCell>
-        <div className="col-xl-3 col-lg-5 col-md-6 col-12 col-12 my-2">
-                      
-                        <div className="row">
-                            <div className="col-12 sw-parent">
-                               
-                                     <SwitchButton
-                                
-                                    checked={isChecked}
-                                    onChange={handleChange}
-                                    onlabel="1"
-                                    offlabel="0"
-                                    onstyle='success'
-                                    offstyle='danger'
-                                    width={20}
-                                />
-                            </div>
-                        </div>
-                    </div>
-           
-        </TableCell>
+      
+        
         
      
-        {/* <TableCell>
+        <TableCell>
       <button
         type="button"
         className="btn btn-sm btn-outline-success btn-tt heading6"
@@ -248,7 +300,7 @@ const handleChange = () => {
       >
         View
       </button>
-    </TableCell> */}
+    </TableCell>
   
       
 
@@ -273,14 +325,143 @@ const handleChange = () => {
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
-          sx: { width: 340 ,padding:2},
+          sx: { width: 430 ,padding:2},
         }}
       >
-           <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.uid} {m.serial}</b>
+           <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
-                            <tbody /> 
-                              
-                            {/* </tbody> */}
+                            <tbody > 
+                            <tr><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                            <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div className="row">
+                                          <p>INH Output</p>
+                                            <div className="col-12 sw-parent">
+                                              
+                                                    <SwitchButton
+                                                
+                                                    checked={isChecked}
+                                                    onChange={handleChange}
+                                                    onlabel="1"
+                                                    offlabel="0"
+                                                    onstyle='success'
+                                                    offstyle='danger'
+                                                    width={20}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p>INH Input</p>
+                              {m.INHinput===0 ?<p style={{color:'red'}}>{m.INHinput}</p>:<p style={{color:'green'}}>{m.INHinput}</p>}
+                              </Typography>
+                                </td>
+        
+                              </tr>   
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div className="row">
+                                          <p>FOTA</p>
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button type="button" className="btn btn-primary text-white"  onClick={sendFota} >
+                                              Fota
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p>Fota Message</p>
+                              {m.FotaMessage}
+                              </Typography>
+                                </td>
+        
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button type="button" className="btn btn-warning text-white"  onClick={sendReset} >
+                                              RESET
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.RstMessage}
+                              </Typography>
+                                </td>
+        
+                              </tr>
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>V</h5>
+                                             <div>
+                                              <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
+                                              <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={sendV} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.Voutput}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button type="button" className="btn btn-secondary text-white"  onClick={sendTC} >
+                                              *TC?#
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.TCoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr>                                 
+                            </tbody>
                         </table>
       </Popover>
       <Modal

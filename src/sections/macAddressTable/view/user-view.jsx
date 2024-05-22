@@ -49,10 +49,21 @@ export default function UserPage() {
 
 
   useEffect(()=>{
+    
     AllMacAddress().then((res)=>{
     
       setData(res);
     })
+     setInterval(()=>{
+      AllMacAddress().then((res)=>{
+    
+        setData(res);
+      })
+
+    
+    },2000);
+
+ 
 
   },[])
 
@@ -139,9 +150,7 @@ export default function UserPage() {
                   { id: 'MacID', label: 'MACAddress' },
                   { id: 'SocketNumber', label: 'SocketNumber' },
                   { id: 'Status', label: 'Status' },
-                  { id: 'INHinput', label: 'INH INPUT' },
-                  { id: 'INHoutput', label: 'INH OUTPUT' },
-                 // { id: '' },
+                  { id: '' },
                 ]}
               />
               <TableBody>
