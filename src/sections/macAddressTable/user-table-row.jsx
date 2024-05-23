@@ -20,14 +20,12 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
+import {sendV,sendTV,sendFW,sendTC,askUrl,sendFota,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
-// import { color } from '@mui/system';
-// import { Alerts } from 'src/components/Alerts';
 
-// import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
+
 const Alert = React.forwardRef((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 ));
@@ -56,6 +54,10 @@ export default function UserTableRow({
   const [showAlert, setShowAlert] = useState(false);
   const [message,setMessage]=useState("");
   const [type,setType]=useState("");
+  const [url,setUrl]=useState("");
+
+  const [light,setLight]=useState("");
+  const [position,setPosition]=useState("");
 
   const [pin,setPin]=useState("");
   const [pulse,setPulse]=useState("");
@@ -82,24 +84,13 @@ export default function UserTableRow({
   };
 
 
-  // Open  Popup function of technician form
-  // const handleModalOpen = () => {
-   
- 
-  //   setOpenModal(true);
-  //   setTimeout(()=>{
-  //     $('[name="machine"]').val(machineId);
-  //     $('[name="userName"]').val(sessionStorage.getItem("name"));
-  //   },200)
-  // };
-
   // Close popup function of technicaian form
   const handleModalClose = () => {
     setOpenModal(false);
   };
 
   const [isChecked, setIsChecked] = useState(m.INHoutput===1);
-  const [isFota, setIsFota] = useState(true);
+  // const [isFota, setIsFota] = useState(true);
  
 
 const handleChange = () => {
@@ -119,78 +110,7 @@ const handleChange = () => {
   setIsChecked(!isChecked);
 };
 
-const sendFota=()=>{
-  const obj={
-    MacId:m.MacID,
-    outPutValue:!isFota,
-    socketNumber:m.SocketNumber
 
-  }
-  fetch(`http://165.232.180.111:8080/kwikpay/sendFota`,{
-    method:'POST',
-    headers:{
-      'Content-type':'application/json'
-    },
-    body:JSON.stringify(obj)
-  })
-   setIsFota(!isFota);
-
-}
- 
-const sendReset=()=>{
-  const obj={
-    MacId:m.MacID,
-  
-    socketNumber:m.SocketNumber
-
-  }
-  fetch(`http://165.232.180.111:8080/kwikpay/reset`,{
-    method:'POST',
-    headers:{
-      'Content-type':'application/json'
-    },
-    body:JSON.stringify(obj)
-  })
-   
-
-}
-
-const sendV=()=>{
-  const obj={
-    MacId:m.MacID,
-    Pin:pin,
-    Pulse:pulse,
-    socketNumber:m.SocketNumber
-
-  }
-  fetch(`http://165.232.180.111:8080/kwikpay/sendV`,{
-    method:'POST',
-    headers:{
-      'Content-type':'application/json'
-    },
-    body:JSON.stringify(obj)
-  })
-   
-
-}
-
-const sendTC=()=>{
-  const obj={
-    MacId:m.MacID,
-   
-    socketNumber:m.SocketNumber
-
-  }
-  fetch(`http://165.232.180.111:8080/kwikpay/sendTC`,{
-    method:'POST',
-    headers:{
-      'Content-type':'application/json'
-    },
-    body:JSON.stringify(obj)
-  })
-   
-
-}
 
 
   // submit form of technician form 
@@ -216,35 +136,6 @@ const sendTC=()=>{
 
   const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
 
-
-  // address of machine table 
-  // const address = a => (
-  //   <small>
-  //     <a
-  //       className="text-muted elp"
-  //       target="_blank"
-  //       rel="noreferrer"
-  //       href={`https://www.google.com/maps?q=${a.lat},${a.lon}`}
-  //     >
-  //       {a.address}
-  //     </a>
-  //   </small>
-  // );
-
-
-  // display stock dtatus function of table row
- 
-
-// const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
-  
-
-// converting integer to text amount function
-
-
-
-
-
-// const sum = (a, b) => a + b;
 
 
   return (
@@ -302,20 +193,6 @@ const sendTC=()=>{
       </button>
     </TableCell>
   
-      
-
-       
-      
-
-        {/* <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
-        </TableCell> */}
-
-        {/* <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell> */}
       </TableRow>
 
       <Popover
@@ -371,7 +248,7 @@ const sendTC=()=>{
                                           <p>FOTA</p>
                                             <div className="col-12 sw-parent">
                                               
-                                            <button type="button" className="btn btn-primary text-white"  onClick={sendFota} >
+                                            <button type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber)} >
                                               Fota
                                           </button>
                                             </div>
@@ -395,7 +272,7 @@ const sendTC=()=>{
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button type="button" className="btn btn-warning text-white"  onClick={sendReset} >
+                                            <button type="button" className="btn btn-warning text-white"  onClick={()=>sendReset(m.MacID,m.SocketNumber)} >
                                               RESET
                                           </button>
                                             </div>
@@ -421,7 +298,7 @@ const sendTC=()=>{
                                               <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={sendV} >
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -445,7 +322,7 @@ const sendTC=()=>{
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button type="button" className="btn btn-secondary text-white"  onClick={sendTC} >
+                                            <button type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber)} >
                                               *TC?#
                                           </button>
                                             </div>
@@ -460,7 +337,110 @@ const sendTC=()=>{
                               </Typography>
                                 </td>
         
-                              </tr>                                 
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                         <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>sendFW(m.MacID,m.SocketNumber)} >
+                                               *Fw?#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.FWoutput}
+                                  </Typography>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                         <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber)} >
+                                               *TV?#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.TVoutput}
+                                  </Typography>
+                                    </td>
+                                </tr> 
+                                 <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                         <div style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          
+                                              <h6>FOTA</h6>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='Url' onChange={(e)=>setUrl(e.target.value)}/>
+                                             
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                                  </th>
+                                  {/* <td/> */}
+                                
+                                </tr>  
+                                <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                    <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>askUrl(m.MacID,m.SocketNumber)} >
+                                               *URL?#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {/* {m.TVoutput} */}
+                                  </Typography>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>S</h5>
+                                             <div>
+                                              <input type='number' style={{width:'100px'}} placeholder='light' onChange={(e)=>setLight(e.target.value)}/>
+                                              <input type='number' style={{width:'100px'}} placeholder='position' onChange={(e)=>setPosition(e.target.value)}/>
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,light,position,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.Voutput}
+                              </Typography>
+                                </td>
+        
+                              </tr>                                                 
                             </tbody>
                         </table>
       </Popover>
