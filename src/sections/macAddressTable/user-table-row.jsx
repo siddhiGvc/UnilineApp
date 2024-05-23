@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,sendTV,sendFW,sendTC,askUrl,sendFota,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,sendCC,sendTV,sendFW,sendTC,askUrl,sendFota,sendLight,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 
@@ -202,7 +202,7 @@ const handleChange = () => {
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
-          sx: { width: 430 ,padding:2},
+          sx: { width: 600 ,padding:3},
         }}
       >
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
@@ -377,13 +377,13 @@ const handleChange = () => {
                                     </td>
                                 </tr> 
                                  <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                   <th>
+                                    <div className="col-xl-4 col-lg-9 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div style={{display:'flex',alignItems:'center',gap:'5px'}}>
                                           
-                                              <h6>FOTA</h6>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='Url' onChange={(e)=>setUrl(e.target.value)}/>
+                                              <h6 style={{fontSize:"12px"}}>FOTA</h6>
+                                             <div >
+                                              <input type='text' style={{width:'200px'}} placeholder='Url' onChange={(e)=>setUrl(e.target.value)}/>
                                              
                                               </div>
                                               <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber)} >
@@ -392,10 +392,36 @@ const handleChange = () => {
                                             
                                         </div>
                                     </div>
-                                  </th>
-                                  {/* <td/> */}
+
+                                    </th>
+                                    <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.FotaURLoutput}
+                                  </Typography>
+                                    </td>
+                                
                                 
                                 </tr>  
+                                <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                    <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber)} >
+                                               *CC#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.Coutput}
+                                  </Typography>
+                                    </td>
+                                </tr>
                                 <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
@@ -411,7 +437,7 @@ const handleChange = () => {
                                   <td>
                                   <Typography>
                                   <p> Message</p>
-                                  {/* {m.TVoutput} */}
+                                  {m.URLoutput}
                                   </Typography>
                                     </td>
                                 </tr>
@@ -420,12 +446,12 @@ const handleChange = () => {
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
                                       
                                         <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>S</h5>
+                                          <h5>SL</h5>
                                              <div>
                                               <input type='number' style={{width:'100px'}} placeholder='light' onChange={(e)=>setLight(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='position' onChange={(e)=>setPosition(e.target.value)}/>
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,light,position,m.SocketNumber)} >
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendLight(m.MacID,light,position,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -436,7 +462,7 @@ const handleChange = () => {
                                 <td>
                               <Typography>
                               <p> Message</p>
-                              {m.Voutput}
+                              {m.Soutput}
                               </Typography>
                                 </td>
         
