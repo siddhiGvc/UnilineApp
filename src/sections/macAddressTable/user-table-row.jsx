@@ -47,7 +47,8 @@ export default function UserTableRow({
   m,
   sr,
   key,
-  handleClick
+  handleClick,
+  mode
 }) {
   const [open, setOpen] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -74,6 +75,8 @@ export default function UserTableRow({
 
   const [NumValue,setNumValue]=useState("");
   const [Polarity,setPolarity]=useState("");
+
+  const [disable]=useState(mode!=="");
 
 
   const showAlertMessage = () => {
@@ -230,13 +233,13 @@ const handleChange = () => {
                                             <div className="col-12 sw-parent">
                                               
                                                     <SwitchButton
-                                                
+                                                    disabled={disable}
                                                     checked={isChecked}
                                                     onChange={handleChange}
                                                     onlabel="1"
                                                     offlabel="0"
-                                                    onstyle='success'
-                                                    offstyle='danger'
+                                                    onstyle='danger'
+                                                    offstyle='success'
                                                     width={20}
                                                 />
                                             </div>
@@ -247,7 +250,7 @@ const handleChange = () => {
                                 <td>
                               <Typography>
                               <p>INH Input</p>
-                              {m.INHinput===0 ?<p style={{color:'red'}}>{m.INHinput}</p>:<p style={{color:'green'}}>{m.INHinput}</p>}
+                              {m.INHinput===0 ?<p style={{color:'green'}}>{m.INHinput}</p>:<p style={{color:'red'}}>{m.INHinput}</p>}
                               </Typography>
                                 </td>
         
@@ -761,7 +764,7 @@ UserTableRow.propTypes = {
   m:PropTypes.any,
   key: PropTypes.any,
   sr:PropTypes.any,
-
-  handleClick: PropTypes.func
+  mode:PropTypes.any,
+   handleClick: PropTypes.func
 
 };

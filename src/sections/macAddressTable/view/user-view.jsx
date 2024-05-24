@@ -1,5 +1,6 @@
 // import $ from 'jquery';
 import {useState, useEffect} from 'react';
+// import SwitchButton from 'bootstrap-switch-button-react';
 
 import Card from '@mui/material/Card';
 // import Stack from '@mui/material/Stack';
@@ -44,7 +45,12 @@ export default function UserPage() {
 
   const [data,setData]=useState([])
 
+  const [mode, setMode] = useState('');
+
+  const handleChange = (e) => {
   
+    setMode(e.target.value);
+  };
  
 
 
@@ -126,6 +132,17 @@ export default function UserPage() {
 
   return (
     <Container maxWidth='xxl'>
+      <div className="row">
+                                          <p>Test Mode</p>
+                                            <div className="col-12 sw-parent">
+                                                 <select onChange={(e)=>handleChange(e)}>
+                                                    <option value=''>None</option>
+                                                    <option value='tm1'>Test Mode 1</option>
+                                                    <option value='tm2'>Test Mode 2</option>
+                                                 </select>
+                                            
+                                            </div>
+                                        </div>
      
       <Card>
         <UserTableToolbar
@@ -162,7 +179,7 @@ export default function UserPage() {
                       sr={page*rowsPerPage+i+1}
                      
                       m={row}
-                      
+                      mode={mode}
 
                       handleClick={(event) => handleClick(event, row.UID)}
                     />
