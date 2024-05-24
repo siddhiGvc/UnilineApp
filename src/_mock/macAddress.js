@@ -197,3 +197,146 @@ export const AllMacAddress=async()=> {
      
   
   }
+
+  export const sendHBT=(MacID,value,port)=>{
+    const obj={
+      MacId:MacID,
+      value,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendHBT`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const sendSIP=(MacID,ip,pin,port)=>{
+    const obj={
+      MacId:MacID,
+      Ip:ip,
+      Pin:pin,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendSIP`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const sendSSID=(MacID,SSID,port)=>{
+    const obj={
+      MacId:MacID,
+      SSID,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendSSID`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+  export const sendPWD=(MacID,PWD,port)=>{
+    const obj={
+      MacId:MacID,
+      PWD,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendPWD`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const sendSSID1=(MacID,SSID1,port)=>{
+    const obj={
+      MacId:MacID,
+      SSID1,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendSSID1`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+  export const sendPWD1=(MacID,PWD1,port)=>{
+    const obj={
+      MacId:MacID,
+      PWD1,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendPWD1`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const sendCA=(MacID,numValue,polarity,port)=>{
+    const obj={
+      MacId:MacID,
+      numValue,
+      polarity,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/sendCA`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const askCA=(MacID,port)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/askCA`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }

@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,sendCC,sendTV,sendFW,sendTC,askUrl,sendFota,sendLight,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 
@@ -61,7 +61,19 @@ export default function UserTableRow({
 
   const [pin,setPin]=useState("");
   const [pulse,setPulse]=useState("");
+  const [HBTvalue,setHBTvalue]=useState("");
 
+  const [IPaddress,setIPaddress]=useState("");
+  const [port,setPort]=useState("");
+
+  const [SSID,setSSID]=useState("");
+  const [PWD,setPWD]=useState("");
+
+  const [SSID1,setSSID1]=useState("");
+  const [PWD1,setPWD1]=useState("");
+
+  const [NumValue,setNumValue]=useState("");
+  const [Polarity,setPolarity]=useState("");
 
 
   const showAlertMessage = () => {
@@ -208,7 +220,7 @@ const handleChange = () => {
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
                             <tbody > 
-                            <tr><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                            <tr ><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
                             <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
@@ -466,7 +478,209 @@ const handleChange = () => {
                               </Typography>
                                 </td>
         
-                              </tr>                                                 
+                              </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                    <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>HBT</h5>
+                                             <div>
+                                              <input type='number' min={30} max={300} style={{width:'100px'}} placeholder='value' onChange={(e)=>setHBTvalue(e.target.value)}/>
+                                            
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendHBT(m.MacID,HBTvalue,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.HBToutput}
+                                  </Typography>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>SIP</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='ipAddress' onChange={(e)=>setIPaddress(e.target.value)}/>
+                                              <input type='number' style={{width:'100px'}} placeholder='port' onChange={(e)=>setPort(e.target.value)}/>
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSIP(m.MacID,IPaddress,port,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SIPoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>SS</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='ssid' onChange={(e)=>setSSID(e.target.value)}/>
+                                        
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID(m.MacID,SSID,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SSIDoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>PW</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='pwd' onChange={(e)=>setPWD(e.target.value)}/>
+                                              
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD(m.MacID,PWD,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.PWDoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr>
+                               
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>SS1</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='ssid1' onChange={(e)=>setSSID1(e.target.value)}/>
+                                        
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SSID1output}
+                              </Typography>
+                                </td>
+        
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>PW1</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='pwd1' onChange={(e)=>setPWD1(e.target.value)}/>
+                                              
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.PWD1output}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>CA</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='numeric value' onChange={(e)=>setNumValue(e.target.value)}/>
+                                              <input type='text' style={{width:'100px'}} placeholder='polarity' onChange={(e)=>setPolarity(e.target.value)}/>
+                                              </div>
+                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendCA(m.MacID,NumValue,Polarity,m.SocketNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.CAmessage}
+                              </Typography>
+                                </td>
+        
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                    <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>askCA(m.MacID,m.SocketNumber)} >
+                                               *CA?#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.CAoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr>                                                                                         
                             </tbody>
                         </table>
       </Popover>
