@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import moment from "moment";
 import PropTypes from 'prop-types';
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import SwitchButton from 'bootstrap-switch-button-react';
 
 import Box from '@mui/material/Box';
@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,modeTest1,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 
@@ -48,7 +48,7 @@ export default function UserTableRow({
   sr,
   key,
   handleClick,
-  mode
+  
 }) {
   const [open, setOpen] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -76,7 +76,23 @@ export default function UserTableRow({
   const [NumValue,setNumValue]=useState("");
   const [Polarity,setPolarity]=useState("");
 
-  const [disable]=useState(mode!=="");
+  const [mode,setMode]=useState('');
+
+  const [disable,setDisable]=useState(false);
+
+  useEffect(()=>{
+     if(mode==="")
+      {
+        setDisable(false);
+      }
+      else if(mode!=="") {
+        setDisable(true);
+        if(mode==="tm1")
+        {
+          modeTest1(m.MacID,m.SocketNumber);
+        }
+      }
+  },[mode, m.MacID, m.SocketNumber])
 
 
   const showAlertMessage = () => {
@@ -222,7 +238,22 @@ const handleChange = () => {
       >
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
+
                             <tbody > 
+                            <tr>
+                              <div className="row">
+                                          <p>Test Mode</p>
+                                            <div className="col-12 sw-parent">
+                                                 <select onChange={(e)=>setMode(e.target.value)}>
+                                                    <option value=''>None</option>
+                                                    <option value='tm1'>Test Mode 1</option>
+                                                    <option value='tm2'>Test Mode 2</option>
+                                                 </select>
+                                            
+                                            </div>
+                                        </div>
+     
+                            </tr>
                             <tr ><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
                             <tr>
                                   <th>   
@@ -230,10 +261,10 @@ const handleChange = () => {
                                       
                                         <div className="row">
                                           <p>INH Output</p>
-                                            <div className="col-12 sw-parent">
+                                            <div className="col-12 sw-parent"   disabled={disable}>
                                               
                                                     <SwitchButton
-                                                    disabled={disable}
+                                                  
                                                     checked={isChecked}
                                                     onChange={handleChange}
                                                     onlabel="1"
@@ -263,7 +294,7 @@ const handleChange = () => {
                                           <p>FOTA</p>
                                             <div className="col-12 sw-parent">
                                               
-                                            <button type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber)} >
+                                            <button disabled={disable} type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber)} >
                                               Fota
                                           </button>
                                             </div>
@@ -287,7 +318,7 @@ const handleChange = () => {
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button type="button" className="btn btn-warning text-white"  onClick={()=>sendReset(m.MacID,m.SocketNumber)} >
+                                            <button disabled={disable} type="button" className="btn btn-warning text-white"  onClick={()=>sendReset(m.MacID,m.SocketNumber)} >
                                               RESET
                                           </button>
                                             </div>
@@ -313,7 +344,7 @@ const handleChange = () => {
                                               <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -337,7 +368,7 @@ const handleChange = () => {
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber)} >
+                                            <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber)} >
                                               *TC?#
                                           </button>
                                             </div>
@@ -356,9 +387,29 @@ const handleChange = () => {
                               <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                    <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber)} >
+                                               *CC#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.Coutput}
+                                  </Typography>
+                                    </td>
+                                </tr>
+                              
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>sendFW(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendFW(m.MacID,m.SocketNumber)} >
                                                *Fw?#
                                               </button>
                                             </div>
@@ -377,7 +428,7 @@ const handleChange = () => {
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber)} >
                                                *TV?#
                                               </button>
                                             </div>
@@ -401,7 +452,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'200px'}} placeholder='Url' onChange={(e)=>setUrl(e.target.value)}/>
                                              
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -418,31 +469,12 @@ const handleChange = () => {
                                 
                                 
                                 </tr>  
-                                <tr>
+                               <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                     <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber)} >
-                                               *CC#
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                  </th>
-                                  <td>
-                                  <Typography>
-                                  <p> Message</p>
-                                  {m.Coutput}
-                                  </Typography>
-                                    </td>
-                                </tr>
-                                <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
-                                    <div className="row">
-                                            <div className="col-12 sw-parent">
-                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>askUrl(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askUrl(m.MacID,m.SocketNumber)} >
                                                *URL?#
                                               </button>
                                             </div>
@@ -466,7 +498,7 @@ const handleChange = () => {
                                               <input type='number' style={{width:'100px'}} placeholder='light' onChange={(e)=>setLight(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='position' onChange={(e)=>setPosition(e.target.value)}/>
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendLight(m.MacID,light,position,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendLight(m.MacID,light,position,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -491,7 +523,7 @@ const handleChange = () => {
                                               <input type='number' min={30} max={300} style={{width:'100px'}} placeholder='value' onChange={(e)=>setHBTvalue(e.target.value)}/>
                                             
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendHBT(m.MacID,HBTvalue,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendHBT(m.MacID,HBTvalue,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -515,7 +547,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='ipAddress' onChange={(e)=>setIPaddress(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='port' onChange={(e)=>setPort(e.target.value)}/>
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSIP(m.MacID,IPaddress,port,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSIP(m.MacID,IPaddress,port,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -541,7 +573,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='ssid' onChange={(e)=>setSSID(e.target.value)}/>
                                         
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID(m.MacID,SSID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID(m.MacID,SSID,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -567,7 +599,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='pwd' onChange={(e)=>setPWD(e.target.value)}/>
                                               
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD(m.MacID,PWD,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD(m.MacID,PWD,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -594,7 +626,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='ssid1' onChange={(e)=>setSSID1(e.target.value)}/>
                                         
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -620,7 +652,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='pwd1' onChange={(e)=>setPWD1(e.target.value)}/>
                                               
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -646,7 +678,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='numeric value' onChange={(e)=>setNumValue(e.target.value)}/>
                                               <input type='text' style={{width:'100px'}} placeholder='polarity' onChange={(e)=>setPolarity(e.target.value)}/>
                                               </div>
-                                              <button type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendCA(m.MacID,NumValue,Polarity,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendCA(m.MacID,NumValue,Polarity,m.SocketNumber)} >
                                               SEND
                                           </button>
                                             
@@ -668,7 +700,7 @@ const handleChange = () => {
                                       
                                     <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button type="button" className="btn btn-secondary text-white "  onClick={()=>askCA(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askCA(m.MacID,m.SocketNumber)} >
                                                *CA?#
                                               </button>
                                             </div>
@@ -764,7 +796,6 @@ UserTableRow.propTypes = {
   m:PropTypes.any,
   key: PropTypes.any,
   sr:PropTypes.any,
-  mode:PropTypes.any,
    handleClick: PropTypes.func
 
 };

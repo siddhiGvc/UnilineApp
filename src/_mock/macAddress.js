@@ -340,3 +340,20 @@ export const AllMacAddress=async()=> {
      
   
   }
+
+  export const modeTest1=(MacID,port)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/modeTest1`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }

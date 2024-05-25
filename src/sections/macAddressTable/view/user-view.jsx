@@ -45,14 +45,7 @@ export default function UserPage() {
 
   const [data,setData]=useState([])
 
-  const [mode, setMode] = useState('');
-
-  const handleChange = (e) => {
   
-    setMode(e.target.value);
-  };
- 
-
 
   useEffect(()=>{
     
@@ -132,17 +125,6 @@ export default function UserPage() {
 
   return (
     <Container maxWidth='xxl'>
-      <div className="row">
-                                          <p>Test Mode</p>
-                                            <div className="col-12 sw-parent">
-                                                 <select onChange={(e)=>handleChange(e)}>
-                                                    <option value=''>None</option>
-                                                    <option value='tm1'>Test Mode 1</option>
-                                                    <option value='tm2'>Test Mode 2</option>
-                                                 </select>
-                                            
-                                            </div>
-                                        </div>
      
       <Card>
         <UserTableToolbar
@@ -179,8 +161,7 @@ export default function UserPage() {
                       sr={page*rowsPerPage+i+1}
                      
                       m={row}
-                      mode={mode}
-
+                   
                       handleClick={(event) => handleClick(event, row.UID)}
                     />
                   ))}
