@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,modeTest1,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 
@@ -90,6 +90,9 @@ export default function UserTableRow({
         if(mode==="tm1")
         {
           modeTest1(m.MacID,m.SocketNumber);
+        }
+        else{
+          modeTest2(m.MacID,m.SocketNumber);
         }
       }
   },[mode, m.MacID, m.SocketNumber])
