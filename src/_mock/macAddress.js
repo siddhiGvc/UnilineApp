@@ -18,11 +18,12 @@ export const AllMacAddress=async()=> {
   }
 
 
-  export const sendFota=(MacID,fota,port)=>{
+  export const sendFota=(MacID,fota,port,name)=>{
     const obj={
       MacId:MacID,
       outPutValue:true,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendFota`,{
@@ -36,11 +37,12 @@ export const AllMacAddress=async()=> {
   
   }
    
- export const sendReset=(MacID,port)=>{
+ export const sendReset=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-    
-      socketNumber:port
+      UserName:name,
+      socketNumber:port,
+      
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/reset`,{
@@ -54,12 +56,13 @@ export const AllMacAddress=async()=> {
   
   }
   
-  export const sendV=(MacID,Pin,Pulse,Port)=>{
+  export const sendV=(MacID,Pin,Pulse,Port,name)=>{
     const obj={
       MacId:MacID,
       Pin,
       Pulse,
-      socketNumber:Port
+      socketNumber:Port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendV`,{
@@ -73,10 +76,10 @@ export const AllMacAddress=async()=> {
   
   }
   
-  export const sendFW=(MacID,port)=>{
+  export const sendFW=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-   
+      UserName:name,
       socketNumber:port
   
     }
@@ -91,10 +94,10 @@ export const AllMacAddress=async()=> {
   
   }
   
- export const sendTC=(MacID,port)=>{
+ export const sendTC=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-     
+      UserName:name,
       socketNumber:port
   
     }
@@ -109,10 +112,10 @@ export const AllMacAddress=async()=> {
   
   }
   
-  export const sendTV=(MacID,port)=>{
+  export const sendTV=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-     
+      UserName:name,
       socketNumber:port
   
     }
@@ -127,11 +130,12 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendFotaUrl=(MacID,url,port)=>{
+  export const sendFotaUrl=(MacID,url,port,name)=>{
     const obj={
       MacId:MacID,
       Url:url,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendFotaUrl`,{
@@ -145,10 +149,11 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const askUrl=(MacID,port)=>{
+  export const askUrl=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/askUrl`,{
@@ -162,10 +167,11 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendCC=(MacID,port)=>{
+  export const sendCC=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendCC`,{
@@ -179,12 +185,13 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendLight=(MacID,light,position,port)=>{
+  export const sendLight=(MacID,light,position,port,name)=>{
     const obj={
       MacId:MacID,
       light,
       position,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendLight`,{
@@ -198,11 +205,12 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendHBT=(MacID,value,port)=>{
+  export const sendHBT=(MacID,value,port,name)=>{
     const obj={
       MacId:MacID,
       value,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendHBT`,{
@@ -216,12 +224,13 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendSIP=(MacID,ip,pin,port)=>{
+  export const sendSIP=(MacID,ip,pin,port,name)=>{
     const obj={
       MacId:MacID,
       Ip:ip,
       Pin:pin,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendSIP`,{
@@ -235,11 +244,12 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendSSID=(MacID,SSID,port)=>{
+  export const sendSSID=(MacID,SSID,port,name)=>{
     const obj={
       MacId:MacID,
       SSID,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendSSID`,{
@@ -252,11 +262,12 @@ export const AllMacAddress=async()=> {
      
   
   }
-  export const sendPWD=(MacID,PWD,port)=>{
+  export const sendPWD=(MacID,PWD,port,name)=>{
     const obj={
       MacId:MacID,
       PWD,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendPWD`,{
@@ -270,11 +281,12 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendSSID1=(MacID,SSID1,port)=>{
+  export const sendSSID1=(MacID,SSID1,port,name)=>{
     const obj={
       MacId:MacID,
       SSID1,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendSSID1`,{
@@ -287,11 +299,12 @@ export const AllMacAddress=async()=> {
      
   
   }
-  export const sendPWD1=(MacID,PWD1,port)=>{
+  export const sendPWD1=(MacID,PWD1,port,name)=>{
     const obj={
       MacId:MacID,
       PWD1,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendPWD1`,{
@@ -305,12 +318,13 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const sendCA=(MacID,numValue,polarity,port)=>{
+  export const sendCA=(MacID,numValue,polarity,port,name)=>{
     const obj={
       MacId:MacID,
       numValue,
       polarity,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendCA`,{
@@ -324,10 +338,11 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const askCA=(MacID,port)=>{
+  export const askCA=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/askCA`,{
@@ -341,10 +356,11 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const modeTest1=(MacID,port)=>{
+  export const modeTest1=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/modeTest1`,{
@@ -358,13 +374,32 @@ export const AllMacAddress=async()=> {
   
   }
 
-  export const modeTest2=(MacID,port)=>{
+  export const modeTest2=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
-      socketNumber:port
+      socketNumber:port,
+      UserName:name
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/modeTest2`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const modeNone=(MacID,port,name)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+      UserName:name
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/modeNone`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'

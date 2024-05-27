@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 
@@ -84,15 +84,16 @@ export default function UserTableRow({
      if(mode==="")
       {
         setDisable(false);
+        modeNone(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
       }
       else if(mode!=="") {
         setDisable(true);
         if(mode==="tm1")
         {
-          modeTest1(m.MacID,m.SocketNumber);
+          modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
         }
         else{
-          modeTest2(m.MacID,m.SocketNumber);
+          modeTest2(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
         }
       }
   },[mode, m.MacID, m.SocketNumber])
@@ -131,7 +132,8 @@ const handleChange = () => {
   const obj={
     MacId:m.MacID,
     outPutValue:!isChecked,
-    socketNumber:m.SocketNumber
+    socketNumber:m.SocketNumber,
+    UserName:sessionStorage.getItem("name")
 
   }
   fetch(`http://165.232.180.111:8080/kwikpay/saveINHoutput`,{
@@ -297,7 +299,7 @@ const handleChange = () => {
                                           <p>FOTA</p>
                                             <div className="col-12 sw-parent">
                                               
-                                            <button disabled={disable} type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber)} >
+                                            <button disabled={disable} type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               Fota
                                           </button>
                                             </div>
@@ -321,7 +323,7 @@ const handleChange = () => {
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button disabled={disable} type="button" className="btn btn-warning text-white"  onClick={()=>sendReset(m.MacID,m.SocketNumber)} >
+                                            <button disabled={disable} type="button" className="btn btn-warning text-white"  onClick={()=>sendReset(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               RESET
                                           </button>
                                             </div>
@@ -347,7 +349,7 @@ const handleChange = () => {
                                               <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -371,7 +373,7 @@ const handleChange = () => {
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber)} >
+                                            <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               *TC?#
                                           </button>
                                             </div>
@@ -392,7 +394,7 @@ const handleChange = () => {
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                     <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                                *CC#
                                               </button>
                                             </div>
@@ -412,7 +414,7 @@ const handleChange = () => {
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendFW(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendFW(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                                *Fw?#
                                               </button>
                                             </div>
@@ -431,7 +433,7 @@ const handleChange = () => {
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                                *TV?#
                                               </button>
                                             </div>
@@ -455,7 +457,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'200px'}} placeholder='Url' onChange={(e)=>setUrl(e.target.value)}/>
                                              
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -477,7 +479,7 @@ const handleChange = () => {
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                     <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askUrl(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askUrl(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                                *URL?#
                                               </button>
                                             </div>
@@ -501,7 +503,7 @@ const handleChange = () => {
                                               <input type='number' style={{width:'100px'}} placeholder='light' onChange={(e)=>setLight(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='position' onChange={(e)=>setPosition(e.target.value)}/>
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendLight(m.MacID,light,position,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendLight(m.MacID,light,position,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -526,7 +528,7 @@ const handleChange = () => {
                                               <input type='number' min={30} max={300} style={{width:'100px'}} placeholder='value' onChange={(e)=>setHBTvalue(e.target.value)}/>
                                             
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendHBT(m.MacID,HBTvalue,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendHBT(m.MacID,HBTvalue,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -550,7 +552,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='ipAddress' onChange={(e)=>setIPaddress(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='port' onChange={(e)=>setPort(e.target.value)}/>
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSIP(m.MacID,IPaddress,port,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSIP(m.MacID,IPaddress,port,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -576,7 +578,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='ssid' onChange={(e)=>setSSID(e.target.value)}/>
                                         
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID(m.MacID,SSID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID(m.MacID,SSID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -602,7 +604,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='pwd' onChange={(e)=>setPWD(e.target.value)}/>
                                               
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD(m.MacID,PWD,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD(m.MacID,PWD,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -629,7 +631,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='ssid1' onChange={(e)=>setSSID1(e.target.value)}/>
                                         
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -655,7 +657,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='pwd1' onChange={(e)=>setPWD1(e.target.value)}/>
                                               
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -681,7 +683,7 @@ const handleChange = () => {
                                               <input type='text' style={{width:'100px'}} placeholder='numeric value' onChange={(e)=>setNumValue(e.target.value)}/>
                                               <input type='text' style={{width:'100px'}} placeholder='polarity' onChange={(e)=>setPolarity(e.target.value)}/>
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendCA(m.MacID,NumValue,Polarity,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendCA(m.MacID,NumValue,Polarity,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -703,7 +705,7 @@ const handleChange = () => {
                                       
                                     <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askCA(m.MacID,m.SocketNumber)} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askCA(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                                *CA?#
                                               </button>
                                             </div>
@@ -718,7 +720,8 @@ const handleChange = () => {
                               </Typography>
                                 </td>
         
-                              </tr>                                                                                         
+                              </tr> 
+                                                                                                            
                             </tbody>
                         </table>
       </Popover>
