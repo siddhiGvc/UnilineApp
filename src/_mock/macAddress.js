@@ -18,12 +18,13 @@ export const AllMacAddress=async()=> {
   }
 
 
-  export const sendFota=(MacID,fota,port,name)=>{
+  export const sendFota=(MacID,fota,port,name,type)=>{
     const obj={
       MacId:MacID,
       outPutValue:true,
       socketNumber:port,
-      UserName:name
+      UserName:name,
+      type
   
     }
     fetch(`http://165.232.180.111:8080/kwikpay/sendFota`,{
