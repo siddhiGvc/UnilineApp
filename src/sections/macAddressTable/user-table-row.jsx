@@ -293,18 +293,7 @@ const handleChange = () => {
                               </tr>   
                               <tr>
                                   <th>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div className="row">
-                                          <p>OLD FOTA</p>
-                                            <div className="col-12 sw-parent">
-                                              
-                                            <button disabled={disable} type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber,sessionStorage.getItem("name"),"old")} >
-                                              Fota
-                                          </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
                                       
                                       <div className="row">
