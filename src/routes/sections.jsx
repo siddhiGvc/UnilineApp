@@ -21,7 +21,7 @@ import InventoryPage from 'src/sections/Inventory/inventoryPage';
 import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
-
+import { MacTableView } from 'src/sections/macAddressTabletesting/view';
 
 
 
@@ -74,7 +74,8 @@ export default function Router() {
         { path: 'lockLogs', element: <LockLogs/>},
         { path: 'selfMap', element: <SelfMap/>},
         { path: 'viewMap', element: <ViewMap/>},
-        { path: 'MacTable', element: <UserView/>}
+        { path: 'MacTable', element: <UserView/>},
+        { path: 'MacTable2', element: <MacTableView/>}
       ],
     },
     {

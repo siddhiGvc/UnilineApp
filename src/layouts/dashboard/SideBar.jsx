@@ -88,6 +88,9 @@ export default function SideBar(){
                 <li  className=" mt-1">
                       <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='MacAddress'/>
                  </li>
+                 <li  className=" mt-1">
+                      <NavItem path="/MacTable2" icon={ <i className="fa-solid fa-fan" />} title='MacAddress2'/>
+                 </li>
 
                 <li  className="ra mt-1">
                       <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>

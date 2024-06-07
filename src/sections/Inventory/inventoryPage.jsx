@@ -279,7 +279,7 @@ export default function InventoryPage(){
 
      </Stack>
     <Card>
-        <Container maxWidth='xxl'>
+        <Container maxWidth='xxl' >
         <Typography variant="h4" sx={{ mb: 5 ,display:'flex',mt:2,alignItems:'center',gap:2}}>
         Inventory
         <div className="col-xl-3 col-lg-5 col-md-6 col-12 col-12 my-2">
