@@ -143,11 +143,24 @@ export default function UserPage() {
   const handleSelectChange1 = (elem) => {
     setSelectedOption1(elem);
     
-    setValue1(data[elem.id]);
+   
+    AllMacAddress().then((res)=>{
+    
+      setData(res);
+       
+      setValue1(res[elem.id]);
+      
+    })
   };
   const handleSelectChange2 = (elem) => {
     setSelectedOption2(elem);
-    setValue2(data[elem.id]);
+    AllMacAddress().then((res)=>{
+    
+      setData(res);
+       
+      setValue2(res[elem.id]);
+      
+    })
   };
 
   // const handleChangePage = (event, newPage) => {
