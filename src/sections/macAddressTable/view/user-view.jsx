@@ -1,5 +1,5 @@
 // import $ from 'jquery';
-import Select from 'react-select';
+// import Select from 'react-select';
 import {useState, useEffect} from 'react';
 
 // import SwitchButton from 'bootstrap-switch-button-react';
@@ -33,12 +33,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 
 export default function UserPage() {
 
-  const [options1,setOptions1]=useState([]);
-  const [options2,setOptions2]=useState([]);
-
-  const [selectedOption1, setSelectedOption1] = useState([]);
-  const [selectedOption2, setSelectedOption2] = useState([]);
-
+  
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -49,7 +44,7 @@ export default function UserPage() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const [data,setData]=useState([])
 
@@ -60,18 +55,26 @@ export default function UserPage() {
     AllMacAddress().then((res)=>{
     
       setData(res);
-      const formattedData = res.map(option => ({
-        value: option.MacID,
-        label: option.MacID
-      }));
+   
+
+      
+    })
+
+    const Interval=setInterval(()=>{
+       
+    AllMacAddress().then((res)=>{
+    
+      setData(res);
+     
 
     
 
-      setOptions1(formattedData);
-     
-      setOptions2(formattedData);
-      
     })
+    },3000);
+
+    return()=>{
+      clearInterval(Interval);
+    }
    
 
  
@@ -113,12 +116,7 @@ export default function UserPage() {
     setSelected(newSelected);
   };
 
-  const handleSelectChange1 = (elem) => {
-    setSelectedOption1(elem);
-  };
-  const handleSelectChange2 = (elem) => {
-    setSelectedOption2(elem);
-  };
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -147,40 +145,9 @@ export default function UserPage() {
      
      <Card container spacing={2} maxWidth='xxl' sx={{padding:'20px', justifyContent:'center'}}>
       <Typography variant="h4" sx={{ mb: 5 }}>
-      Boards
+      Mac Address
       </Typography>
-      <div className="row">
-                    <div className="col-md-6">
-                        <div className="form-group my-2">
-                            <h6>Board1 (Coin Acceptor):</h6>
-                            <Select
-                                name="board"
-                                value={selectedOption1}
-                                onChange={handleSelectChange1}
-                                options={options1}
-                                isSearchable // Equivalent to isSearchable={true}
-                                placeholder="Select option..."
-                            />
-                            {/* <input type="text" className="form-control" name="machine" /> */}
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="form-group my-2">
-                            <h6>Board2:</h6>
-                            <Select
-                                name="board"
-                                value={selectedOption2}
-                                onChange={handleSelectChange2}
-                                options={options2}
-                                isSearchable // Equivalent to isSearchable={true}
-                                placeholder="Select option..."
-                            />
-                            {/* <input type="text" className="form-control" name="machine" /> */}
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
-              </div>
+     
         
         <UserTableToolbar
           numSelected={selected.length}

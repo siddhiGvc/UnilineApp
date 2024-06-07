@@ -206,7 +206,7 @@ const handleChange = () => {
     </TableCell>
   
       </TableRow >
-        <div style={{border:"1px solid grey", overflow: "auto", height: "400px",paddingTop:"10px",paddingLeft:'10px'}}>
+        <div style={{border:"1px solid grey", overflow: "auto", height: "500px",paddingTop:"10px",paddingLeft:'10px'}}>
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
 
@@ -455,7 +455,7 @@ const handleChange = () => {
                                   </th>
                                   <td>
                                   <Typography>
-                                  <p> Message</p>
+                                  <p style={{width:'200px',height:'50px'}}> Message</p>
                                   {m.URLoutput}
                                   </Typography>
                                     </td>

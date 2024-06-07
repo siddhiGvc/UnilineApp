@@ -132,7 +132,7 @@ export  function Nav({ openNav, onCloseNav }) {
         </Box>
       ) : (
         <Drawer
-          open={openNav}
+          open={!openNav}
           onClose={onCloseNav}
           PaperProps={{
             sx: {
