@@ -36,8 +36,8 @@ export default function UserPage() {
   const [options1,setOptions1]=useState([]);
   const [options2,setOptions2]=useState([]);
 
-  const [selectedOption1, setSelectedOption1] = useState([]);
-  const [selectedOption2, setSelectedOption2] = useState([]);
+  const [selectedOption1, setSelectedOption1] = useState({id:-1});
+  const [selectedOption2, setSelectedOption2] = useState({id:-1});
 
   const [value1,setValue1]=useState({});
   const [value2,setValue2]=useState({});
@@ -75,6 +75,19 @@ export default function UserPage() {
       setOptions1(formattedData);
      
       setOptions2(formattedData);
+      // console.log(selectedOption1.id>=0);
+      if(selectedOption1.id>=0)
+        {
+          // console.log(res[selectedOption1.id]);
+          setValue1(res[selectedOption1.id]);
+         
+        }
+        if(selectedOption2.id>=0)
+          {
+            setValue2(res[selectedOption2.id]);
+          }
+     
+      
       
     })
 
@@ -93,17 +106,31 @@ export default function UserPage() {
         setOptions1(formattedData);
        
         setOptions2(formattedData);
+        // console.log(selectedOption1.id>=0);
+        if(selectedOption1.id>=0)
+          {
+            // console.log(res[selectedOption1.id]);
+            setValue1(res[selectedOption1.id]);
+           
+          }
+          if(selectedOption2.id>=0)
+            {
+              setValue2(res[selectedOption2.id]);
+            }
+       
+        
         
       })
 
-    },3000)
-   
-   return()=>{
-    clearInterval(Interval);
-   }
+    },1000)
+  
+
+    return()=>{
+      clearInterval(Interval);
+    }
  
 
-  },[])
+  },[selectedOption1,selectedOption2])
 
   // const handleSort = (event, id) => {
   //   const isAsc = orderBy === id && order === 'asc';
@@ -147,8 +174,8 @@ export default function UserPage() {
     AllMacAddress().then((res)=>{
     
       setData(res);
-       
-      setValue1(res[elem.id]);
+      console.log(data);
+      // setValue1(res[elem.id]);
       
     })
   };
@@ -158,7 +185,7 @@ export default function UserPage() {
     
       setData(res);
        
-      setValue2(res[elem.id]);
+      // setValue2(res[elem.id]);
       
     })
   };
@@ -232,7 +259,7 @@ export default function UserPage() {
                      
                       m={value1}
                    
-                      handleClick={(event) => handleClick(event, selectedOption1.UID)}
+                      handleClick={(event) => handleClick(event, value1.UID)}
                     />
                   </div>
                   <div className="col-md-6">
@@ -242,7 +269,7 @@ export default function UserPage() {
                      
                       m={value2}
                    
-                      handleClick={(event) => handleClick(event, selectedOption1.UID)}
+                      handleClick={(event) => handleClick(event, value2.UID)}
                     />
                   </div>
 
