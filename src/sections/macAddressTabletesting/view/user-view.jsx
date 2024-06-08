@@ -1,8 +1,8 @@
 // import $ from 'jquery';
 import Select from 'react-select';
 import {useState, useEffect} from 'react';
+import SwitchButton from 'bootstrap-switch-button-react';
 
-// import SwitchButton from 'bootstrap-switch-button-react';
 import Card from '@mui/material/Card';
 // import Stack from '@mui/material/Stack';
 // import Table from '@mui/material/Table';
@@ -10,6 +10,7 @@ import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 // import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
+
 // import TableContainer from '@mui/material/TableContainer';
 // import TablePagination from '@mui/material/TablePagination';
 
@@ -41,7 +42,7 @@ export default function UserPage() {
 
   const [value1,setValue1]=useState({});
   const [value2,setValue2]=useState({});
-
+  const [isChecked, setIsChecked] = useState(false);
 
   // const [page, setPage] = useState(0);
 
@@ -190,6 +191,11 @@ export default function UserPage() {
     })
   };
 
+  const handleChange = () => {
+  
+    setIsChecked(!isChecked);
+  };
+
   // const handleChangePage = (event, newPage) => {
   //   setPage(newPage);
   // };
@@ -251,12 +257,29 @@ export default function UserPage() {
                         </div>
                     </div>
               </div>
+              <div className="row">
+                                      
+                                            <div className="col-12 sw-parent">
+                                              
+                                                    <SwitchButton
+                                                  
+                                                    checked={isChecked}
+                                                    onChange={handleChange}
+                                                    onlabel="TEST MODE ON"
+                                                    offlabel="TEST MODE OFF"
+                                                    onstyle='success'
+                                                    offstyle='danger'
+                                                    width={200}
+                                                />
+                                            </div>
+                                        </div>
               <div className='row'>
                  <div className="col-md-6">
                   <UserTableRow
                       key={value1.id}
-
                      
+                      testMode={isChecked}
+                      board={1}
                       m={value1}
                    
                       handleClick={(event) => handleClick(event, value1.UID)}
@@ -266,9 +289,9 @@ export default function UserPage() {
                   <UserTableRow
                       key={value2.id}
 
-                     
+                      testMode={isChecked}
                       m={value2}
-                   
+                      board={2}
                       handleClick={(event) => handleClick(event, value2.UID)}
                     />
                   </div>

@@ -46,6 +46,8 @@ const style = {
 };
 export default function UserTableRow({
   m,
+  testMode,
+  board,
   sr,
   key,
   handleClick,
@@ -77,28 +79,30 @@ export default function UserTableRow({
   const [NumValue,setNumValue]=useState("");
   const [Polarity,setPolarity]=useState("");
 
-  const [mode,setMode]=useState('');
+  // const [mode,setMode]=useState('');
 
   const [disable,setDisable]=useState(false);
 
   useEffect(()=>{
-    console.log(m);
-     if(mode==="")
+    
+     if(!testMode && m.id>=0)
       {
         setDisable(false);
         modeNone(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
       }
-      else if(mode!=="") {
+      else if(testMode && board===1 && m.id>=0) {
         setDisable(true);
-        if(mode==="tm1")
-        {
+     
           modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-        }
-        else{
+      
+      }
+      else if(testMode && board===2 && m.id>=0)
+        {
+          setDisable(true);
+     
           modeTest2(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
         }
-      }
-  },[mode, m.MacID, m.SocketNumber,m])
+  },[testMode,m.MacID, m.SocketNumber,m.id,board])
 
 
   const showAlertMessage = () => {
@@ -211,7 +215,7 @@ const handleChange = () => {
          <table className="table" style={{fontSize:'14px'}}>
 
                             <tbody > 
-                            <tr>
+                            {/* <tr>
                               <div className="row">
                                           <p>Test Mode</p>
                                             <div className="col-10 sw-parent">
@@ -224,8 +228,98 @@ const handleChange = () => {
                                             </div>
                                         </div>
      
-                            </tr>
+                            </tr> */}
                             <tr ><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                            <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>V</h5>
+                                             <div>
+                                              <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
+                                              <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
+                                              </div>
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.Voutput}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              *TC?#
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.TCoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                    <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                               *CC#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.Coutput}
+                                  </Typography>
+                                    </td>
+                                </tr>
+                              
+                             
+                                <tr>
+                                  <th>   
+                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
+                                         <div className="row">
+                                            <div className="col-12 sw-parent">
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                               *TV?#
+                                              </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </th>
+                                  <td>
+                                  <Typography>
+                                  <p> Message</p>
+                                  {m.TVoutput}
+                                  </Typography>
+                                    </td>
+                                </tr>
                             <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
@@ -306,77 +400,8 @@ const handleChange = () => {
                                 </td>
         
                               </tr>
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>V</h5>
-                                             <div>
-                                              <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
-                                              <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.Voutput}
-                              </Typography>
-                                </td>
-        
-                              </tr> 
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div className="row">
-                                         
-                                            <div className="col-12 sw-parent">
-                                              
-                                            <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              *TC?#
-                                          </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.TCoutput}
-                              </Typography>
-                                </td>
-        
-                              </tr>  
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
-                                    <div className="row">
-                                            <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                               *CC#
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                  </th>
-                                  <td>
-                                  <Typography>
-                                  <p> Message</p>
-                                  {m.Coutput}
-                                  </Typography>
-                                    </td>
-                                </tr>
-                              
-                              <tr>
+                            
+                                <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div className="row">
@@ -395,25 +420,6 @@ const handleChange = () => {
                                   </Typography>
                                     </td>
                                 </tr>
-                                <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
-                                         <div className="row">
-                                            <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendTV(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                               *TV?#
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                  </th>
-                                  <td>
-                                  <Typography>
-                                  <p> Message</p>
-                                  {m.TVoutput}
-                                  </Typography>
-                                    </td>
-                                </tr> 
                                  <tr>
                                    <th>
                                     <div className="col-xl-4 col-lg-9 col-md-7 col-12 col-12 my-2 mx-3">
@@ -769,6 +775,8 @@ UserTableRow.propTypes = {
   m:PropTypes.any,
   key: PropTypes.any,
   sr:PropTypes.any,
+  testMode:PropTypes.any,
+  board:PropTypes.any,
    handleClick: PropTypes.func
 
 };
