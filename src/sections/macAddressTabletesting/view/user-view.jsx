@@ -1,4 +1,5 @@
 // import $ from 'jquery';
+import moment from "moment";
 import Select from 'react-select';
 import {useState, useEffect} from 'react';
 import SwitchButton from 'bootstrap-switch-button-react';
@@ -26,6 +27,7 @@ import {AllMacAddress} from 'src/_mock/macAddress';
 
 // import TableNoData from '../table-no-data';
 import UserTableRow from '../user-table-row';
+
 // import UserTableHead from '../user-table-head';
 // import TableEmptyRows from '../table-empty-rows';
 // import UserTableToolbar from '../user-table-toolbar';
@@ -58,14 +60,16 @@ export default function UserPage() {
 
   const [data,setData]=useState([])
 
-  
+  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
 
   useEffect(()=>{
     
     AllMacAddress().then((res)=>{
-    
-      setData(res);
-      const formattedData = res.map((option,i) => ({
+
+      const filteredData=res.filter((elem)=> online(elem) );
+      setData(filteredData);
+
+      const formattedData = filteredData.map((option,i) => ({
         value: option.MacID,
         label: option.MacID,
         id:i
@@ -95,8 +99,9 @@ export default function UserPage() {
     const Interval=setInterval(()=>{
       AllMacAddress().then((res)=>{
     
-        setData(res);
-        const formattedData = res.map((option,i) => ({
+        const filteredData=res.filter((elem)=> online(elem) );
+        setData(filteredData);
+        const formattedData = filteredData.map((option,i) => ({
           value: option.MacID,
           label: option.MacID,
           id:i
@@ -174,7 +179,9 @@ export default function UserPage() {
    
     AllMacAddress().then((res)=>{
     
-      setData(res);
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
       console.log(data);
       // setValue1(res[elem.id]);
       
@@ -183,10 +190,9 @@ export default function UserPage() {
   const handleSelectChange2 = (elem) => {
     setSelectedOption2(elem);
     AllMacAddress().then((res)=>{
-    
-      setData(res);
-       
-      // setValue2(res[elem.id]);
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
       
     })
   };
