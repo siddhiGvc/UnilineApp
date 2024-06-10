@@ -84,12 +84,12 @@ export default function UserPage() {
       if(selectedOption1.id>=0)
         {
           // console.log(res[selectedOption1.id]);
-          setValue1(res[selectedOption1.id]);
+          setValue1(formattedData[selectedOption1.id]);
          
         }
         if(selectedOption2.id>=0)
           {
-            setValue2(res[selectedOption2.id]);
+            setValue2(formattedData[selectedOption2.id]);
           }
      
       
