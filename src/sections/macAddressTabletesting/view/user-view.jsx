@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography';
 
 // import { emptyRows} from '../utils';
 
-import {AllMacAddress} from 'src/_mock/macAddress';
+import {getTestMode, setTestMode,AllMacAddress} from 'src/_mock/macAddress';
 // import Iconify from 'src/components/iconify';
 
 // import TableNoData from '../table-no-data';
@@ -96,6 +96,11 @@ export default function UserPage() {
       
     })
 
+    getTestMode().then((res)=>{
+
+      setIsChecked(res.testMode);
+    })
+
     const Interval=setInterval(()=>{
       AllMacAddress().then((res)=>{
     
@@ -126,8 +131,16 @@ export default function UserPage() {
         
         
       })
+      getTestMode().then((res)=>{
+      
+           setIsChecked(res.testMode);
+       
+     })
 
     },500)
+
+
+
   
 
     return()=>{
@@ -197,8 +210,8 @@ export default function UserPage() {
   };
 
   const handleChange = () => {
-  
-    setIsChecked(!isChecked);
+    setTestMode();
+   
   };
 
   // const handleChangePage = (event, newPage) => {
@@ -262,7 +275,7 @@ export default function UserPage() {
                         </div>
                     </div>
               </div>
-              <div className="row">
+             {selectedOption1.id>=0 && selectedOption2.id>=0 ? <div className="row">
                                       
                                             <div className="col-12 sw-parent">
                                               
@@ -277,7 +290,8 @@ export default function UserPage() {
                                                     width={200}
                                                 />
                                             </div>
-                                        </div>
+                                        </div>:''
+              }
               <div className='row'>
                  <div className="col-md-6">
                   <UserTableRow
