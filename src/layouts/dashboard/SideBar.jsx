@@ -86,10 +86,10 @@ export default function SideBar(){
                      <NavItem path="/dashboard" icon={ <i className="fa-solid fa-chart-line" />} title='Dashboard'/>
                 </li>
                 <li  className=" mt-1">
-                      <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='MacAddress'/>
+                      <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='Kwikpay Single'/>
                  </li>
                  <li  className=" mt-1">
-                      <NavItem path="/MacTable2" icon={ <i className="fa-solid fa-fan" />} title='MacAddress2'/>
+                      <NavItem path="/MacTable2" icon={ <i className="fa-solid fa-fan" />} title='Kwikpay Dual'/>
                  </li>
 
                 <li  className="ra mt-1">
