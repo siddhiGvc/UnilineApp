@@ -232,7 +232,7 @@ const handleChange = () => {
                             <tr ><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
                             <tr>
                                   <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3 ">
                                       
                                         <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
                                           <h5>V</h5>
@@ -240,7 +240,7 @@ const handleChange = () => {
                                               <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
                                               </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              <button disabled={disable} type="button"   className={`btn btn-${board===2?m.Color:''} btn-info text-white `}  style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -264,7 +264,7 @@ const handleChange = () => {
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                            <button disabled={disable} type="button" className={`btn  btn-${board===1? m.Color:''} btn-secondary text-white`}  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               *TC?#
                                           </button>
                                             </div>
@@ -285,7 +285,7 @@ const handleChange = () => {
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                     <div className="row">
                                             <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>sendCC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendCC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                                *CC#
                                               </button>
                                             </div>

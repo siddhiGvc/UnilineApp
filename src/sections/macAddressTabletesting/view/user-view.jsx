@@ -127,7 +127,7 @@ export default function UserPage() {
         
       })
 
-    },1000)
+    },500)
   
 
     return()=>{
@@ -233,7 +233,7 @@ export default function UserPage() {
       <div className="row">
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>Board1 (Coin Acceptor):</h6>
+                            <h6>Board1 (Receiving Pulses):</h6>
                             <Select
                                 name="board"
                                 value={selectedOption1}
@@ -248,7 +248,7 @@ export default function UserPage() {
                     </div>
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>Board2:</h6>
+                            <h6>Board2 (Sending Pulses):</h6>
                             <Select
                                 name="board"
                                 value={selectedOption2}
