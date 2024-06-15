@@ -38,12 +38,16 @@ export default function UserPage() {
 
   const [options1,setOptions1]=useState([]);
   const [options2,setOptions2]=useState([]);
+  const [options3,setOptions3]=useState([]);
 
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [selectedOption2, setSelectedOption2] = useState({id:-1});
+  const [selectedOption3, setSelectedOption3] = useState({id:-1});
 
   const [value1,setValue1]=useState({});
   const [value2,setValue2]=useState({});
+  const [value3,setValue3]=useState({});
+
   const [isChecked, setIsChecked] = useState(false);
 
   // const [page, setPage] = useState(0);
@@ -80,6 +84,8 @@ export default function UserPage() {
       setOptions1(formattedData);
      
       setOptions2(formattedData);
+
+      setOptions3(formattedData);
       // console.log(selectedOption1.id>=0);
       if(selectedOption1.id>=0)
         {
@@ -91,6 +97,11 @@ export default function UserPage() {
           {
             setValue2(filteredData[selectedOption2.id]);
           }
+
+          if(selectedOption3.id>=0)
+            {
+              setValue3(filteredData[selectedOption3.id]);
+            }
      
       
       
@@ -117,6 +128,8 @@ export default function UserPage() {
         setOptions1(formattedData);
        
         setOptions2(formattedData);
+
+        setOptions3(formattedData);
         // console.log(selectedOption1.id>=0);
         if(selectedOption1.id>=0)
           {
@@ -128,6 +141,10 @@ export default function UserPage() {
             {
               setValue2(filteredData[selectedOption2.id]);
             }
+            if(selectedOption3.id>=0)
+              {
+                setValue3(filteredData[selectedOption3.id]);
+              }
         
         
       })
@@ -148,7 +165,7 @@ export default function UserPage() {
     }
  
 
-  },[selectedOption1,selectedOption2])
+  },[selectedOption1,selectedOption2,selectedOption3])
 
   // const handleSort = (event, id) => {
   //   const isAsc = orderBy === id && order === 'asc';
@@ -209,6 +226,16 @@ export default function UserPage() {
     })
   };
 
+  const handleSelectChange3 = (elem) => {
+    setSelectedOption3(elem);
+    AllMacAddress().then((res)=>{
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
+      
+    })
+  };
+
   const handleChange = () => {
     setTestMode();
    
@@ -244,11 +271,11 @@ export default function UserPage() {
       Boards
       </Typography>
       <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <div className="form-group my-2">
                             <h6>Board1 (TC):</h6>
                             <Select
-                                name="board"
+                                name="board1"
                                 value={selectedOption1}
                                 onChange={handleSelectChange1}
                                 options={options1}
@@ -259,14 +286,29 @@ export default function UserPage() {
                             <div className="invalid-feedback"/>
                         </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <div className="form-group my-2">
                             <h6>Board2 (V):</h6>
                             <Select
-                                name="board"
+                                name="board2"
                                 value={selectedOption2}
                                 onChange={handleSelectChange2}
                                 options={options2}
+                                isSearchable // Equivalent to isSearchable={true}
+                                placeholder="Select option..."
+                            />
+                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <div className="invalid-feedback"/>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="form-group my-2">
+                            <h6>Board3 (V):</h6>
+                            <Select
+                                name="board3"
+                                value={selectedOption3}
+                                onChange={handleSelectChange3}
+                                options={options3}
                                 isSearchable // Equivalent to isSearchable={true}
                                 placeholder="Select option..."
                             />
@@ -293,7 +335,7 @@ export default function UserPage() {
                                         </div>:''
               }
               <div className='row'>
-                 <div className="col-md-6">
+                 <div className="col-md-4">
                   <UserTableRow
                       key={value1.id}
                      
@@ -304,7 +346,7 @@ export default function UserPage() {
                       handleClick={(event) => handleClick(event, value1.UID)}
                     />
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                   <UserTableRow
                       key={value2.id}
 
@@ -312,6 +354,16 @@ export default function UserPage() {
                       m={value2}
                       board={2}
                       handleClick={(event) => handleClick(event, value2.UID)}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                  <UserTableRow
+                      key={value3.id}
+
+                      testMode={isChecked}
+                      m={value3}
+                      board={3}
+                      handleClick={(event) => handleClick(event, value3.UID)}
                     />
                   </div>
 

@@ -229,35 +229,36 @@ const handleChange = () => {
                                         </div>
      
                             </tr> */}
-                            <tr ><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                            <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
                             <tr>
-                                  <th>   
+                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3 ">
                                       
                                         <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                         
                                           <h5>V</h5>
                                              <div>
                                               <input type='number' style={{width:'100px'}} placeholder='Pin' onChange={(e)=>setPin(e.target.value)}/>
                                               <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
                                               </div>
+                                            
                                               <button disabled={disable} type="button"   className={`btn btn-${board===2?m.Color:''} btn-info text-white `}  style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
                                         </div>
                                     </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
+                                    <Typography>
                               <p> Message</p>
                               {board===1 ? m.RPoutput:m.Voutput}
                               </Typography>
-                                </td>
+                          
+                              </th>
+                              <td /> 
         
                               </tr> 
                               <tr>
-                                  <th>   
+                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
                                       
                                         <div className="row">
@@ -270,18 +271,19 @@ const handleChange = () => {
                                             </div>
                                         </div>
                                     </div>
-                          
-                              </th>
-                                <td>
+                                    <td>
                               <Typography>
                               <p> Message</p>
                               {m.TCoutput}
                               </Typography>
                                 </td>
+                          
+                              </th>
+                              <td /> 
         
                               </tr>  
                               <tr>
-                                  <th>   
+                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                     <div className="row">
                                             <div className="col-12 sw-parent">
@@ -291,18 +293,20 @@ const handleChange = () => {
                                             </div>
                                         </div>
                                     </div>
-                                  </th>
-                                  <td>
+                                    <td>
                                   <Typography>
                                   <p> Message</p>
                                   {m.Coutput}
                                   </Typography>
                                     </td>
+                                  </th>
+                                  <td />  
+                                
                                 </tr>
                               
                              
                                 <tr>
-                                  <th>   
+                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
                                          <div className="row">
                                             <div className="col-12 sw-parent">
@@ -312,16 +316,17 @@ const handleChange = () => {
                                             </div>
                                         </div>
                                     </div>
-                                  </th>
-                                  <td>
+                                    <td>
                                   <Typography>
                                   <p> Message</p>
                                   {m.TVoutput}
                                   </Typography>
                                     </td>
+                                  </th>
+                                  <td /> 
                                 </tr>
                             <tr>
-                                  <th>   
+                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
                                       
                                         <div className="row">
@@ -341,14 +346,15 @@ const handleChange = () => {
                                             </div>
                                         </div>
                                     </div>
-                          
-                              </th>
-                                <td>
+                                    <td>
                               <Typography>
                               <p>INH Input</p>
                               {m.INHinput===0 ?<p style={{color:'green'}}>{m.INHinput}</p>:<p style={{color:'red'}}>{m.INHinput}</p>}
                               </Typography>
                                 </td>
+                          
+                              </th>
+                              <td /> 
         
                               </tr>   
                               <tr>
