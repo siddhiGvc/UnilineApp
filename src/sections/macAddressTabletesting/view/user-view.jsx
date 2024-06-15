@@ -273,7 +273,7 @@ export default function UserPage() {
       <div className="row">
                     <div className="col-md-4">
                         <div className="form-group my-2">
-                            <h6>Board1 (TC):</h6>
+                            <h6>Board1:</h6>
                             <Select
                                 name="board1"
                                 value={selectedOption1}
@@ -288,7 +288,7 @@ export default function UserPage() {
                     </div>
                     <div className="col-md-4">
                         <div className="form-group my-2">
-                            <h6>Board2 (V):</h6>
+                            <h6>Board2:</h6>
                             <Select
                                 name="board2"
                                 value={selectedOption2}
@@ -303,7 +303,7 @@ export default function UserPage() {
                     </div>
                     <div className="col-md-4">
                         <div className="form-group my-2">
-                            <h6>Board3 (V):</h6>
+                            <h6>Board3:</h6>
                             <Select
                                 name="board3"
                                 value={selectedOption3}

@@ -250,7 +250,7 @@ const handleChange = () => {
                                     </div>
                                     <Typography>
                               <p> Message</p>
-                              {board===1 ? m.RPoutput:m.Voutput}
+                              {board===1 && testMode? m.RPoutput:m.Voutput}
                               </Typography>
                           
                               </th>
