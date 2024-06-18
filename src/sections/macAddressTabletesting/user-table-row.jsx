@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 // import { Y } from 'dist/assets/index-8d78d312';
@@ -543,6 +543,27 @@ const handleChange = () => {
                               <Typography>
                               <p> Message</p>
                               {m.SIPoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                        <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askSIP(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                               *SIP?#
+                                              </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SIPmessage}
                               </Typography>
                                 </td>
         

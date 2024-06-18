@@ -386,6 +386,24 @@ export const AllMacAddress=async()=> {
   
   }
 
+  export const askSIP=(MacID,port,name)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+      UserName:name
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/askSIP`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
   export const modeTest1=(MacID,port,name)=>{
     const obj={
       MacId:MacID,
