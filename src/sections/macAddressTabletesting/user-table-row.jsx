@@ -93,15 +93,21 @@ export default function UserTableRow({
       else if(testMode && board===1 && m.id>=0) {
         setDisable(true);
      
-          modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
+          modeTest2(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
       
       }
       else if(testMode && board===2 && m.id>=0)
         {
           setDisable(true);
      
-          modeTest2(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
+          modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
         }
+        else if(testMode && board===3 && m.id>=0)
+          {
+            setDisable(true);
+       
+            modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
+          }
   },[testMode,m.MacID, m.SocketNumber,m.id,board])
 
 
@@ -242,7 +248,7 @@ const handleChange = () => {
                                               <input type='number' style={{width:'100px'}} placeholder='Pulse' onChange={(e)=>setPulse(e.target.value)}/>
                                               </div>
                                             
-                                              <button disabled={disable} type="button"   className={`btn btn-${board===2?m.Color:''} btn-info text-white `}  style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              <button disabled={disable} type="button"   className={`btn btn-${board===1?m.Color:''} btn-info text-white `}  style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendV(m.MacID,pin,pulse,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               SEND
                                           </button>
                                             
@@ -250,7 +256,7 @@ const handleChange = () => {
                                     </div>
                                     <Typography>
                               <p> Message</p>
-                              {board===1 && testMode? m.RPoutput:m.Voutput}
+                              {(board===2 || board===3) && testMode? m.RPoutput:m.Voutput}
                               </Typography>
                           
                               </th>
@@ -265,7 +271,7 @@ const handleChange = () => {
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button disabled={disable} type="button" className={`btn  btn-${board===1? m.Color:''} btn-secondary text-white`}  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                            <button disabled={disable} type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-secondary text-white`}  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
                                               *TC?#
                                           </button>
                                             </div>
