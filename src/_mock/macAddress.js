@@ -3,7 +3,7 @@
 import { store } from "../Redux/store";
 import { saveData } from "../Redux/action";
 
-const API = import.meta.env.VITE_REACT_API;
+const API = import.meta.env.VITE_REACT_SERVER_API;
 
 export const AllMacAddress=async()=> {
   
