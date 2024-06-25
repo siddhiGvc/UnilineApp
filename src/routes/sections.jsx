@@ -8,6 +8,7 @@ import LockLogs from 'src/sections/Reports/lockLogs';
 import LoginLogs from 'src/sections/Reports/loginLogs';
 import SSNReport from 'src/sections/Reports/ssnReport';
 import FaultReport from 'src/sections/Reports/faultReport';
+import {TestingView} from "src/sections/testingTable/view";
 import { ProductsView } from 'src/sections/MachineData/view';
 import { UserView } from 'src/sections/macAddressTable/view';
 import SelfMap from 'src/sections/Reports/LoginMaps/selfMap';
@@ -22,6 +23,7 @@ import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
 import { MacTableView } from 'src/sections/macAddressTabletesting/view';
+
 
 
 
@@ -75,7 +77,8 @@ export default function Router() {
         { path: 'selfMap', element: <SelfMap/>},
         { path: 'viewMap', element: <ViewMap/>},
         { path: 'MacTable', element: <UserView/>},
-        { path: 'MacTable2', element: <MacTableView/>}
+        { path: 'MacTable2', element: <MacTableView/>},
+        { path: 'testing', element: <TestingView/>}
       ],
     },
     {

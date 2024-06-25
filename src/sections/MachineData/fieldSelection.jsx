@@ -8,7 +8,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 
-import {zoneData,wardData,beatData,getAllData } from 'src/_mock/fildData';
+import {getData} from 'src/_mock/macAddress';
+import {zoneData,wardData,beatData} from 'src/_mock/fildData';
 import { GetClentInfoDetails,GetClentNameDetails} from 'src/_mock/customers';
 
 function FieldSelection({ sx, ...other }) {
@@ -119,7 +120,7 @@ function FieldSelection({ sx, ...other }) {
   
   });
 
-  getAllData();
+  getData();
 
    
 

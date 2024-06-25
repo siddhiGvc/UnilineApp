@@ -1,13 +1,15 @@
 // import $ from 'jquery';
-import {useState} from 'react';
+// import Select from 'react-select';
+import {useState, useEffect} from 'react';
 
+// import SwitchButton from 'bootstrap-switch-button-react';
 import Card from '@mui/material/Card';
 // import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 // import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-// import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -18,7 +20,7 @@ import Scrollbar from 'src/components/scrollbar';
 
 // import { emptyRows} from '../utils';
 
-import { store } from "../../../Redux/store";
+import {getAllOutputs} from 'src/_mock/macAddress';
 // import Iconify from 'src/components/iconify';
 
 import TableNoData from '../table-no-data';
@@ -27,9 +29,12 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+// import label from 'src/components/label';
 // ----------------------------------------------------------------------
 
 export default function UserPage() {
+
+  
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -40,20 +45,42 @@ export default function UserPage() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const [data,setData]=useState([])
 
-  const [machineType]=useState('');
+  
+
+  useEffect(()=>{
+    
+    getAllOutputs().then((res)=>{
+      // console.log(res);
+      setData(res);
+   
+
+      
+    })
+
+    const Interval=setInterval(()=>{
+       
+    getAllOutputs().then((res)=>{
+    
+      setData(res);
+     
+
+    
+
+    })
+    },3000);
+
+    return()=>{
+      clearInterval(Interval);
+    }
+   
+
  
 
-  // getting data from Redux/store
-  store.subscribe(() => {
-    setData(store.getState().data.data);
-   
-  });
-
-  
+  },[])
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -90,6 +117,8 @@ export default function UserPage() {
     setSelected(newSelected);
   };
 
+  
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -115,7 +144,12 @@ export default function UserPage() {
   return (
     <Container maxWidth='xxl'>
      
-      <Card>
+     <Card container spacing={2} maxWidth='xxl' sx={{padding:'20px', justifyContent:'center'}}>
+      <Typography variant="h4" sx={{ mb: 5 }}>
+       Testing
+      </Typography>
+     
+        
         <UserTableToolbar
           numSelected={selected.length}
           filterName={filterName}
@@ -134,24 +168,12 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'sr', label: 'Sr.No' },
-                  { id: 'machine', label: `${machineType==="RECD" ? "Machine Details":"Machine" }` },
-                  { id: 'status', label: 'Status' },
-                  ...(machineType !== "Incinerator"
-                  ? [{ id: 'stockStatus',  label: `${machineType==="RECD" ? "Temperature":"Stock Status" }`}]
-                  : []),
-                  ...(machineType !== "Vending"
-                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Pressure":"Burning Status" }` }]
-                  : []),
-                
-                  { id: 'doorStatus', label: `${machineType==="RECD" ? "Diffrential":"Door Status" }`},
-                  ...(machineType === "RECD"
-                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Temper":"Burning Status" }` }]
-                  : []),
-                  { id: 'info', label: 'Info' },
-                
-                  // { id: 'ward', label: 'Verified', align: 'center' },
-                  // { id: 'city', label: 'Status' },
-                  // { id: '' },
+                  { id: 'device_number', label: `DeviceNumber` },
+                  { id: 'command', label: 'Command' },
+                  { id: 'expected_output', label: 'Expected Output' },
+                  { id: 'actual_outtput', label: 'Actual Output' },
+                  { id: 'result',label:'Result' },
+                  { id:""}
                 ]}
               />
               <TableBody>
@@ -161,29 +183,10 @@ export default function UserPage() {
                     <UserTableRow
                       key={row.id}
                       sr={page*rowsPerPage+i+1}
-                      machineId={row.machineId}
-                      serial={row.serial}
-                      addresss={row.address}
-                      lat={row.lat}
-                      lon={row.lon}
-                      zone={row.zone}
-                      ward={row.ward}
-                      beat={row.beat}
-                      uid={row.uid}
-                      spiralAStatus={row.spiral_a_status}
-                      spiralBStatus={row.spiral_b_status}
-                      doorCurrent={row.doorCurrent}
-                      qtyCurrent={row.qtyCurrent}
-                      burnCycleCurrent={row.burnCycleCurrent}
-                      burStatus={row.bur_status}
-                      lastStatus={row.last_status}
-                      rssi={row.rssi}
+                     
                       m={row}
-                      MachineType={machineType}
-
-                      // isVerified={row.isVerified}
-                      // selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event) => handleClick(event, row.name)}
+                   
+                      handleClick={(event) => handleClick(event, row.id)}
                     />
                   ))}
 

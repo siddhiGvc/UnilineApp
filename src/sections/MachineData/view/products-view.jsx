@@ -1,4 +1,4 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 import moment from "moment";
 import {  useState ,useEffect} from 'react';
 
@@ -10,8 +10,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
 // import { products } from 'src/_mock/products';
-import { getAllData } from "src/_mock/fildData";
-import {GetClentNameDetails} from 'src/_mock/customers';
+import { getData} from "src/_mock/macAddress";
+// import {GetClentNameDetails} from 'src/_mock/customers';
 
 import { UserView } from 'src/sections/machineDataTable/view';
 
@@ -38,59 +38,28 @@ import StatusSelection from '../statusSelection';
 
 // machineData ui componet started here
 export default function ProductsView() {
-  const [data,setData]=useState({data:[],dataAll:[]})
-  const [machineType,setMachineType]=useState('');
+  const [data,setData]=useState([])
+  const [machineType]=useState('');
  
   // getting data from file 'src/Redux/store'
   store.subscribe(() => {
     // store in data hook
-    setData(store.getState().data);
+    console.log(store.getState().data);
+    setData(store.getState().data.data);
    
   });
 
   useEffect(() => {
 
-    const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-    const Obj={
-     clientName:UserInfo.clientName
-    }
-   GetClentNameDetails(Obj).then((r)=>{
-     // const MachineType=r.data[0].MachineType
-     const [{ MachineType }] = r.data;
-     const Data=r.data;
-     $('.CInfo1').text(Data[0].CInfo1);
-     if(Data[0].CInfo1===''){
-        $('.City').remove();
-     }
-     $('.CInfo2').text(Data[0].CInfo2);
-      if(Data[0].CInfo2===''){
-        $('.Zone').remove();
-     }
-     $('.CInfo3').text(Data[0].CInfo3);
-      if(Data[0].CInfo3===''){
-        $('.Ward').remove();
-     }
-     $('.CInfo4').text(Data[0].CInfo4);
-      if(Data[0].CInfo4===''){
-        $('.Beat').remove();
-     }
-
-
-     if(MachineType==="Incinerator")
-     {
-       $('.vending').remove();
-     }
-     else if(MachineType==="Vending")
-     {
-       $('.incinerator').remove();
-     }
-     setMachineType(MachineType);
-
-   })
-    getAllData();
+    // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+    // const Obj={
+    //  clientName:UserInfo.clientName
+    // }
+  
+    getData();
   
     const interval=setInterval(()=>{
-     getAllData();
+     getData();
     },5000)
 
     return ()=>{
@@ -106,10 +75,10 @@ export default function ProductsView() {
 
 
   // filtering online machines
-  const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+  // const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
   
   //  caheckin machine is online or not
-  const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const online = m => moment().diff(moment.utc((m.lastHeartBeatTime)), 'minute') < 10;
 
 
   // calculated amount as lacks , coror, thound
@@ -159,7 +128,7 @@ const sum = (a, b) => a + b;
         <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
           <MachineCard
             title="Total Machines"
-            total={data.dataAll.length}
+            total={data.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
@@ -168,7 +137,7 @@ const sum = (a, b) => a + b;
         <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
           <MachineCard
             title="Online Machines"
-            total={data.data.filter(filterOnline).length}
+            total={data.filter(online).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
@@ -178,7 +147,7 @@ const sum = (a, b) => a + b;
         <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title={machineType ==="RECD" ? "Defective Sensor":"Total Collection"}
-            total={data.data.length ?amountText(data.dataAll.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):0}
+            total={data.length ?amountText(data.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):0}
             color="info"
             icon={<img alt="icon" src="/assets/icons/collection.png" />}
           />
@@ -188,7 +157,7 @@ const sum = (a, b) => a + b;
         <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title={machineType ==="RECD" ? "Tempered":"Item Dispensed"}
-            total={data.data.length ?(data.dataAll.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):0}
+            total={data.length ?(data.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):0}
             color="error"
             icon={<img alt="icon" src="/assets/icons/items.png" />}
           />
@@ -199,7 +168,7 @@ const sum = (a, b) => a + b;
         <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title="Stock Empty"
-            total={data.data.filter(online).filter(m => m.spiral_a_status === 0).map(q => 1).length?data.data.filter(online).filter(m => m.spiral_a_status === 0).map(q => 1).reduce(sum):0}
+            total={data.filter(online).filter(m => m.spiral_a_status === 0).map(q => 1).length?data.filter(online).filter(m => m.spiral_a_status === 0).map(q => 1).reduce(sum):0}
             color="success"
             icon={<img alt="icon" src="/assets/icons/EmptyStock.png" />}
           />
@@ -209,32 +178,32 @@ const sum = (a, b) => a + b;
         <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="vending">
           <MachineCard
             title="Low Stock"
-            total={data.data.filter(online).filter(m => m.spiral_a_status === 1).map(q => 1).length?data.data.filter(online).filter(m => m.spiral_a_status === 1).map(q => 1).reduce(sum):0}
+            total={data.filter(online).filter(m => m.spiral_a_status === 1).map(q => 1).length?data.filter(online).filter(m => m.spiral_a_status === 1).map(q => 1).reduce(sum):0}
             color="info"
             icon={<img alt="icon" src="/assets/icons/LowStock.png" />}
           />
         </Grid>
         
         {/* burning enabled ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
           <MachineCard
             title="Burning Enabled"
-            total={data.data.filter(online).filter(m => m.burn_status === 1).map(q => 1).length?data.data.filter(online).filter(m => m.burn_status === 1).map(q => 1).reduce(sum):0}
+            total={data.filter(online).filter(m => m.burn_status === 1).map(q => 1).length?data.filter(online).filter(m => m.burn_status === 1).map(q => 1).reduce(sum):0}
             color="info"
             icon={<img alt="icon" src="/assets/icons/Burning.png" />}
           />
-        </Grid>
+        </Grid> */}
 
         {/* burning cycles ui */}
 
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
+        {/* <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3} className="incinerator">
           <MachineCard
             title="Total Burning Cycles"
-            total={data.data.map(q => (q.burnCycleCurrent+q.burnCycleLife)).length ?  data.data.map(q => (q.burnCycleCurrent+q.burnCycleLife)).reduce(sum):0}
+            total={data.map(q => (q.burnCycleCurrent+q.burnCycleLife)).length ?  data.map(q => (q.burnCycleCurrent+q.burnCycleLife)).reduce(sum):0}
             color="error"
             icon={<img alt="icon" src="/assets/icons/BurningCycles.png" />}
           />
-        </Grid>
+        </Grid> */}
         </Stack>
       </Grid>
       </Grid>

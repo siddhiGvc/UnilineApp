@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 
-import {getAllData } from 'src/_mock/fildData';
+// import {getAllData } from 'src/_mock/fildData';
 
 function StatusSelection({MachineType, sx, ...other }) {
   // const [mStatus] = useState(['Online', 'Offline']);
@@ -42,25 +42,25 @@ function StatusSelection({MachineType, sx, ...other }) {
   const handleMachineStatusChange = (event) => {
     sessionStorage.setItem('machineStatus',JSON.stringify(event.target.value));
     setMachineStatus(event.target.value);
-    getAllData();
+    // getAllData();
     // Handle other logic as needed
   };
   const handleStockStatusChange = (event) => {
     sessionStorage.setItem('stockStatus',JSON.stringify(event.target.value));
     setStockStatus(event.target.value);
-    getAllData();
+    // getAllData();
     // Handle other logic as needed
   };
   const handleBurnStatusChange = (event) => {
     sessionStorage.setItem('burnStatus',JSON.stringify(event.target.value));
     setBurnStatus(event.target.value);
-    getAllData();
+    // getAllData();
     // Handle other logic as needed
   };
   const handleDoorStatusChange = (event) => {
     sessionStorage.setItem('dorStatus',JSON.stringify(event.target.value));
     setDoorStatus(event.target.value);
-    getAllData();
+    // getAllData();
     // Handle other logic as needed
   };
 

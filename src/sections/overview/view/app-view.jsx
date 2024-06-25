@@ -17,13 +17,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 // import AppTasks from '../app-tasks';
 // import AppNewsUpdate from '../app-news-update';
-import { GetClentNameDetails } from "src/_mock/customers";
+// import { GetClentNameDetails } from "src/_mock/customers";
 
-import {fetchData} from "../../../_mock/machineData";
 // import AppOrderTimeline from '../app-order-timeline';
 import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
+import {AllMacAddress} from "../../../_mock/macAddress";
 
 // import AppTrafficBySite from '../app-traffic-by-site';
 // import AppCurrentSubject from '../app-current-subject';
@@ -37,8 +37,8 @@ import AppWidgetSummary from '../app-widget-summary';
 // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo")) || [] ;
 export default function AppView() {
   // const [cities,setCities]=useState([]);
-  const [pathName,setPathName]=useState({data:[],dataAll:[]});
-  const [machineType,setMachineType]=useState('');
+  const [pathName,setPathName]=useState([]);
+  const [machineType]=useState('');
  
 
   // calling for api data
@@ -46,25 +46,9 @@ export default function AppView() {
     const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
        console.log(UserInfo);
 
-       if(UserInfo.clientName)
-       {
-        const obj={
-          clientName:UserInfo.clientName
-        }
-        GetClentNameDetails(obj).then((r)=>{
-          const [{ MachineType }] = r.data;
-          setMachineType(MachineType);
-        })
-       }
-   
-      const Cities=(UserInfo.city).split(',') || [''];
-         if(Cities[0]==="null")
-         {
-          Cities[0]=" "
-         }
-         console.log(Cities);
-    // const city=JSON.parse(sessionStorage.getItem("userCity"));
-    fetchData(Cities).then((res)=>{
+    
+    AllMacAddress().then((res)=>{
+      console.log(res);
       setPathName(res);
     
     });
@@ -101,7 +85,7 @@ export default function AppView() {
 
 
   // filtering onlines machines
-  const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
@@ -147,7 +131,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Total Machines"
-            total={pathName.dataAll.length}
+            total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
@@ -156,7 +140,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Online Machines"
-            total={pathName.data.filter(filterOnline).length}
+            total={pathName.filter(filterOnline).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
@@ -165,7 +149,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title={machineType==="RECD" ? "Defective Sensor" :"Total Collections"}
-            total={pathName.data.length ?amountText(pathName.dataAll.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
+            total={pathName.length ?amountText(pathName.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
             color="info"
             icon={<img alt="icon" src="/assets/icons/collection.png" />}
           />
@@ -174,7 +158,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title={machineType==="RECD" ? "Tempered" :"Item Dispnesed"}
-            total={pathName.data.length ?(pathName.dataAll.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):'...'}
+            total={pathName.length ?(pathName.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):'...'}
             color="error"
             icon={<img alt="icon" src="/assets/icons/items.png" />}
           />
@@ -186,8 +170,8 @@ export default function AppView() {
             title="Machine Status"
             chart={{
               series: [
-                { label: 'Online', value:pathName.data.filter(filterOnline).length||0 },
-                { label: 'Offline', value:(pathName.data.length - pathName.data.filter(filterOnline).length) ||0},
+                { label: 'Online', value:pathName.filter(filterOnline).length||0 },
+                { label: 'Offline', value:(pathName.length - pathName.filter(filterOnline).length) ||0},
              
               ],
               colors:[
@@ -204,10 +188,10 @@ export default function AppView() {
             title="Stock Status"
             chart={{
               series: [
-                { label: 'Ok', value: pathName.data.filter(filterOnline).filter(m => m.spiral_a_status === 3).length ||0},  // Example color
-                { label: 'Low', value: pathName.data.filter(filterOnline).filter(m => m.spiral_a_status === 1).length ||0},
-                { label: 'Empty', value: pathName.data.filter(filterOnline).filter(m => m.spiral_a_status === 0).length ||0 },
-                { label: 'Unknown', value:pathName.data.filter(filterOnline).filter(m => m.spiral_a_status === 2).length ||0},
+                { label: 'Ok', value: pathName.filter(filterOnline).filter(m => m.spiral_a_status === 3).length ||0},  // Example color
+                { label: 'Low', value: pathName.filter(filterOnline).filter(m => m.spiral_a_status === 1).length ||0},
+                { label: 'Empty', value: pathName.filter(filterOnline).filter(m => m.spiral_a_status === 0).length ||0 },
+                { label: 'Unknown', value:pathName.filter(filterOnline).filter(m => m.spiral_a_status === 2).length ||0},
               ],
               colors:[
                 theme.palette.success.main,

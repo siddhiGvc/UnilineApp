@@ -1,4 +1,9 @@
-// const API = import.meta.env.VITE_REACT_APP_API;
+
+
+import { store } from "../Redux/store";
+import { saveData } from "../Redux/action";
+
+const API = import.meta.env.VITE_REACT_API;
 
 export const AllMacAddress=async()=> {
   
@@ -6,8 +11,30 @@ export const AllMacAddress=async()=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`http://165.232.180.111:8080/kwikpay/getMacAddress`, { method: 'GET', headers });
+
+      const response = await fetch(`${API}/kwikpay/getMacAddress`, { method: 'GET', headers });
       const json = await response.json();
+      // console.log(json)
+      return json.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+  
+      return [];
+    }
+  }
+
+  export const getData=async()=> {
+  
+    try {
+      const headers = new Headers({
+        'x-token': sessionStorage.getItem('token'),
+      });
+      const city=JSON.parse(sessionStorage.getItem("cities"));
+
+      const response = await fetch(`${API}/kwikpay/getData?city=${city.join()}`, { method: 'GET', headers });
+      const json = await response.json();
+
+      store.dispatch(saveData(json.data));
       // console.log(json)
       return json.data;
     } catch (error) {
@@ -23,7 +50,7 @@ export const AllMacAddress=async()=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`http://165.232.180.111:8080/kwikpay/getTestMode`, { method: 'GET', headers });
+      const response = await fetch(`${API}/kwikpay/getTestMode`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json)
       return json.data;
@@ -36,7 +63,7 @@ export const AllMacAddress=async()=> {
 
   export const setTestMode=()=>{
   
-    fetch(`http://165.232.180.111:8080/kwikpay/setTestMode`,{
+    fetch(`${API}/kwikpay/setTestMode`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -56,7 +83,7 @@ export const AllMacAddress=async()=> {
       type
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendFota`,{
+    fetch(`${API}/kwikpay/sendFota`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -75,7 +102,7 @@ export const AllMacAddress=async()=> {
       
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/reset`,{
+    fetch(`${API}/kwikpay/reset`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -95,7 +122,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendV`,{
+    fetch(`${API}/kwikpay/sendV`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -113,7 +140,7 @@ export const AllMacAddress=async()=> {
       socketNumber:port
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendFW`,{
+    fetch(`${API}/kwikpay/sendFW`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -131,7 +158,7 @@ export const AllMacAddress=async()=> {
       socketNumber:port
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendTC`,{
+    fetch(`${API}/kwikpay/sendTC`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -149,7 +176,7 @@ export const AllMacAddress=async()=> {
       socketNumber:port
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendTV`,{
+    fetch(`${API}/kwikpay/sendTV`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -168,7 +195,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendFotaUrl`,{
+    fetch(`${API}/kwikpay/sendFotaUrl`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -186,7 +213,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/askUrl`,{
+    fetch(`${API}/kwikpay/askUrl`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -204,7 +231,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendCC`,{
+    fetch(`${API}/kwikpay/sendCC`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -224,7 +251,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendLight`,{
+    fetch(`${API}/kwikpay/sendLight`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -243,7 +270,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendHBT`,{
+    fetch(`${API}/kwikpay/sendHBT`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -263,7 +290,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendSIP`,{
+    fetch(`${API}/kwikpay/sendSIP`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -282,7 +309,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendSSID`,{
+    fetch(`${API}/kwikpay/sendSSID`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -300,7 +327,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/askSSID`,{
+    fetch(`${API}/kwikpay/askSSID`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -318,7 +345,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendPWD`,{
+    fetch(`${API}/kwikpay/sendPWD`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -337,7 +364,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendSSID1`,{
+    fetch(`${API}/kwikpay/sendSSID1`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -355,7 +382,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendPWD1`,{
+    fetch(`${API}/kwikpay/sendPWD1`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -375,7 +402,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/sendCA`,{
+    fetch(`${API}/kwikpay/sendCA`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -393,7 +420,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/askCA`,{
+    fetch(`${API}/kwikpay/askCA`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -411,7 +438,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/askSIP`,{
+    fetch(`${API}/kwikpay/askSIP`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -429,7 +456,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/modeTest1`,{
+    fetch(`${API}/kwikpay/modeTest1`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -447,7 +474,25 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/modeTest2`,{
+    fetch(`${API}/kwikpay/modeTest2`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const modeTest3=(MacID,port,name)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+      UserName:name
+  
+    }
+    fetch(`${API}/kwikpay/modeTest3`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -465,7 +510,7 @@ export const AllMacAddress=async()=> {
       UserName:name
   
     }
-    fetch(`http://165.232.180.111:8080/kwikpay/modeNone`,{
+    fetch(`${API}/kwikpay/modeNone`,{
       method:'POST',
       headers:{
         'Content-type':'application/json'
@@ -474,4 +519,24 @@ export const AllMacAddress=async()=> {
     })
      
   
+  }
+
+
+
+  export const getAllOutputs=async()=> {
+  
+    try {
+      const headers = new Headers({
+        'x-token': sessionStorage.getItem('token'),
+      });
+
+      const response = await fetch(`${API}/kwikpayTesting/getOutPuts`, { method: 'GET', headers });
+      const json = await response.json();
+      // console.log(json)
+      return json.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+  
+      return [];
+    }
   }

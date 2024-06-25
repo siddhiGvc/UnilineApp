@@ -138,7 +138,7 @@ export default function UserTableRow({
 
   }
 
-  const online = a => moment().diff(moment.utc((a.lastHeartbeatTime || a.lastOnTime).replace('Z', '')), 'minute') < 5;
+  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
 
 
   // address of machine table 
@@ -361,8 +361,8 @@ const amountText = amt => {
                                 {MachineType!=="Vending" ?<tr id="itemsBurntRow" ><th style={{color: '#444'}}>Items Burnt</th><td style={{color: '#444'}} >{m.doorCurrent} <span className="text-muted ">[ {amountText(m.doorLife + m.doorCurrent)} ]</span></td></tr>:""}
                                  {MachineType!=="Vending" ?<tr id="burningCyclesRow"><th style={{color: '#444'}}>Burning Cycles</th><td style={{color: '#444'}}>{m.burnCycleCurrent} <span className="text-muted ">[ {amountText(m.burnCycleLife + m.burnCycleCurrent)} ]</span></td></tr>:""}
                         
-                                <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartbeatTime).replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
-                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartbeatTime ? moment.utc(m.lastHeartbeatTime.replace('Z', '')).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
+                                <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartBeatTime)).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
+                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartbeatTime ? moment.utc(m.lastHeartBeatTime).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
                             </tbody>
                         </table>
       </Popover>
