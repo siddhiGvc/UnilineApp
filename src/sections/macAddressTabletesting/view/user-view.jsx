@@ -2,7 +2,7 @@
 import moment from "moment";
 import Select from 'react-select';
 import {useState, useEffect} from 'react';
-import SwitchButton from 'bootstrap-switch-button-react';
+// import SwitchButton from 'bootstrap-switch-button-react';
 
 import Card from '@mui/material/Card';
 // import Stack from '@mui/material/Stack';
@@ -10,7 +10,7 @@ import Card from '@mui/material/Card';
 // import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 // import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 
 // import TableContainer from '@mui/material/TableContainer';
 // import TablePagination from '@mui/material/TablePagination';
@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography';
 
 // import { emptyRows} from '../utils';
 
-import {getTestMode, setTestMode,AllMacAddress} from 'src/_mock/macAddress';
+import {getTestMode,AllMacAddress} from 'src/_mock/macAddress';
 // import Iconify from 'src/components/iconify';
 
 // import TableNoData from '../table-no-data';
@@ -39,14 +39,23 @@ export default function UserPage() {
   const [options1,setOptions1]=useState([]);
   const [options2,setOptions2]=useState([]);
   const [options3,setOptions3]=useState([]);
+  const [options4,setOptions4]=useState([]);
+  const [options5,setOptions5]=useState([]);
+  const [options6,setOptions6]=useState([]);
 
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [selectedOption2, setSelectedOption2] = useState({id:-1});
   const [selectedOption3, setSelectedOption3] = useState({id:-1});
+  const [selectedOption4, setSelectedOption4] = useState({id:-1});
+  const [selectedOption5, setSelectedOption5] = useState({id:-1});
+  const [selectedOption6, setSelectedOption6] = useState({id:-1});
 
   const [value1,setValue1]=useState({});
   const [value2,setValue2]=useState({});
   const [value3,setValue3]=useState({});
+  const [value4,setValue4]=useState({});
+  const [value5,setValue5]=useState({});
+  const [value6,setValue6]=useState({});
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -86,6 +95,9 @@ export default function UserPage() {
       setOptions2(formattedData);
 
       setOptions3(formattedData);
+      setOptions4(formattedData);
+      setOptions5(formattedData);
+      setOptions6(formattedData);
       // console.log(selectedOption1.id>=0);
       if(selectedOption1.id>=0)
         {
@@ -102,6 +114,18 @@ export default function UserPage() {
             {
               setValue3(filteredData[selectedOption3.id]);
             }
+            if(selectedOption4.id>=0)
+              {
+                setValue4(filteredData[selectedOption4.id]);
+              }
+        if(selectedOption5.id>=0)
+                {
+                  setValue5(filteredData[selectedOption5.id]);
+                }
+          if(selectedOption6.id>=0)
+                  {
+                    setValue6(filteredData[selectedOption6.id]);
+                  }
      
       
       
@@ -130,6 +154,9 @@ export default function UserPage() {
         setOptions2(formattedData);
 
         setOptions3(formattedData);
+        setOptions4(formattedData);
+        setOptions5(formattedData);
+        setOptions6(formattedData);
         // console.log(selectedOption1.id>=0);
         if(selectedOption1.id>=0)
           {
@@ -141,10 +168,23 @@ export default function UserPage() {
             {
               setValue2(filteredData[selectedOption2.id]);
             }
-            if(selectedOption3.id>=0)
+          if (selectedOption3.id>=0)
               {
                 setValue3(filteredData[selectedOption3.id]);
               }
+          if(selectedOption4.id>=0)
+                {
+                  setValue4(filteredData[selectedOption4.id]);
+                }
+          if(selectedOption5.id>=0)
+                  {
+                    setValue5(filteredData[selectedOption5.id]);
+                  }
+            if(selectedOption6.id>=0)
+                    {
+                      setValue6(filteredData[selectedOption6.id]);
+                    }
+
         
         
       })
@@ -165,7 +205,7 @@ export default function UserPage() {
     }
  
 
-  },[selectedOption1,selectedOption2,selectedOption3])
+  },[selectedOption1,selectedOption2,selectedOption3,selectedOption4,selectedOption5,selectedOption6])
 
   // const handleSort = (event, id) => {
   //   const isAsc = orderBy === id && order === 'asc';
@@ -236,10 +276,39 @@ export default function UserPage() {
     })
   };
 
-  const handleChange = () => {
-    setTestMode();
-   
+  const handleSelectChange4 = (elem) => {
+    setSelectedOption4(elem);
+    AllMacAddress().then((res)=>{
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
+      
+    })
   };
+
+  const handleSelectChange5= (elem) => {
+    setSelectedOption5(elem);
+    AllMacAddress().then((res)=>{
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
+      
+    })
+  };
+  const handleSelectChange6 = (elem) => {
+    setSelectedOption6(elem);
+    AllMacAddress().then((res)=>{
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
+      
+    })
+  };
+
+  // const handleChange = () => {
+  //   setTestMode();
+   
+  // };
 
   // const handleChangePage = (event, newPage) => {
   //   setPage(newPage);
@@ -267,9 +336,7 @@ export default function UserPage() {
     <Container maxWidth='xxl'>
      
      <Card  spacing={2}  sx={{padding:'20px', justifyContent:'center'}}>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-      Boards
-      </Typography>
+     
       <div className="row">
                     <div className="col-md-4">
                         <div className="form-group my-2">
@@ -317,7 +384,7 @@ export default function UserPage() {
                         </div>
                     </div>
               </div>
-             {selectedOption1.id>=0 && selectedOption2.id>=0 ? <div className="row">
+             {/* {selectedOption1.id>=0 && selectedOption2.id>=0 ? <div className="row">
                                       
                                             <div className="col-12 sw-parent">
                                               
@@ -333,7 +400,7 @@ export default function UserPage() {
                                                 />
                                             </div>
                                         </div>:''
-              }
+              } */}
               <div className='row'>
                  <div className="col-md-4">
                   <UserTableRow
@@ -364,6 +431,87 @@ export default function UserPage() {
                       m={value3}
                       board={3}
                       handleClick={(event) => handleClick(event, value3.UID)}
+                    />
+                  </div>
+
+              </div>
+              <div className="row">
+                    <div className="col-md-4">
+                        <div className="form-group my-2">
+                            <h6>Board4:</h6>
+                            <Select
+                                name="board4"
+                                value={selectedOption4}
+                                onChange={handleSelectChange4}
+                                options={options4}
+                                isSearchable // Equivalent to isSearchable={true}
+                                placeholder="Select option..."
+                            />
+                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <div className="invalid-feedback"/>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="form-group my-2">
+                            <h6>Board5:</h6>
+                            <Select
+                                name="board5"
+                                value={selectedOption5}
+                                onChange={handleSelectChange5}
+                                options={options5}
+                                isSearchable // Equivalent to isSearchable={true}
+                                placeholder="Select option..."
+                            />
+                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <div className="invalid-feedback"/>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="form-group my-2">
+                            <h6>Board6:</h6>
+                            <Select
+                                name="board6"
+                                value={selectedOption5}
+                                onChange={handleSelectChange6}
+                                options={options6}
+                                isSearchable // Equivalent to isSearchable={true}
+                                placeholder="Select option..."
+                            />
+                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <div className="invalid-feedback"/>
+                        </div>
+                    </div>
+              </div>
+              <div className='row'>
+                 <div className="col-md-4">
+                  <UserTableRow
+                      key={value4.id}
+                     
+                      testMode={isChecked}
+                      board={4}
+                      m={value4}
+                   
+                      handleClick={(event) => handleClick(event, value4.UID)}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                  <UserTableRow
+                      key={value5.id}
+
+                      testMode={isChecked}
+                      m={value5}
+                      board={5}
+                      handleClick={(event) => handleClick(event, value5.UID)}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                  <UserTableRow
+                      key={value6.id}
+
+                      testMode={isChecked}
+                      m={value6}
+                      board={6}
+                      handleClick={(event) => handleClick(event, value6.UID)}
                     />
                   </div>
 
