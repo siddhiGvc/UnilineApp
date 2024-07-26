@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askSIP,sendTV,sendFW,sendTC,askUrl,askSSID,modeNone,modeTest1,modeTest2,modeTest3} from 'src/_mock/macAddress';
+import {sendV,askSIP,sendTV,sendFW,sendTC,askUrl,askSSID,checkSN,} from 'src/_mock/macAddress';
 
 // import Label from 'src/components/label';
 // import { Y } from 'dist/assets/index-8d78d312';
@@ -63,38 +63,12 @@ export default function UserTableRow({
   const [pulse,setPulse]=useState("");
  
 
-  const [disable,setDisable]=useState(false);
+  const [disable]=useState(false);
 
   const videoRef = useRef(null);
   const [showVideo, setShowVideo] = useState(false);
 
-  useEffect(()=>{
-    
-     if(!testMode && m.id>=0)
-      {
-        setDisable(false);
-        modeNone(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-      }
-      else if(testMode && board===1 && m.id>=0) {
-        setDisable(true);
-     
-          modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-      
-      }
-      else if(testMode && board===2 && m.id>=0)
-        {
-          setDisable(true);
-     
-          modeTest2(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-        }
-        else if(testMode && board===3 && m.id>=0)
-          {
-            setDisable(true);
-       
-            modeTest3(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-          }
-  },[testMode,m.MacID, m.SocketNumber,m.id,board])
-
+ 
 
   const showAlertMessage = () => {
     setShowAlert(true);
@@ -230,11 +204,12 @@ export default function UserTableRow({
                                     </div>
                                     <Typography>
                               <p> Message</p>
-                              {(board===2 || board===3) && testMode? m.RPoutput:m.Voutput}
+                              {m.Voutput}
                               </Typography>
                           
                               </th>
                               <td /> 
+                              </tr>
                               <tr>
                                   <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
@@ -243,7 +218,7 @@ export default function UserTableRow({
                                          
                                             <div className="col-12 sw-parent">
                                               
-                                            <button disabled={disable} type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-secondary text-white`}  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                            <button disabled={disable} type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-secondary text-white`}  onClick={()=>checkSN(m.MacID,m.SocketNumber)} >
                                               *SN?#
                                           </button>
                                             </div>
@@ -252,7 +227,7 @@ export default function UserTableRow({
                                     <td>
                               <Typography>
                               <p> Message</p>
-                              {m.TCoutput}
+                              {m.SNmessage}
                               </Typography>
                                 </td>
                           
@@ -261,7 +236,7 @@ export default function UserTableRow({
         
                               </tr>  
         
-                              </tr> 
+                              
                               <tr>
                                   <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">

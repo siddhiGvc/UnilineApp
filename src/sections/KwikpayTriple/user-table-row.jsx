@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,askSSID,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,modeTest3,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,setSN,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,checkSN,sendHBT,sendSIP,sendPWD,askSSID,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,modeTest3,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 // import { Y } from 'dist/assets/index-8d78d312';
@@ -78,6 +78,9 @@ export default function UserTableRow({
 
   const [NumValue,setNumValue]=useState("");
   const [Polarity,setPolarity]=useState("");
+
+
+  const [SerialNumber,setSerialNumber]=useState("");
 
   // const [mode,setMode]=useState('');
 
@@ -574,6 +577,55 @@ const handleChange = () => {
                                 </td>
         
                               </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>SN</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='SerialNumber' onChange={(e)=>setSerialNumber(e.target.value)}/>
+                                           
+                                              </div>
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>setSN(m.MacID,m.SocketNumber,sessionStorage.getItem("name"),SerialNumber)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SNoutput}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                              <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                        <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>checkSN(m.MacID,m.SocketNumber)} >
+                                               *SN?#
+                                              </button>
+                                            
+                                        </div>
+                                    </div>
+                                    </th> 
+                                    <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SNmessage}
+                              </Typography>
+                                </td>
+                          
+                             
+                              <td /> 
+        
+                              </tr>
                               <tr>
                                   <th>   
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">

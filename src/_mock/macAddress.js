@@ -242,6 +242,44 @@ export const AllMacAddress=async()=> {
   
   }
 
+  export const setSN=(MacID,port,name,SN)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+      UserName:name,
+      SerialNumber:SN
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/setSN`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const checkSN=(MacID,port)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+    
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/checkSN`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+  
+
   export const sendLight=(MacID,light,position,port,name)=>{
     const obj={
       MacId:MacID,
