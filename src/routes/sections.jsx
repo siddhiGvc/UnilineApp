@@ -18,12 +18,13 @@ import HourlyReport from 'src/sections/Reports/HourlyReport';
 import ColorSetting from 'src/sections/Settings/colorSetting';
 import MachinePage from 'src/sections/Machines/view/user-view';
 import CustomerPage from 'src/sections/Customers/customerPage';
+import { KwikpayTriple } from 'src/sections/KwikpayTriple/view';
 import InventoryPage from 'src/sections/Inventory/inventoryPage';
 import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
 import { MacTableView } from 'src/sections/macAddressTabletesting/view';
-import { KwikpayTriple } from 'src/sections/KwikpayTriple/view';
+
 
 
 

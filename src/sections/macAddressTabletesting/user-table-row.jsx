@@ -2,7 +2,7 @@ import $ from 'jquery';
 // import moment from "moment";
 import PropTypes from 'prop-types';
 import React,{ useRef,useState,useEffect } from 'react';
-import SwitchButton from 'bootstrap-switch-button-react';
+// import SwitchButton from 'bootstrap-switch-button-react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,askSSID,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,modeTest3,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askSIP,sendTV,sendFW,sendTC,askUrl,askSSID,modeNone,modeTest1,modeTest2,modeTest3} from 'src/_mock/macAddress';
 
 // import Label from 'src/components/label';
 // import { Y } from 'dist/assets/index-8d78d312';
@@ -58,28 +58,10 @@ export default function UserTableRow({
   const [showAlert, setShowAlert] = useState(false);
   const [message,setMessage]=useState("");
   const [type,setType]=useState("");
-  const [url,setUrl]=useState("");
-
-  const [light,setLight]=useState("");
-  const [position,setPosition]=useState("");
-
+ 
   const [pin,setPin]=useState("");
   const [pulse,setPulse]=useState("");
-  const [HBTvalue,setHBTvalue]=useState("");
-
-  const [IPaddress,setIPaddress]=useState("");
-  const [port,setPort]=useState("");
-
-  const [SSID,setSSID]=useState("");
-  const [PWD,setPWD]=useState("");
-
-  const [SSID1,setSSID1]=useState("");
-  const [PWD1,setPWD1]=useState("");
-
-  const [NumValue,setNumValue]=useState("");
-  const [Polarity,setPolarity]=useState("");
-
-  // const [mode,setMode]=useState('');
+ 
 
   const [disable,setDisable]=useState(false);
 
@@ -123,15 +105,7 @@ export default function UserTableRow({
     }, 5000); // Hide the alert after 5 seconds (5000 milliseconds)
 };
 
-// view mwnu open function
-  // const handleOpenMenu = (event) => {
-  //   setOpen(event.currentTarget);
-  // };
 
-  // view menu clsoe function
-  // const handleCloseMenu = () => {
-  //   setOpen(null);
-  // };
 
 
   // Close popup function of technicaian form
@@ -139,27 +113,6 @@ export default function UserTableRow({
     setOpenModal(false);
   };
 
-  const [isChecked, setIsChecked] = useState(m.INHoutput===1);
-  // const [isFota, setIsFota] = useState(true);
- 
-
-const handleChange = () => {
-  const obj={
-    MacId:m.MacID,
-    outPutValue:!isChecked,
-    socketNumber:m.SocketNumber,
-    UserName:sessionStorage.getItem("name")
-
-  }
-  fetch(`http://165.232.180.111:8080/kwikpay/saveINHoutput`,{
-    method:'POST',
-    headers:{
-      'Content-type':'application/json'
-    },
-    body:JSON.stringify(obj)
-  })
-  setIsChecked(!isChecked);
-};
 
 
 
@@ -255,20 +208,7 @@ const handleChange = () => {
          <table className="table" style={{fontSize:'14px'}}>
 
                             <tbody > 
-                            {/* <tr>
-                              <div className="row">
-                                          <p>Test Mode</p>
-                                            <div className="col-10 sw-parent">
-                                                 <select onChange={(e)=>setMode(e.target.value)}>
-                                                    <option value=''>None</option>
-                                                    <option value='tm1'>Test Mode 1</option>
-                                                    <option value='tm2'>Test Mode 2</option>
-                                                 </select>
-                                            
-                                            </div>
-                                        </div>
-     
-                            </tr> */}
+                         
                             {/* <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr> */}
                             <tr>
                                   <th style={{display:'flex',justifyContent:'space-between'}}>   
@@ -295,6 +235,31 @@ const handleChange = () => {
                           
                               </th>
                               <td /> 
+                              <tr>
+                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
+                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button disabled={disable} type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-secondary text-white`}  onClick={()=>sendTC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              *SN?#
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.TCoutput}
+                              </Typography>
+                                </td>
+                          
+                              </th>
+                              <td /> 
+        
+                              </tr>  
         
                               </tr> 
                               <tr>
@@ -322,27 +287,7 @@ const handleChange = () => {
                               <td /> 
         
                               </tr>  
-                              <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
-                                    <div className="row">
-                                            <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white"  onClick={()=>sendCC(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                               *CC#
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <td>
-                                  <Typography>
-                                  <p> Message</p>
-                                  {m.Coutput}
-                                  </Typography>
-                                    </td>
-                                  </th>
-                                  <td />  
-                                
-                                </tr>
+                            
                               
                              
                                 <tr>
@@ -365,88 +310,9 @@ const handleChange = () => {
                                   </th>
                                   <td /> 
                                 </tr>
-                            <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div className="row">
-                                          <p>INH Output</p>
-                                            <div className="col-12 sw-parent"   disabled={disable}>
-                                              
-                                                    <SwitchButton
-                                                  
-                                                    checked={isChecked}
-                                                    onChange={handleChange}
-                                                    onlabel="1"
-                                                    offlabel="0"
-                                                    onstyle='danger'
-                                                    offstyle='success'
-                                                    width={20}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <td>
-                              <Typography>
-                              <p>INH Input</p>
-                              {m.INHinput===0 ?<p style={{color:'green'}}>{m.INHinput}</p>:<p style={{color:'red'}}>{m.INHinput}</p>}
-                              </Typography>
-                                </td>
-                          
-                              </th>
-                              <td /> 
-        
-                              </tr>   
-                              <tr>
-                                  <th>   
-                                  
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
-                                      
-                                      <div className="row">
-                                        <p>NEW FOTA</p>
-                                          <div className="col-12 sw-parent">
-                                            
-                                          <button disabled={disable} type="button" className="btn btn-primary text-white"  onClick={()=>sendFota(m.MacID,true,m.SocketNumber,sessionStorage.getItem("name"),"new")} >
-                                            Fota
-                                        </button>
-                                          </div>
-                                      </div>
-                                  </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p>Fota Message</p>
-                              {m.FotaMessage}
-                              </Typography>
-                                </td>
-        
-                              </tr>  
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div className="row">
-                                         
-                                            <div className="col-12 sw-parent">
-                                              
-                                            <button disabled={disable} type="button" className="btn btn-warning text-white"  onClick={()=>sendReset(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              RESET
-                                          </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.RstMessage}
-                              </Typography>
-                                </td>
-        
-                              </tr>
-                            
+                           
+                             
+                         
                                 <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
@@ -466,33 +332,6 @@ const handleChange = () => {
                                   </Typography>
                                     </td>
                                 </tr>
-                                 <tr>
-                                   <th>
-                                    <div className="col-xl-4 col-lg-9 col-md-7 col-12 col-12 my-2 mx-3">
-                                         <div style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          
-                                              <h6 style={{fontSize:"12px"}}>FOTA</h6>
-                                             <div >
-                                              <input type='text' style={{width:'200px'}} placeholder='Url' onChange={(e)=>setUrl(e.target.value)}/>
-                                             
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendFotaUrl(m.MacID,url,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-
-                                    </th>
-                                    <td>
-                                  <Typography>
-                                  <p> Message</p>
-                                  {m.FotaURLoutput}
-                                  </Typography>
-                                    </td>
-                                
-                                
-                                </tr>  
                                <tr>
                                   <th>   
                                     <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
@@ -512,81 +351,8 @@ const handleChange = () => {
                                   </Typography>
                                     </td>
                                 </tr>
-                                <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>SL</h5>
-                                             <div>
-                                              <input type='number' style={{width:'100px'}} placeholder='light' onChange={(e)=>setLight(e.target.value)}/>
-                                              <input type='number' style={{width:'100px'}} placeholder='position' onChange={(e)=>setPosition(e.target.value)}/>
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendLight(m.MacID,light,position,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.Soutput}
-                              </Typography>
-                                </td>
-        
-                              </tr> 
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-4 col-lg-7 col-md-7 col-12 col-12 my-2 mx-3">
-                                    <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>HBT</h5>
-                                             <div>
-                                              <input type='number' min={30} max={300} style={{width:'100px'}} placeholder='value' onChange={(e)=>setHBTvalue(e.target.value)}/>
-                                            
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendHBT(m.MacID,HBTvalue,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                                  </th>
-                                  <td>
-                                  <Typography>
-                                  <p> Message</p>
-                                  {m.HBToutput}
-                                  </Typography>
-                                    </td>
-                                </tr> 
-                                <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>SIP</h5>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='ipAddress' onChange={(e)=>setIPaddress(e.target.value)}/>
-                                              <input type='number' style={{width:'100px'}} placeholder='port' onChange={(e)=>setPort(e.target.value)}/>
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSIP(m.MacID,IPaddress,port,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.SIPoutput}
-                              </Typography>
-                                </td>
-        
-                              </tr> 
+                            
+                              
                               <tr>
                                   <th>   
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
@@ -608,32 +374,7 @@ const handleChange = () => {
                                 </td>
         
                               </tr> 
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>SS</h5>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='ssid' onChange={(e)=>setSSID(e.target.value)}/>
-                                        
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID(m.MacID,SSID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.SSIDoutput}
-                              </Typography>
-                                </td>
-        
-                              </tr>  
+                             
                               <tr>
                                   <th>   
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
@@ -658,133 +399,11 @@ const handleChange = () => {
                                 </td>
         
                               </tr>  
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>PW</h5>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='pwd' onChange={(e)=>setPWD(e.target.value)}/>
-                                              
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD(m.MacID,PWD,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.PWDoutput}
-                              </Typography>
-                                </td>
-        
-                              </tr>
-                               
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>SS1</h5>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='ssid1' onChange={(e)=>setSSID1(e.target.value)}/>
-                                        
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.SSID1output}
-                              </Typography>
-                                </td>
-        
-                              </tr>  
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>PW1</h5>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='pwd1' onChange={(e)=>setPWD1(e.target.value)}/>
-                                              
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.PWD1output}
-                              </Typography>
-                                </td>
-        
-                              </tr> 
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
-                                          <h5>CA</h5>
-                                             <div>
-                                              <input type='text' style={{width:'100px'}} placeholder='numeric value' onChange={(e)=>setNumValue(e.target.value)}/>
-                                              <input type='text' style={{width:'100px'}} placeholder='polarity' onChange={(e)=>setPolarity(e.target.value)}/>
-                                              </div>
-                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendCA(m.MacID,NumValue,Polarity,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                              SEND
-                                          </button>
-                                            
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.CAmessage}
-                              </Typography>
-                                </td>
-        
-                              </tr>  
-                              <tr>
-                                  <th>   
-                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
-                                      
-                                    <div className="row">
-                                            <div className="col-12 sw-parent">
-                                              <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>askCA(m.MacID,m.SocketNumber,sessionStorage.getItem("name"))} >
-                                               *CA?#
-                                              </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                          
-                              </th>
-                                <td>
-                              <Typography>
-                              <p> Message</p>
-                              {m.CAoutput}
-                              </Typography>
-                                </td>
-        
-                              </tr> 
+                             
+                            
+                              
+                            
+                             
                                                                                                             
                             </tbody>
                         </table>
