@@ -1,7 +1,7 @@
 import $ from 'jquery';
-// import moment from "moment";
+import moment from "moment";
 import PropTypes from 'prop-types';
-import React,{ useRef,useState,useEffect } from 'react';
+import React,{ useState,useEffect } from 'react';
 import SwitchButton from 'bootstrap-switch-button-react';
 
 import Box from '@mui/material/Box';
@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography';
 import { SaveFaultReport } from 'src/_mock/faultReportData';
 import {sendV,askCA,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,askSSID,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,modeTest3,sendFotaUrl} from 'src/_mock/macAddress';
 
-// import Label from 'src/components/label';
+import Label from 'src/components/label';
 // import { Y } from 'dist/assets/index-8d78d312';
 
 
@@ -82,9 +82,6 @@ export default function UserTableRow({
   // const [mode,setMode]=useState('');
 
   const [disable,setDisable]=useState(false);
-
-  const videoRef = useRef(null);
-  const [showVideo, setShowVideo] = useState(false);
 
   useEffect(()=>{
     
@@ -185,21 +182,7 @@ const handleChange = () => {
 
   }
 
-  useEffect(() => {
- 
-    if(m.Voutput)
-    {
-      setShowVideo(true);
-    }
-   
-  }, [m.Voutput]);
-
-  const handleVideoEnd = () => {
-    setShowVideo(false);
-   
-  };
-
-  // const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
 
 
 
@@ -233,24 +216,7 @@ const handleChange = () => {
     </TableCell>
   
       </TableRow >
-        <div style={{border:"1px solid grey", overflow: "auto", height: "325px",paddingTop:"5px",paddingLeft:'2px',marginTop:"-20px"}}>
-         {/* {m.Voutput? <video width="100%" height="100%" controls autoPlay>
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-          <track
-            src="path-to-your-captions.vtt"
-            kind="captions"
-            srcLang="en"
-            label="English"
-          />
-          Your browser does not support the video tag.
-        </video>:null} */}
-        {showVideo && (
-        <video ref={videoRef} width="100%" height="100%" controls autoPlay  onEnded={handleVideoEnd}>
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-          <track src="path-to-your-captions.vtt" kind="captions" srcLang="en" label="English" />
-          Your browser does not support the video tag.
-        </video>
-      )}
+        <div style={{border:"1px solid grey", overflow: "auto", height: "500px",paddingTop:"10px",paddingLeft:'2px'}}>
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
 
@@ -269,12 +235,12 @@ const handleChange = () => {
                                         </div>
      
                             </tr> */}
-                            {/* <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr> */}
+                            <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
                             <tr>
                                   <th style={{display:'flex',justifyContent:'space-between'}}>   
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3 ">
                                       
-                                        <div  style={{display:'flex',alignItems:'center',gap:'3px'}}>
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
                                          
                                           <h5>V</h5>
                                              <div>
@@ -788,7 +754,6 @@ const handleChange = () => {
                                                                                                             
                             </tbody>
                         </table>
-               
        </div>
       <Modal
         open={openModal}

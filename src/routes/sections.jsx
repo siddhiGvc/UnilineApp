@@ -23,6 +23,7 @@ import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
 import { MacTableView } from 'src/sections/macAddressTabletesting/view';
+import { KwikpayTriple } from 'src/sections/KwikpayTriple/view';
 
 
 
@@ -78,7 +79,8 @@ export default function Router() {
         { path: 'viewMap', element: <ViewMap/>},
         { path: 'MacTable', element: <UserView/>},
         { path: 'MacTable2', element: <MacTableView/>},
-        { path: 'testing', element: <TestingView/>}
+        { path: 'testing', element: <TestingView/>},
+        { path: 'KwikpayTriple', element: <KwikpayTriple/>}
       ],
     },
     {
