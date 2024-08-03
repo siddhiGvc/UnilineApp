@@ -755,6 +755,61 @@ const handleChange = () => {
                                 </td>
         
                               </tr> 
+                              
+                              
+                               
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>SS1</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='ssid1' onChange={(e)=>setSSID1(e.target.value)}/>
+                                        
+                                              </div>
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendSSID1(m.MacID,SSID1,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.SSID1output}
+                              </Typography>
+                                </td>
+        
+                              </tr>  
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>PW1</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='pwd1' onChange={(e)=>setPWD1(e.target.value)}/>
+                                              
+                                              </div>
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPWD1(m.MacID,PWD1,m.SocketNumber,sessionStorage.getItem("name"))} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.PWD1output}
+                              </Typography>
+                                </td>
+        
+                              </tr>
                               <tr>
                                   <th>   
                                     <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">

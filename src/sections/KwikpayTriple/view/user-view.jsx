@@ -317,7 +317,7 @@ export default function UserPage() {
                         </div>
                     </div>
               </div>
-             {selectedOption1.id>=0 && selectedOption2.id>=0 ? <div className="row">
+             {selectedOption1.id>=0? <div className="row">
                                       
                                             <div className="col-12 sw-parent">
                                               
