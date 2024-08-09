@@ -220,7 +220,7 @@ const handleChange = () => {
   
       </TableRow >
         <div style={{border:"1px solid grey", overflow: "auto", height: "500px",paddingTop:"10px",paddingLeft:'2px'}}>
-           <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.MacID} {m.SocketNumber}</b>
+       <b style={{fontSize: '1.20em',cursor:'pointer'}} >  SN:{m.SNoutput} MacID:{m.MacID} Socket:{m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
 
                             <tbody > 
