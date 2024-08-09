@@ -169,6 +169,7 @@ export default function UserPage() {
                   { id: 'sr', label: 'Sr.No' },
                   { id: 'UID', label: `UID` },
                   { id: 'MacID', label: 'MACAddress' },
+                  { id: 'SerialNumber', label: 'SerialNumber' },
                   { id: 'SocketNumber', label: 'SocketNumber' },
                   { id: 'Status', label: 'Status' },
                   { id: '' },

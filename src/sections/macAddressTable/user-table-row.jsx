@@ -207,6 +207,13 @@ const handleChange = () => {
         <TableCell>
            <Typography>
 
+           {m.SNoutput}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           <Typography>
+
            {m.SocketNumber}
            </Typography>
            
