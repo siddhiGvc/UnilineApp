@@ -156,6 +156,7 @@ export default function UserPage() {
 
   const handleFilterByName = (event) => {
     setPage(0);
+    setOrderBy('name');
     setFilterName(event.target.value);
   };
 

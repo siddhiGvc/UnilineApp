@@ -69,13 +69,20 @@ export function applyFilter({ inputData, comparator, filterName ,filterMinSerial
   //     (user) => user.SerialNumber.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
   //   );
   // }
+ 
+  const maxSerial = filterMaxSerial ? Number(filterMaxSerial) : Infinity;
+  const minSerial = filterMinSerial ? Number(filterMinSerial) : -Infinity;
+
   return inputData
-  .filter(item => 
-    (!filterName || item.MacID.includes(filterName)) &&
-    (!filterMaxSerial || item.SNoutput <= filterMaxSerial) &&
-    (!filterMinSerial || item.SNoutput >= filterMinSerial)
-  )
-  .sort(comparator);
+    .filter(item => {
+      const matchesName = !filterName || (item.MacID && item.MacID.includes(filterName));
+      const matchesMaxSerial = !filterMaxSerial || (item.SNoutput <= maxSerial);
+      const matchesMinSerial = !filterMinSerial || (item.SNoutput >= minSerial);
+      return matchesName && matchesMaxSerial && matchesMinSerial;
+    })
+    .sort(comparator);
+ 
+  
 
   // return inputData;
 }
