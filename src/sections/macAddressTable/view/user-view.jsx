@@ -254,7 +254,7 @@ export default function UserPage() {
           count={data.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25 ,100]}
+          rowsPerPageOptions={[5, 10, 25 ,100, 200,300, 400, 500, 1000]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
          <p style={{display:'flex',justifyContent:'flex-end'}}>
