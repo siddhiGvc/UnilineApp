@@ -30,11 +30,11 @@ export function emptyRows(page, rowsPerPage, arrayLength) {
 //   return 0;
 // }
 export function getComparator(order, orderBy) {
-
+  
   
     return order === 'desc'
-    ? (a, b) => b[orderBy] < a[orderBy] ? -1 : 1
-    : (a, b) => a[orderBy] < b[orderBy] ? -1 : 1;
+    ? (a, b) => parseInt(b[orderBy],10) < parseInt(a[orderBy],10) ? -1 : 1
+    : (a, b) => parseInt(a[orderBy],10) < parseInt(b[orderBy],10) ? -1 : 1;
   
 }
 
@@ -70,14 +70,14 @@ export function applyFilter({ inputData, comparator, filterName ,filterMinSerial
   //   );
   // }
  
-  const maxSerial = filterMaxSerial ? Number(filterMaxSerial) : Infinity;
-  const minSerial = filterMinSerial ? Number(filterMinSerial) : -Infinity;
+  const maxSerial = filterMaxSerial
+  const minSerial = filterMinSerial
 
   return inputData
     .filter(item => {
       const matchesName = !filterName || (item.MacID && item.MacID.includes(filterName));
-      const matchesMaxSerial = !filterMaxSerial || (item.SNoutput <= maxSerial);
-      const matchesMinSerial = !filterMinSerial || (item.SNoutput >= minSerial);
+      const matchesMaxSerial = !filterMaxSerial || (parseInt(item.SNoutput ,10) <= maxSerial);
+      const matchesMinSerial = !filterMinSerial || (parseInt(item.SNoutput,10) >= minSerial);
       return matchesName && matchesMaxSerial && matchesMinSerial;
     })
     .sort(comparator);
