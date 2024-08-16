@@ -11,7 +11,7 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserTableToolbar({ numSelected, filterName, onFilterName ,filterMaxSerial,filterMinSerial ,onFilterMaxSerial,onFilterMinSerial }) {
   return (
     <Toolbar
       sx={{
@@ -30,10 +30,11 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
           {numSelected} selected
         </Typography>
       ) : (
+        <>
         <OutlinedInput
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search ..."
+          placeholder="Search Mac Id"
           startAdornment={
             <InputAdornment position="start">
               <Iconify
@@ -44,6 +45,35 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
           }
           sx={{height:'37px'}}
         />
+        <OutlinedInput
+        value={filterMinSerial}
+        onChange={onFilterMinSerial}
+        placeholder="Min Serial Number *"
+        startAdornment={
+          <InputAdornment position="start">
+            <Iconify
+              icon="eva:search-fill"
+              sx={{ color: 'text.disabled', width: 20, height: 20 }}
+            />
+          </InputAdornment>
+        }
+        sx={{height:'37px'}}
+      />
+        <OutlinedInput
+        value={filterMaxSerial}
+        onChange={onFilterMaxSerial}
+        placeholder="Max Serial Number *"
+        startAdornment={
+          <InputAdornment position="start">
+            <Iconify
+              icon="eva:search-fill"
+              sx={{ color: 'text.disabled', width: 20, height: 20 }}
+            />
+          </InputAdornment>
+        }
+        sx={{height:'37px'}}
+      />
+      </>
       )}
 
       {numSelected > 0 ? (
@@ -67,4 +97,8 @@ UserTableToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
+  filterMaxSerial:PropTypes.any,
+  filterMinSerial:PropTypes.any,
+  onFilterMaxSerial:PropTypes.any,
+  onFilterMinSerial:PropTypes.any,
 };
