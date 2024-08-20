@@ -261,6 +261,44 @@ export const AllMacAddress=async()=> {
   
   }
 
+  export const setErase=(MacID,port,name,SN)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+      UserName:name,
+      Erase:SN
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/setErase`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const checkErase=(MacID,port)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+    
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/checkErase`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+  
+
   export const checkSN=(MacID,port)=>{
     const obj={
       MacId:MacID,
