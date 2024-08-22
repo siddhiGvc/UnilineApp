@@ -335,6 +335,43 @@ export const AllMacAddress=async()=> {
      
   
   }
+
+  export const setPair=(MacID,port,name,SN)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+      UserName:name,
+      PairNumber:SN
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/setPair`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
+
+  export const checkPair=(MacID,port)=>{
+    const obj={
+      MacId:MacID,
+      socketNumber:port,
+    
+  
+    }
+    fetch(`http://165.232.180.111:8080/kwikpay/checkPair`,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(obj)
+    })
+     
+  
+  }
   
 
   export const sendLight=(MacID,light,position,port,name)=>{
