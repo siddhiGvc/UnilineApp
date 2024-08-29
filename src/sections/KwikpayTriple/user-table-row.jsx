@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {setL,sendV,askCA,setSN,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,checkSN,sendHBT,sendSIP,sendPWD,setPair,askSSID,sendSSID,sendFota,sendPWD1,modeNone,setErase,sendSSID1,checkPair,sendLight,sendReset,modeTest1,modeTest2,modeTest3,checkErase,sendFotaUrl} from 'src/_mock/macAddress';
+import {setL,sendV,askCA,setSN,askSIP,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,checkSN,sendHBT,sendSIP,sendPWD,setPair,askSSID,sendSSID,sendFota,sendPWD1,modeNone,setErase,sendSSID1,checkPair,sendLight,sendReset,modeTest1,modeTest2,modeTest3,checkErase,sendFotaUrl,sendPassThru,checkPassThru} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 // import { Y } from 'dist/assets/index-8d78d312';
@@ -86,6 +86,7 @@ export default function UserTableRow({
   const [ERASE,setERASE]=useState("");
 
   const [PairNumber,setPairNumber]=useState("");
+  const [PassThru,setPassThru]=useState("");
 
   // const [mode,setMode]=useState('');
 
@@ -608,6 +609,55 @@ const handleChange = () => {
                                 </td>
         
                               </tr> 
+                              <tr>
+                                  <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                          <h5>PT</h5>
+                                             <div>
+                                              <input type='text' style={{width:'100px'}} placeholder='PassThruValue' onChange={(e)=>setPassThru(e.target.value)}/>
+                                           
+                                              </div>
+                                              <button disabled={disable} type="button" className="btn btn-info text-white " style={{height:"30px",width:'60px',fontSize:'12px'}}  onClick={()=>sendPassThru(m.MacID,m.SocketNumber,sessionStorage.getItem("name"),PassThru)} >
+                                              SEND
+                                          </button>
+                                            
+                                        </div>
+                                    </div>
+                          
+                              </th>
+                                <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.PToutput}
+                              </Typography>
+                                </td>
+        
+                              </tr> 
+                              <tr>
+                              <th>   
+                                    <div className="col-xl-5 col-lg-7 col-md-8 col-12 col-12 my-2 mx-3">
+                                      
+                                        <div  style={{display:'flex',alignItems:'center',gap:'5px'}}>
+                                        <button disabled={disable} type="button" className="btn btn-secondary text-white "  onClick={()=>checkPassThru(m.MacID,m.SocketNumber)} >
+                                               *PT?#
+                                              </button>
+                                            
+                                        </div>
+                                    </div>
+                                    </th> 
+                                    <td>
+                              <Typography>
+                              <p> Message</p>
+                              {m.PTmessage}
+                              </Typography>
+                                </td>
+                          
+                             
+                              <td /> 
+        
+                              </tr>
                               
                               <tr>
                                   <th>   
