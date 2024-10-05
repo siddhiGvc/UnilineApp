@@ -206,7 +206,7 @@ const GFcommand=()=>{
     </TableCell>
   
       </TableRow >
-        <div style={{border:"1px solid grey", overflow: "auto", height: "500px",paddingTop:"10px",paddingLeft:'2px'}}>
+        <div style={{border:"1px solid grey",width:'100%', overflow: "auto", height: "650px",paddingTop:"10px",paddingLeft:'2px'}}>
        <b style={{fontSize: '1.20em',cursor:'pointer'}} >  SN:{m.SNoutput} MacID:{m.MacID} Socket:{m.SocketNumber}</b>
          <table className="table" style={{fontSize:'14px'}}>
 
@@ -214,8 +214,8 @@ const GFcommand=()=>{
                           
                             <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
                             <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-5 mx-3">
+                                  <th style={{display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
                                       
                                         <div className="row">
                                          
@@ -231,11 +231,11 @@ const GFcommand=()=>{
                               <Typography>
                                   <table className='AllTables'>
                                       <thead>
-                                        <th>Start Byte</th>
+                                      
                                         <th>Start Byte</th>
                                         <th>Battery Voltage</th>
                                         <th>Battery Capacity</th>
-                                        <th>Remaing Time</th>
+                                        <th>Remaining Time</th>
                                         <th>Battery Mode</th>
                                         <th>Temperature</th>
                                         <th>IP Frequency</th>
@@ -256,7 +256,7 @@ const GFcommand=()=>{
                                           <td>{G1output[6]}</td>
                                           <td>{G1output[7]}</td>
                                           <td>{G1output[8]}</td>
-                                          <td>{G1output[9]}</td>
+                                          {/* <td>{G1output[9]}</td> */}
                                           {/* <td>{G1output[10]}</td> */}
                                           {/* <td>{G1output[11]}</td> */}
                                         
@@ -272,7 +272,7 @@ const GFcommand=()=>{
                               </tr>  
                               <tr>
                                   <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-5 mx-3">
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
                                       
                                         <div className="row">
                                          
@@ -334,8 +334,8 @@ const GFcommand=()=>{
         
                               </tr> 
                               <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-5 mx-3">
+                                  <th style={{display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
                                       
                                         <div className="row">
                                          
@@ -396,8 +396,8 @@ const GFcommand=()=>{
         
                               </tr>   
                               <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-5 mx-3">
+                                  <th style={{display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-5 col-12 col-12 my-5 mx-1">
                                       
                                         <div className="row">
                                          
@@ -440,7 +440,7 @@ const GFcommand=()=>{
                               </tr>   
                               <tr>
                                   <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-4 col-lg-6 col-md-7 col-12 col-12 my-5 mx-3">
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
                                       
                                         <div className="row">
                                          

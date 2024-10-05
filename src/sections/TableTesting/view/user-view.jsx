@@ -10,7 +10,7 @@ import Card from '@mui/material/Card';
 // import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 // import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 
 // import TableContainer from '@mui/material/TableContainer';
 // import TablePagination from '@mui/material/TablePagination';
@@ -159,13 +159,11 @@ export default function UserPage() {
     <Container maxWidth='xxl'>
      
      <Card  spacing={2}  sx={{padding:'20px', justifyContent:'center'}}>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-      Boards
-      </Typography>
+    
       <div className="row">
                     <div className="col-md-12">
                         <div className="form-group my-2">
-                            <h6>Board1:</h6>
+                            <h6>Board:</h6>
                             <Select
                                 name="board1"
                                 value={selectedOption1}
