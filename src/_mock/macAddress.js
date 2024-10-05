@@ -723,7 +723,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendG1`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendG1`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;
@@ -743,7 +743,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendG2`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendG2`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;
@@ -762,7 +762,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendG3`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendG3`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;
@@ -782,7 +782,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendI`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendI`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;
@@ -802,7 +802,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendGF`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendGF`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;

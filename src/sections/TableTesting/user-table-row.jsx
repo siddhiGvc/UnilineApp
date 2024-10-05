@@ -327,8 +327,8 @@ const GFcommand=()=>{
                                       <tbody>
                                       <tr>
                                         
-                                          <td>{G1output.length>0 && G1output[0].includes('!')? '!':''}</td>
-                                          <td>{G1output.length>0 && G1output[0].split('!')[1]}</td>
+                                          <td>{G1output.length>1 && G1output[0].includes('!')? '!':''}</td>
+                                          <td>{G1output.length>1 && G1output[0].split('!')[1]}</td>
                                           <td>{G1output[1]}</td>
                                           <td>{G1output[2]}</td>
                                           <td>{G1output[3]}</td>
@@ -391,8 +391,8 @@ const GFcommand=()=>{
                                        
                                         <tr>
                                          
-                                          <td>{G2output.length>0 && G2output[0].includes('!')? '!':''}</td>
-                                          <td>{G2output.length>0 && G2output[0].split('!')[1]}</td>
+                                          <td>{G2output.length>1 && G2output[0].includes('!')? '!':''}</td>
+                                          <td>{G2output.length>1 && G2output[0].split('!')[1]}</td>
                                           <td>{G2output[1]}</td>
                                           <td>{G2output[2]}</td>
                                           <td>{G2output[3]}</td>
@@ -441,30 +441,30 @@ const GFcommand=()=>{
                                       <tbody>
                                        <tr>
                                           <th>Input</th>
-                                          <td>{G3output.length>0 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}</td>
-                                          <td>{G3output.length>0 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}</td>
-                                          <td>{G3output.length>0 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}</td>
+                                          <td>{G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}</td>
+                                          <td>{G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}</td>
+                                          <td>{G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}</td>
                                         
                                         </tr>
                                         <tr>
                                           <th>Bypass</th>
-                                          <td>{G3output.length>0 && G3output[1].split('/')[0]}</td>
-                                          <td>{G3output.length>0 && G3output[1].split('/')[1]}</td>
-                                          <td>{G3output.length>0 && G3output[1].split('/')[2]}</td>
+                                          <td>{G3output.length>1 && G3output[1].split('/')[0]}</td>
+                                          <td>{G3output.length>1 && G3output[1].split('/')[1]}</td>
+                                          <td>{G3output.length>1 && G3output[1].split('/')[2]}</td>
                                         
                                         </tr>
                                         <tr>
                                           <th>Output</th>
-                                          <td>{G3output.length>0 && G3output[2].split('/')[0]}</td>
-                                          <td>{G3output.length>0 && G3output[2].split('/')[1]}</td>
-                                          <td>{G3output.length>0 && G3output[2].split('/')[2]}</td>
+                                          <td>{G3output.length>1 && G3output[2].split('/')[0]}</td>
+                                          <td>{G3output.length>1 && G3output[2].split('/')[1]}</td>
+                                          <td>{G3output.length>1 && G3output[2].split('/')[2]}</td>
                                         
                                         </tr>
                                         <tr>
                                           <th>Load %</th>
-                                          <td>{G3output.length>0 && G3output[3].split('/')[0]}</td>
-                                          <td>{G3output.length>0 && G3output[3].split('/')[1]}</td>
-                                          <td>{G3output.length>0 && G3output[3].split('/')[2]}</td>
+                                          <td>{G3output.length>1 && G3output[3].split('/')[0]}</td>
+                                          <td>{G3output.length>1 && G3output[3].split('/')[1]}</td>
+                                          <td>{G3output.length>1 && G3output[3].split('/')[2]}</td>
                                         
                                         </tr>
                                       </tbody>
@@ -503,9 +503,9 @@ const GFcommand=()=>{
                                       <tbody>
                                        <tr>
                                       
-                                          <td>{Ioutput.length>0 && Ioutput[4] }</td>
-                                          <td>{Ioutput.length>0 && Ioutput[10]}</td>
-                                          <td>{Ioutput.length>0 && Ioutput[11]}</td>
+                                          <td>{Ioutput.length>1 && Ioutput[4] }</td>
+                                          <td>{Ioutput.length>1 && Ioutput[10]}</td>
+                                          <td>{Ioutput.length>1 && Ioutput[11]}</td>
                                          
                                         </tr>
                                        
