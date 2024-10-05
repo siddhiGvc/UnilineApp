@@ -15,6 +15,7 @@ import SelfMap from 'src/sections/Reports/LoginMaps/selfMap';
 import ViewMap from 'src/sections/Reports/LoginMaps/viewMap';
 import DailyReports from 'src/sections/Reports/dailyReports';
 import HourlyReport from 'src/sections/Reports/HourlyReport';
+import { TableTesting } from 'src/sections/TableTesting/view';
 import ColorSetting from 'src/sections/Settings/colorSetting';
 import MachinePage from 'src/sections/Machines/view/user-view';
 import CustomerPage from 'src/sections/Customers/customerPage';
@@ -81,7 +82,8 @@ export default function Router() {
         { path: 'MacTable', element: <UserView/>},
         { path: 'MacTable2', element: <MacTableView/>},
         { path: 'testing', element: <TestingView/>},
-        { path: 'KwikpayTriple', element: <KwikpayTriple/>}
+        { path: 'KwikpayTriple', element: <KwikpayTriple/>},
+         {path:'TableTesting',element:<TableTesting/>}
       ],
     },
     {

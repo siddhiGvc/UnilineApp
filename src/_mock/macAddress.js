@@ -709,3 +709,103 @@ export const AllMacAddress=async()=> {
       return [];
     }
   }
+
+
+  export const sendG1=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendG1`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }
+
+  export const sendG2=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendG2`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }
+  export const sendG3=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendG3`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }
+
+  export const sendI=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendI`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }
+
+  export const sendGF=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendGF`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }

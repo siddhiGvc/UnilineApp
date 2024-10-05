@@ -26,6 +26,18 @@
 }
 
 
+
+.AllTables th, .AllTables td {
+    border: 1px solid black; /* Border for table cells */
+    padding: 8px; /* Adds padding inside cells */
+    text-align: center; /* Aligns text to the left */
+}
+
+.AllTables th {
+    background-color: #f2f2f2; /* Background color for header */
+}
+
+
 #map {
     width: 100%;
     height: 820px;
