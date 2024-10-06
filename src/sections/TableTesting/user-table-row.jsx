@@ -97,7 +97,7 @@ export default function UserTableRow({
 const G1command=()=>{
   console.log(m.SNoutput);
   sendG1(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-    console.log(res);
+
     setG1Output(res);
     setTimeout(()=>{
          setG1Output([]);
@@ -212,10 +212,10 @@ const GFcommand=()=>{
 
                             <tbody > 
                           
-                            <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
+                            <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between',alignItems:'center'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
                             <tr>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
-                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
                                         <div className="row">
                                          
@@ -223,46 +223,69 @@ const GFcommand=()=>{
                                               
                                             <button  type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-primary text-white`}  onClick={()=>G1command()} >
                                               G1/r/n
-                                          </button>
+                                            </button>
                                             </div>
+                                           
                                         </div>
                                     </div>
-                                    <td>
+                                    <td >
                               <Typography>
-                                  <table className='AllTables'>
-                                      <thead>
-                                      
-                                        <th>Start Byte</th>
-                                        <th>Battery Voltage</th>
-                                        <th>Battery Capacity</th>
-                                        <th>Remaining Time</th>
-                                        <th>Battery Mode</th>
-                                        <th>Temperature</th>
-                                        <th>IP Frequency</th>
-                                        <th>Bypass Frequency</th>
-                                        <th>Output Frequency</th>
-                                        <th>Stop Byte</th>
-                                      </thead>
+                                {G1output[0]==='D'? <h5>Device Is Offline</h5>:
+                                  <table className='AllTables' style={{display:G1output.length>1 ? 'block':'none'}}>
+                                     
                                       <tbody>
                                       <tr>
-                                        
+                                          <th>Command</th>
+                                          <td>G1</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Start Byte</th>
                                           <td>{G1output.length>1 && G1output[0].includes('!')? '!':''}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Battery Voltage</th>
                                           <td>{G1output.length>1 && G1output[0].split('!')[1]}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Battery Capacity</th>
                                           <td>{G1output[1]}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Remaining Time</th>
                                           <td>{G1output[2]}</td>
+                                       </tr>
+                                       <tr>
+                                          <th>Battery Mode</th>
                                           <td>{G1output[3]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Temperature</th>
                                           <td>{G1output[4]}</td>
+                                         </tr>
+                                         <tr>
+                                          <th>IP Frequency</th>
                                           <td>{G1output[5]}</td>
+                                          </tr>
+                                          <tr>
+                                          <th>Bypass Frequency</th>
                                           <td>{G1output[6]}</td>
+                                          </tr>
+                                          <tr>
+                                          <th>Output Frequency</th>
                                           <td>{G1output[7]}</td>
+                                          </tr>
+                                          <tr>
+                                          <th>Stop Byte</th>
                                           <td>{G1output[8]}</td>
+                                          </tr>
                                           {/* <td>{G1output[9]}</td> */}
                                           {/* <td>{G1output[10]}</td> */}
                                           {/* <td>{G1output[11]}</td> */}
                                         
-                                        </tr>
+                                  
                                       </tbody>
                                   </table>
+                                  }
                               </Typography>
                                 </td>
                           
@@ -271,8 +294,8 @@ const GFcommand=()=>{
         
                               </tr>  
                               <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
+                                  <th style={{display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
                                         <div className="row">
                                          
@@ -286,46 +309,88 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  <table className='AllTables'>
-                                      <thead>
-                                       
-                                        <th>Low Battery Shut Down</th>
-                                        <th>Low Battery</th>
-                                        <th>Topology</th>
-                                        <th>Backup/AC Normal</th>
-                                        <th>BoostT/Float Chanrging</th>
-                                        <th>Rectifier Operating</th>
-                                        <th>Bypass Frequency Fail</th>
-                                        <th>Manual Bypass Breaker</th>
-                                        <th>Bypass AC</th>
-                                        <th>Static Switch</th>
-                                        <th>Inverter Operating</th>
-                                        <th>Emergency Stop</th>
-                                        <th>High DC Shut Down</th>
-                                        <th>Manual Bypass Breaker Shut Down</th>
-                                        <th>Overload Shutdown</th>
-                                        <th>Shot Circuit Shut Down</th>
-                                      </thead>
+                                  {G2output[0]==='D' ? <h5>Device Is Offline</h5>:
+                                  <table className='AllTables' style={{display:G2output.length>1 ? 'block':'none'}}>
+                                     
                                       <tbody>
+                                          <tr>
+                                              <th>Command</th>
+                                              <td>G2</td>
+                                          </tr>
                                        
-                                        <tr>
+                                          <tr>
+                                            <th>Low Battery Shut Down</th>
+                                            <td>{G2output.length>1 && G2output[0].includes('!')? '!':''}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>Low Battery</th>
+                                            <td>{G2output.length>1 && G2output[0].split('!')[1]}</td>
+                                          </tr>
+                                          <tr>
+                                             <th>Topology</th>
+                                             <td>{G2output[1]}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>Backup/AC Normal</th>
+                                            <td>{G2output[2]}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>BoostT/Float Chanrging</th>
+                                             <td>{G2output[3]}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>Rectifier Operating</th>
+                                            <td>{G2output[4]}</td>
+                                          </tr>
+                                          <tr>
+                                             <th>Bypass Frequency Fail</th>
+                                             <td>{G2output[5]}</td>
+                                          </tr>
+                                          <tr>
+                                             <th>Manual Bypass Breaker</th>
+                                             <td>{G2output[6]}</td>
+                                          </tr>
+                                          <tr>
+                                             <th>Bypass AC</th>
+                                             <td>{G2output[7]}</td>
+                                          </tr>
+                                          <tr>
+                                             <th>Static Switch</th>
+                                             <td>{G2output[8]}</td>
+                                          </tr>
+                                         <tr>
+                                           <th>Inverter Operating</th>
+                                            <td>{G2output[9]}</td>
+                                         </tr>
+                                         <tr>
+                                           <th>Emergency Stop</th>
+                                           <td>{G2output[10]}</td>
+                                         </tr>
+                                         <tr>
+                                           <th>High DC Shut Down</th>
+                                           <td>{G2output[11]}</td>
+                                         </tr>
+                                         <tr>
+                                           <th>Manual Bypass Breaker Shut Down</th>
+                                           <td>{G2output[12]}</td>
+                                         </tr>
+                                         <tr>
+                                           <th>Overload Shutdown</th>
+                                           <td>{G2output[13]}</td>
+                                         </tr>
+                                         <tr>
+                                          <th>Shot Circuit Shut Down</th>
+                                          <td>{G2output[14]}</td>
+                                         </tr>
+                                        
+                                          
                                          
-                                          <td>{G2output.length>1 && G2output[0].includes('!')? '!':''}</td>
-                                          <td>{G2output.length>1 && G2output[0].split('!')[1]}</td>
-                                          <td>{G2output[1]}</td>
-                                          <td>{G2output[2]}</td>
-                                          <td>{G2output[3]}</td>
-                                          <td>{G2output[4]}</td>
-                                          <td>{G2output[5]}</td>
-                                          <td>{G2output[6]}</td>
-                                          <td>{G2output[7]}</td>
-                                          <td>{G2output[8]}</td>
-                                          <td>{G2output[9]}</td>
-                                          {/* <td>{G1output[10]}</td> */}
-                                          {/* <td>{G1output[11]}</td> */}
-                                        </tr>
+                                         
+                                          
+                                        
                                       </tbody>
                                   </table>
+                                    }
                               </Typography>
                                 </td>
                           
@@ -335,7 +400,7 @@ const GFcommand=()=>{
                               </tr> 
                               <tr>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
-                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
                                         <div className="row">
                                          
@@ -349,7 +414,8 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  <table className='AllTables'>
+                                  { G3output[0]==='D' ?<h5>Device Is Offline</h5>:
+                                  <table className='AllTables' style={{display:G3output.length>1 ? 'block':'none'}}>
                                       <thead>
                                         <th />
                                         <th>Phase 1</th>
@@ -388,6 +454,7 @@ const GFcommand=()=>{
                                         </tr>
                                       </tbody>
                                   </table>
+                                   }
                               </Typography>
                                 </td>
                           
@@ -397,7 +464,7 @@ const GFcommand=()=>{
                               </tr>   
                               <tr>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
-                                    <div className="col-xl-2 col-lg-6 col-md-5 col-12 col-12 my-5 mx-1">
+                                    <div className="col-xl-2 col-lg-6 col-md-5 col-12 col-12 my-3 mx-1">
                                       
                                         <div className="row">
                                          
@@ -411,26 +478,32 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  <table className='AllTables'>
-                                      <thead>
-                                      
-                                        <th>Company</th>
-                                        <th>Model</th>
-                                        <th>Version</th>
-                                        
-                                      </thead>
+                                  {Ioutput[0]==='G'? <h5>Device Is Offline</h5>:
+                                  <table className='AllTables' style={{display:Ioutput.length>1 ? 'block':'none'}}>
+                                     
                                       <tbody>
-                                       <tr>
-                                      
-                                          <td>{Ioutput.length>1 && Ioutput[4] }</td>
-                                          <td>{Ioutput.length>1 && Ioutput[10]}</td>
-                                          <td>{Ioutput.length>1 && Ioutput[11]}</td>
-                                         
+                                        <tr>
+                                          <th>Command</th>
+                                          <td>I</td>
                                         </tr>
+                                        <tr>
+                                          <th>Company</th>
+                                          <td>{Ioutput.length>1 && Ioutput[4] }</td>
+                                        </tr>
+                                        <tr>
+                                        <th>Model</th>
+                                         <td>{Ioutput.length>1 && Ioutput[10]}</td>
+                                        </tr>
+                                         <tr>
+                                         <th>Version</th>
+                                         <td>{Ioutput.length>1 && Ioutput[11]}</td>
+                                          </tr>
+                                 
                                        
                                          
                                       </tbody>
                                   </table>
+                                 }
                               </Typography>
                                 </td>
                           
@@ -439,8 +512,8 @@ const GFcommand=()=>{
         
                               </tr>   
                               <tr>
-                                  <th style={{display:'flex',justifyContent:'space-between'}}>   
-                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-5 mx-1">
+                                  <th style={{display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
                                         <div className="row">
                                          
@@ -454,47 +527,79 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  <table className='AllTables'>
-                                      <thead>
-                                      
-                                        <th>Rectifier -Phase 2 Neutral</th>
-                                        <th>Rectifier - Phase 2 Phase</th>
-                                        <th>Topology</th>
-                                        <th>Rectifier Frequency</th>
-                                        <th>Bypass Phase 2 Neutral</th>
-                                        <th>Bypass Phase 2 Phase</th>
-                                        <th>Bypass Topology</th>
-                                        <th>Bypass frequency</th>
-                                        <th>Ouput voltage Phase 2 Neutral</th>
-                                        <th>Output Phase 2 Phase</th>
-                                        <th>Output Topology</th>
-                                        <th>Output Frequency</th>
-                                        <th>Battery Voltage</th>
-                                        <th>Power Rating</th>
-                                        
-                                      </thead>
+                                  {GFoutput[0]==='D' ? <h5>Device Is Offline</h5>:
+                                  <table className='AllTables' style={{display:GFoutput.length>1 ? 'block':'none'}}>
+                                  
                                       <tbody>
-                                       <tr>
-                                          <td>{GFoutput.length>1 && GFoutput[0].split('!')[1].split('/')[0] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[0].split('!')[1].split('/')[1] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[1] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[2] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[3].split('/')[0] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[3].split('/')[1] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[4] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[5] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[6].split('/')[0] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[6].split('/')[1] }</td>
-                                          <td>{GFoutput.length>1 && GFoutput[7]}</td>
-                                          <td>{GFoutput.length>1 && GFoutput[8]}</td>
-                                          <td>{GFoutput.length>1 && GFoutput[9]}</td>
-                                          <td>{GFoutput.length>1 && GFoutput[10] }</td>
-                                         
+                                      <tr>
+                                          <th>Command</th>
+                                          <td>GF</td>
                                         </tr>
+                                       <tr>
+                                          <th>Rectifier -Phase 2 Neutral</th>
+                                          <td>{GFoutput.length>1 && GFoutput[0].split('!')[1].split('/')[0] }</td>
+                                       </tr>
+                                       <tr>
+                                         <th>Rectifier - Phase 2 Phase</th>
+                                          <td>{GFoutput.length>1 && GFoutput[0].split('!')[1].split('/')[1] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Topology</th>
+                                          <td>{GFoutput.length>1 && GFoutput[1] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Rectifier Frequency</th>
+                                          <td>{GFoutput.length>1 && GFoutput[2] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Bypass Phase 2 Neutral</th>
+                                          <td>{GFoutput.length>1 && GFoutput[3].split('/')[0] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Bypass Phase 2 Phase</th>
+                                          <td>{GFoutput.length>1 && GFoutput[3].split('/')[1] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Bypass Topology</th>
+                                          <td>{GFoutput.length>1 && GFoutput[4] }</td>
+                                        </tr>
+                                        <tr>
+                                           
+                                          <th>Bypass frequency</th>
+                                          <td>{GFoutput.length>1 && GFoutput[5] }</td>
+                                        </tr>
+                                        <tr>
+                                          
+                                          <th>Ouput voltage Phase 2 Neutral</th>
+                                          <td>{GFoutput.length>1 && GFoutput[6].split('/')[0] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Phase 2 Phase</th>
+                                          <td>{GFoutput.length>1 && GFoutput[6].split('/')[1] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Topology</th>
+                                          <td>{GFoutput.length>1 && GFoutput[7]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Frequency</th>
+                                          <td>{GFoutput.length>1 && GFoutput[8]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Battery Voltage</th>
+                                          <td>{GFoutput.length>1 && GFoutput[9]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Power Rating</th>
+                                          <td>{GFoutput.length>1 && GFoutput[10] }</td>
+                                        </tr>
+                                         
+    
                                        
                                          
                                       </tbody>
                                   </table>
+                                    }
                               </Typography>
                                 </td>
                           
