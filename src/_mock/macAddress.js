@@ -822,7 +822,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendQ`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendQ`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;
@@ -842,7 +842,7 @@ export const AllMacAddress=async()=> {
       'Content-Type': 'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`http://localhost:8080/testingBoard/sendQ1`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const response = await fetch(`http://165.232.180.111:8080/testingBoard/sendQ1`, { method: 'POST', headers,body:JSON.stringify(obj) });
     const json = await response.json();
     // console.log(json)
     return json.data;
