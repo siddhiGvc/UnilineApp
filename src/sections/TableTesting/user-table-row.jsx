@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendI,sendGF,sendG1,sendG2,sendG3} from 'src/_mock/macAddress';
+import {sendI,sendQ,sendQ1,sendGF,sendG1,sendG2,sendG3} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 // import { Table } from '@mui/material';
@@ -563,6 +563,376 @@ function Component5({m,board}){
 
 }
 
+function Component6({m,board}){
+  const [Qoutput,setQOutput]=useState([]);
+  
+
+  const Qcommand=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendQ(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setQOutput(res);
+      setTimeout(()=>{
+          setQOutput([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+       Qcommand();
+    }
+  },[Qcommand,m.MacID])
+  
+  return <> <th style={{width:'100%',display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-primary text-white`}  onClick={()=>Qcommand()} >
+                                              Q/r/n
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <td>
+                              <Typography>
+                                  {Qoutput[0]==='D' ? <h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables'>
+                                  
+                                      <tbody>
+                                      <tr>
+                                          <th>Command</th>
+                                          <td>Q</td>
+                                        </tr>
+                                       <tr>
+                                          <th>Start Byte</th>
+                                          <td>{Qoutput.length>1 && Qoutput[0] }</td>
+                                       </tr>
+                                       <tr>
+                                         <th>I/P Voltage</th>
+                                          <td>{Qoutput.length>1 && Qoutput[1] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>I/P Fault Voltage</th>
+                                          <td>{Qoutput.length>1 && Qoutput[2] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Voltage</th>
+                                          <td>{Qoutput.length>1 && Qoutput[3] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Current</th>
+                                          <td>{Qoutput.length>1 && Qoutput[4] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Input Frequence</th>
+                                          <td>{Qoutput.length>1 && Qoutput[5]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Battery voltage</th>
+                                          <td>{Qoutput.length>1 && Qoutput[7] }</td>
+                                        </tr>
+                                        <tr>
+                                           
+                                          <th>Temperature</th>
+                                          <td>{Qoutput.length>1 && Qoutput[8] }</td>
+                                        </tr>
+                                        <tr>
+                                          
+                                          <th>Status</th>
+                                          <td>{Qoutput.length>1 && Qoutput[9]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B7</th>
+                                          <td>{Qoutput.length>1 && Qoutput[10]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B6</th>
+                                          <td>{Qoutput.length>1 && Qoutput[11]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B5</th>
+                                          <td>{Qoutput.length>1 && Qoutput[12]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B4</th>
+                                          <td>{Qoutput.length>1 && Qoutput[13]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B3</th>
+                                          <td>{Qoutput.length>1 && Qoutput[14] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B2</th>
+                                          <td>{Qoutput.length>1 && Qoutput[15] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B1</th>
+                                          <td>{Qoutput.length>1 && Qoutput[16] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B0</th>
+                                          <td>{Qoutput.length>1 && Qoutput[17] }</td>
+                                        </tr>
+                                         
+                                         
+    
+                                       
+                                         
+                                      </tbody>
+                                  </table>
+                                    }
+                              </Typography>
+                                </td>
+                          
+                              </th>
+                              <td /> 
+        
+         
+  </>
+
+}
+
+function Component7({m,board}){
+  const [Q1output,setQ1Output]=useState([]);
+  
+
+  const Q1command=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendQ1(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setQ1Output(res);
+      setTimeout(()=>{
+          setQ1Output([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+       Q1command();
+    }
+  },[Q1command,m.MacID])
+  
+  return <> <th style={{width:'100%',display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-primary text-white`}  onClick={()=>Q1command()} >
+                                              Q1/r/n
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <td>
+                              <Typography>
+                                  {Q1output[0]==='D' ? <h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables'>
+                                  
+                                      <tbody>
+                                      <tr>
+                                          <th>Command</th>
+                                          <td>Q1</td>
+                                        </tr>
+                                       <tr>
+                                          <th>Start Byte</th>
+                                          <td>{Q1output.length>1 && Q1output[0] }</td>
+                                       </tr>
+                                       <tr>
+                                         <th>I/P Voltage</th>
+                                          <td>{Q1output.length>1 && Q1output[1] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>I/P Fault Voltage</th>
+                                          <td>{Q1output.length>1 && Q1output[2] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Voltage</th>
+                                          <td>{Q1output.length>1 && Q1output[3] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Output Current</th>
+                                          <td>{Q1output.length>1 && Q1output[4] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Input Frequence</th>
+                                          <td>{Q1output.length>1 && Q1output[5]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Battery voltage</th>
+                                          <td>{Q1output.length>1 && Q1output[7] }</td>
+                                        </tr>
+                                        <tr>
+                                           
+                                          <th>Temperature</th>
+                                          <td>{Q1output.length>1 && Q1output[8] }</td>
+                                        </tr>
+                                        <tr>
+                                          
+                                          <th>Status</th>
+                                          <td>{Q1output.length>1 && Q1output[9]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B7</th>
+                                          <td>{Q1output.length>1 && Q1output[10]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B6</th>
+                                          <td>{Q1output.length>1 && Q1output[11]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B5</th>
+                                          <td>{Q1output.length>1 && Q1output[12]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B4</th>
+                                          <td>{Q1output.length>1 && Q1output[13]}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B3</th>
+                                          <td>{Q1output.length>1 && Q1output[14] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B2</th>
+                                          <td>{Q1output.length>1 && Q1output[15] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B1</th>
+                                          <td>{Q1output.length>1 && Q1output[16] }</td>
+                                        </tr>
+                                        <tr>
+                                          <th>B0</th>
+                                          <td>{Q1output.length>1 && Q1output[17] }</td>
+                                        </tr>
+                                         
+                                         
+    
+                                       
+                                         
+                                      </tbody>
+                                  </table>
+                                    }
+                              </Typography>
+                                </td>
+                          
+                              </th>
+                              <td /> 
+        
+         
+  </>
+
+}
+
+function Component8({m,board}){
+  const [Toutput,setTOutput]=useState([]);
+  
+
+  const Tcommand=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendQ1(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setTOutput(res);
+      setTimeout(()=>{
+          setTOutput([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+       Tcommand();
+    }
+  },[Tcommand,m.MacID])
+  
+  return <> <th style={{width:'100%',display:'flex',justifyContent:'flex-start'}}>   
+                                    <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
+                                      
+                                        <div className="row">
+                                         
+                                            <div className="col-12 sw-parent">
+                                              
+                                            <button type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-primary text-white`}  onClick={()=>Tcommand()} >
+                                              T/r/n
+                                          </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <td>
+                              <Typography>
+                                  {Toutput[0]==='D' ? <h5>Device Is Not Responding</h5>:
+                                     ''
+                                    }
+                              </Typography>
+                                </td>
+                          
+                              </th>
+                              <td /> 
+        
+         
+  </>
+
+}
+
+// function Component9({m,board}){
+//   const [TLoutput,setTLOutput]=useState([]);
+  
+
+//   const TLcommand=useCallback(()=>{
+//     console.log(m.SNoutput);
+//     sendQ1(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+//       console.log(res);
+//       setTOutput(res);
+//       setTimeout(()=>{
+//           setTOutput([]);
+//       },5000)
+//     })
+//   },[m.MacID,m.SNoutput])
+
+//   useEffect(()=>{
+//     if(m.MacID)
+//     {
+//        Tcommand();
+//     }
+//   },[Tcommand,m.MacID])
+  
+//   return <> <th style={{width:'100%',display:'flex',justifyContent:'flex-start'}}>   
+//                                     <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
+                                      
+//                                         <div className="row">
+                                         
+//                                             <div className="col-12 sw-parent">
+                                              
+//                                             <button type="button" className={`btn  btn-${board===2 || board===3? m.Color:''} btn-primary text-white`}  onClick={()=>Tcommand()} >
+//                                               T/r/n
+//                                           </button>
+//                                             </div>
+//                                         </div>
+//                                     </div>
+//                                     <td>
+//                               <Typography>
+//                                   {Toutput[0]==='D' ? <h5>Device Is Not Responding</h5>:
+//                                      ''
+//                                     }
+//                               </Typography>
+//                                 </td>
+                          
+//                               </th>
+//                               <td /> 
+        
+         
+//   </>
+
+// }
+
 
 
 
@@ -585,10 +955,10 @@ export default function UserTableRow({
   const [currentPage, setCurrentPage] = useState(1);
 
   // Array of components to paginate
-  const components = [<Component1 m={m} board={board}/>, <Component2 m={m} board={board}/>, <Component3 m={m} board={board}/>, <Component4 m={m} board={board}/>,<Component5 m={m} board={board}/>];
+  const components = [<Component1 m={m} board={board}/>, <Component2 m={m} board={board}/>, <Component3 m={m} board={board}/>, <Component4 m={m} board={board}/>,<Component5 m={m} board={board}/>,<Component6 m={m} board={board}/>,<Component7 m={m} board={board}/>];
 
   // Calculate total number of pages
-  const totalPages = 5;
+  const totalPages = 7;
 
   // Get the current components for the current page
   const indexOfLastComponent = currentPage * 1;
@@ -628,7 +998,7 @@ export default function UserTableRow({
      
         const Page=currentPage+1;
         setCurrentPage(Page);
-        if(Page===6)
+        if(Page===8)
           {
             setCurrentPage(1);
             clearInterval(Interval);
@@ -859,6 +1229,30 @@ Component4.propTypes = {
 
 
 Component5.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+Component6.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+Component7.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+Component8.propTypes = {
  
   m:PropTypes.any,
   board:PropTypes.any

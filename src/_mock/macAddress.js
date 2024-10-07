@@ -809,3 +809,43 @@ export const AllMacAddress=async()=> {
      
   
   }
+
+  export const sendQ=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendQ`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }
+
+  export const sendQ1=async(MacID,SN,name)=>{
+    const obj={
+      MacId:MacID,
+      serialNumber:SN,
+      UserName:name,
+      
+  
+    }
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-token': sessionStorage.getItem('token'),
+    });
+    const response = await fetch(`http://localhost:8080/testingBoard/sendQ1`, { method: 'POST', headers,body:JSON.stringify(obj) });
+    const json = await response.json();
+    // console.log(json)
+    return json.data;
+     
+  
+  }
