@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import moment from "moment";
 import PropTypes from 'prop-types';
-import React,{ useState} from 'react';
+import React,{useState,useEffect, useCallback} from 'react';
 // import SwitchButton from 'bootstrap-switch-button-react';
 
 import Box from '@mui/material/Box';
@@ -45,175 +45,29 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function UserTableRow({
-  m,
-  testMode,
-  board,
-  sr,
-  key,
-  handleClick,
-  
-}) {
-  // const [ setOpen] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [message,setMessage]=useState("");
-  const [type,setType]=useState("");
- 
 
+
+function Component1 ({m,board}){
   const [G1output,setG1Output]=useState([]);
-  const [G2output,setG2Output]=useState([]);
-  const [G3output,setG3Output]=useState([]);
-  const [Ioutput,setIOutput]=useState([]);
-  const [GFoutput,setGFOutput]=useState([]);
-
-  // const [mode,setMode]=useState('');
-
+  const G1command=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendG1(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
   
-
-  
- 
-
-  const showAlertMessage = () => {
-    setShowAlert(true);
-
-    // You can optionally set a timeout to hide the alert after a few seconds
-    setTimeout(() => {
-    setShowAlert(false);
-    }, 5000); // Hide the alert after 5 seconds (5000 milliseconds)
-};
-
-
-
-  // Close popup function of technicaian form
-  const handleModalClose = () => {
-    setOpenModal(false);
-  };
-
- 
- 
-
-
-const G1command=()=>{
-  console.log(m.SNoutput);
-  sendG1(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-
-    setG1Output(res);
-    setTimeout(()=>{
-         setG1Output([]);
-    },5000)
-  })
-}
-
-const G2command=()=>{
-  console.log(m.SNoutput);
-  sendG2(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-    console.log(res);
-    setG2Output(res);
-    setTimeout(()=>{
-         setG2Output([]);
-    },5000)
-  })
-}
-
-const G3command=()=>{
-  console.log(m.SNoutput);
-  sendG3(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-    console.log(res);
-    setG3Output(res);
-    setTimeout(()=>{
-         setG3Output([]);
-    },5000)
-  })
-}
-const Icommand=()=>{
-  console.log(m.SNoutput);
-  sendI(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-    console.log(res);
-    setIOutput(res);
-    setTimeout(()=>{
-         setIOutput([]);
-    },5000)
-  })
-}
-
-const GFcommand=()=>{
-  console.log(m.SNoutput);
-  sendGF(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-    console.log(res);
-    setGFOutput(res);
-    setTimeout(()=>{
-         setGFOutput([]);
-    },5000)
-  })
-}
-
-
-
-
-  // submit form of technician form 
-  const SubmitForm=()=>{
-    const obj={
-    machineNumber: $('[name="machine"]').val(),
-    userName: $('[name="userName"]').val(),
-    fault:$('[name="fault"]').val(),
-    action:$('[name="action"]').val(),
-    status:$('[name="faultStatus"]').val(),
-    Lat:sessionStorage.getItem("Lattitude"),
-    Long:sessionStorage.getItem("Longitude"),
-    }
-    SaveFaultReport(obj).then((r)=>{
-       showAlertMessage();
-       setType('success');
-       setMessage("Saved Succesfully");
-       handleModalClose();
-
+      setG1Output(res);
+      setTimeout(()=>{
+           setG1Output([]);
+      },5000)
     })
+  },[m.MacID,m.SNoutput])
 
-  }
+   useEffect(()=>{
+    if(m.MacID)
+    {
+       G1command();
+    }
+   },[G1command,m.MacID])
 
-  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
-
-
-
-  return (
-    <>
-    {/* Alert popup ui */}
-       <Stack spacing={2} sx={{ width: '100%'}}>
-    
-    <Snackbar  anchorOrigin={{ vertical:'bottom', horizontal:'right' }} open={showAlert} autoHideDuration={4000} onClose={()=>setShowAlert(false)}>
-      <Alert onClose={()=>setShowAlert(false)} severity={type} sx={{ width: '100%' }}>
-        {message}
-      </Alert>
-    </Snackbar>
-
-     </Stack>
-      <TableRow hover tabIndex={-1} role="checkbox" sx={{paddingBottom:"200px"}}>
-        
-     
-        
-        
-     
-        <TableCell >
-      {/* <button
-        type="button"
-        className="btn btn-sm btn-outline-success btn-tt heading6"
-        onClick={handleOpenMenu}
-        
-      >
-        View
-      </button> */}
-    </TableCell>
-  
-      </TableRow >
-        <div style={{border:"1px solid grey",width:'100%', overflow: "auto", height: "650px",paddingTop:"10px",paddingLeft:'2px'}}>
-       <b style={{fontSize: '1.20em',cursor:'pointer'}} >  SN:{m.SNoutput} MacID:{m.MacID} Socket:{m.SocketNumber}</b>
-         <table className="table" style={{fontSize:'14px'}}>
-
-                            <tbody > 
-                          
-                            <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between',alignItems:'center'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
-                            <tr>
+    return <>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
                                     <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
@@ -230,8 +84,8 @@ const GFcommand=()=>{
                                     </div>
                                     <td >
                               <Typography>
-                                {G1output[0]==='D'? <h5>Device Is Offline</h5>:
-                                  <table className='AllTables' style={{display:G1output.length>1 ? 'block':'none'}}>
+                                {G1output[0]==='D'? <h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables' >
                                      
                                       <tbody>
                                       <tr>
@@ -292,8 +146,34 @@ const GFcommand=()=>{
                               </th>
                               <td /> 
         
-                              </tr>  
-                              <tr>
+                              </>  
+      
+}
+
+
+
+function Component2({m,board}){
+  const [G2output,setG2Output]=useState([]);
+
+  const G2command=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendG2(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setG2Output(res);
+      setTimeout(()=>{
+           setG2Output([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+    G2command()
+    }
+  },[G2command,m.MacID])
+
+   return <>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
                                     <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
@@ -309,8 +189,8 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  {G2output[0]==='D' ? <h5>Device Is Offline</h5>:
-                                  <table className='AllTables' style={{display:G2output.length>1 ? 'block':'none'}}>
+                                  {G2output[0]==='D' ? <h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables' >
                                      
                                       <tbody>
                                           <tr>
@@ -397,8 +277,33 @@ const GFcommand=()=>{
                               </th>
                               <td /> 
         
-                              </tr> 
-                              <tr>
+                              </> 
+
+   
+}
+
+function Component3({m,board}){
+  const [G3output,setG3Output]=useState([]);
+  const G3command=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendG3(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setG3Output(res);
+      setTimeout(()=>{
+           setG3Output([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+      G3command()
+    }
+   
+  },[G3command,m.MacID])
+  
+  return <>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
                                     <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
@@ -414,8 +319,8 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  { G3output[0]==='D' ?<h5>Device Is Offline</h5>:
-                                  <table className='AllTables' style={{display:G3output.length>1 ? 'block':'none'}}>
+                                  { G3output[0]==='D' ?<h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables' >
                                       <thead>
                                         <th />
                                         <th>Phase 1</th>
@@ -461,8 +366,31 @@ const GFcommand=()=>{
                               </th>
                               <td /> 
         
-                              </tr>   
-                              <tr>
+                              </>   
+
+
+}
+function Component4({m,board}){
+  const [Ioutput,setIOutput]=useState([]);
+  const Icommand=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendI(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setIOutput(res);
+      setTimeout(()=>{
+           setIOutput([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+    Icommand()
+    }
+  },[Icommand,m.MacID])
+  
+  return  <>
                                   <th style={{display:'flex',justifyContent:'flex-start'}}>   
                                     <div className="col-xl-2 col-lg-6 col-md-5 col-12 col-12 my-3 mx-1">
                                       
@@ -478,8 +406,8 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  {Ioutput[0]==='G'? <h5>Device Is Offline</h5>:
-                                  <table className='AllTables' style={{display:Ioutput.length>1 ? 'block':'none'}}>
+                                  {Ioutput[0]==='G'? <h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables' >
                                      
                                       <tbody>
                                         <tr>
@@ -510,9 +438,33 @@ const GFcommand=()=>{
                               </th>
                               <td /> 
         
-                              </tr>   
-                              <tr>
-                                  <th style={{display:'flex',justifyContent:'flex-start'}}>   
+                              </>   
+
+  
+}
+function Component5({m,board}){
+  const [GFoutput,setGFOutput]=useState([]);
+  
+
+  const GFcommand=useCallback(()=>{
+    console.log(m.SNoutput);
+    sendGF(m.MacID,m.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setGFOutput(res);
+      setTimeout(()=>{
+          setGFOutput([]);
+      },5000)
+    })
+  },[m.MacID,m.SNoutput])
+
+  useEffect(()=>{
+    if(m.MacID)
+    {
+       GFcommand();
+    }
+  },[GFcommand,m.MacID])
+  
+  return <> <th style={{width:'100%',display:'flex',justifyContent:'flex-start'}}>   
                                     <div className="col-xl-2 col-lg-6 col-md-7 col-12 col-12 my-3 mx-1">
                                       
                                         <div className="row">
@@ -527,8 +479,8 @@ const GFcommand=()=>{
                                     </div>
                                     <td>
                               <Typography>
-                                  {GFoutput[0]==='D' ? <h5>Device Is Offline</h5>:
-                                  <table className='AllTables' style={{display:GFoutput.length>1 ? 'block':'none'}}>
+                                  {GFoutput[0]==='D' ? <h5>Device Is Not Responding</h5>:
+                                  <table className='AllTables'>
                                   
                                       <tbody>
                                       <tr>
@@ -606,7 +558,182 @@ const GFcommand=()=>{
                               </th>
                               <td /> 
         
-                              </tr>   
+         
+  </>
+
+}
+
+
+
+
+
+export default function UserTableRow({
+  m,
+  testMode,
+  board,
+  sr,
+  key,
+  handleClick,
+  
+}) {
+ 
+  const [openModal, setOpenModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [message,setMessage]=useState("");
+  const [type,setType]=useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Array of components to paginate
+  const components = [<Component1 m={m} board={board}/>, <Component2 m={m} board={board}/>, <Component3 m={m} board={board}/>, <Component4 m={m} board={board}/>,<Component5 m={m} board={board}/>];
+
+  // Calculate total number of pages
+  const totalPages = 5;
+
+  // Get the current components for the current page
+  const indexOfLastComponent = currentPage * 1;
+  const indexOfFirstComponent = indexOfLastComponent - 1;
+  const currentComponents = components.slice(indexOfFirstComponent, indexOfLastComponent);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+ 
+
+
+  const showAlertMessage = () => {
+    setShowAlert(true);
+
+    // You can optionally set a timeout to hide the alert after a few seconds
+    setTimeout(() => {
+    setShowAlert(false);
+    }, 5000); // Hide the alert after 5 seconds (5000 milliseconds)
+};
+
+
+
+  // Close popup function of technicaian form
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
+
+
+
+  useEffect(()=>{
+    let Interval;
+    if(m.MacID)
+      {
+   Interval= setInterval(()=>{
+     
+        const Page=currentPage+1;
+        setCurrentPage(Page);
+        if(Page===6)
+          {
+            setCurrentPage(1);
+            clearInterval(Interval);
+          }
+       
+     },5000)
+
+
+     
+    }
+    return ()=>clearInterval(Interval);
+  },[currentPage,m.MacID])
+ 
+
+
+
+
+
+
+
+
+  // submit form of technician form 
+  const SubmitForm=()=>{
+    const obj={
+    machineNumber: $('[name="machine"]').val(),
+    userName: $('[name="userName"]').val(),
+    fault:$('[name="fault"]').val(),
+    action:$('[name="action"]').val(),
+    status:$('[name="faultStatus"]').val(),
+    Lat:sessionStorage.getItem("Lattitude"),
+    Long:sessionStorage.getItem("Longitude"),
+    }
+    SaveFaultReport(obj).then((r)=>{
+       showAlertMessage();
+       setType('success');
+       setMessage("Saved Succesfully");
+       handleModalClose();
+
+    })
+
+  }
+
+  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+
+
+
+  return (
+    <>
+    {/* Alert popup ui */}
+       <Stack spacing={2} sx={{ width: '100%'}}>
+    
+    <Snackbar  anchorOrigin={{ vertical:'bottom', horizontal:'right' }} open={showAlert} autoHideDuration={4000} onClose={()=>setShowAlert(false)}>
+      <Alert onClose={()=>setShowAlert(false)} severity={type} sx={{ width: '100%' }}>
+        {message}
+      </Alert>
+    </Snackbar>
+
+     </Stack>
+      <TableRow hover tabIndex={-1} role="checkbox" sx={{paddingBottom:"200px"}}>
+        
+     
+        
+        
+     
+        <TableCell >
+      {/* <button
+        type="button"
+        className="btn btn-sm btn-outline-success btn-tt heading6"
+        onClick={handleOpenMenu}
+        
+      >
+        View
+      </button> */}
+    </TableCell>
+  
+      </TableRow >
+        <div style={{border:"1px solid grey",width:'100%', overflow: "auto", height: "650px",paddingTop:"10px",paddingLeft:'2px'}}>
+       <b style={{fontSize: '1.20em',cursor:'pointer'}} >  SN:{m.SNoutput} MacID:{m.MacID} Socket:{m.SocketNumber}</b>
+         {/* Pagination controls */}
+      <div>
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            type="button"
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            disabled={currentPage === index + 1}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+         <table className="table" style={{fontSize:'14px'}}>
+
+                            <tbody > 
+                          
+                            <tr ><th style={{color: '#444',display:'flex',justifyContent:'space-between',alignItems:'center'}}>Status <td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></th>  <td /> </tr>
+                            
+                              {currentComponents.map((component, index) => (
+                                    <tr>   {component} </tr>
+                              ))}
+                            
+
+                          
+                                                  
+                            
                            
                                                                                                             
                             </tbody>
@@ -692,5 +819,49 @@ UserTableRow.propTypes = {
   testMode:PropTypes.any,
   board:PropTypes.any,
    handleClick: PropTypes.func
+
+};
+
+
+Component1.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+Component2.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+
+Component3.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+
+Component4.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
+
+};
+
+
+Component5.propTypes = {
+ 
+  m:PropTypes.any,
+  board:PropTypes.any
+  
 
 };
