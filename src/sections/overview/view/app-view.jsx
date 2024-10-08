@@ -1,14 +1,17 @@
 import moment from "moment";
 // import { faker } from '@faker-js/faker';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useCallback } from 'react';
+
+// import "../calibration.css";
 
 // import { useLocation } from 'react-router-dom';
 // import { useState} from 'react';
-
-
+// import GaugeChart from 'react-gauge-chart';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
+
+
 
 // import Typography from '@mui/material/Typography';
 // import { useRouter } from 'src/routes/hooks';
@@ -23,7 +26,9 @@ import Grid from '@mui/material/Unstable_Grid2';
 import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {AllMacAddress} from "../../../_mock/macAddress";
+import {sendG3,AllMacAddress} from "../../../_mock/macAddress";
+
+
 
 // import AppTrafficBySite from '../app-traffic-by-site';
 // import AppCurrentSubject from '../app-current-subject';
@@ -38,7 +43,22 @@ import {AllMacAddress} from "../../../_mock/macAddress";
 export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName,setPathName]=useState([]);
-  const [machineType]=useState('');
+  const [G3output,setG3Output]=useState([]);
+  const G3command=useCallback(()=>{
+   
+    sendG3('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setG3Output(res);
+     
+    })
+  },[])
+  // const [machineType]=useState('');
+
+  // const [value, setValue] = useState(50); // Set default value at 50%
+
+  // const handleChange = (e) => {
+  //   setValue(e.target.value);
+  // };
  
 
   // calling for api data
@@ -62,9 +82,11 @@ export default function AppView() {
   useEffect(() => {
   
     LoadData();
+    G3command();
     
     const interval=setInterval(()=>{
        LoadData();
+       G3command();
      
     },5000)
 
@@ -75,7 +97,7 @@ export default function AppView() {
 
  
    
-  },[]);
+  },[G3command]);
 
   
   
@@ -91,76 +113,126 @@ export default function AppView() {
 
 
   // converting value in the form of lacks, thousand ,Coror
-  const amountText = amt => {
-    amt = amt || 0;
+//   const amountText = amt => {
+//     amt = amt || 0;
  
-    if(amt>=10000000) {
-        const cr = parseInt(amt / 100000, 10) / 100;
-        const Cr = parseFloat(cr.toFixed(2));
-        return `${Cr} Cr`;
-    } 
-    if(amt>=1000000) {
-        const l = parseInt(amt / 1000 ,10) / 100;
-        const L = parseFloat(l.toFixed(6));
-        return  `${L} L`;
-    } 
-    if(amt>=1000) {
-        const k = parseInt(amt / 10 ,10) / 100;
-        const K = parseFloat(k.toFixed(2));
-        return  `${K} K`;
-    }
+//     if(amt>=10000000) {
+//         const cr = parseInt(amt / 100000, 10) / 100;
+//         const Cr = parseFloat(cr.toFixed(2));
+//         return `${Cr} Cr`;
+//     } 
+//     if(amt>=1000000) {
+//         const l = parseInt(amt / 1000 ,10) / 100;
+//         const L = parseFloat(l.toFixed(6));
+//         return  `${L} L`;
+//     } 
+//     if(amt>=1000) {
+//         const k = parseInt(amt / 10 ,10) / 100;
+//         const K = parseFloat(k.toFixed(2));
+//         return  `${K} K`;
+//     }
 
-    // Remove the unnecessary else statement
-    return amt;
-}
+//     // Remove the unnecessary else statement
+//     return amt;
+// }
 
 
 
  // calulating some of two numbers
- const sum = (a, b) => a + b;
+//  const sum = (a, b) => a + b;
 
   
 
 
   return (
     <Container maxWidth="xxl" >
-      
-
+        
       <Grid container spacing={3} >
         {/* total Machines */}
         <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Total Machines"
+        <AppWidgetSummary
+            title="Input Voltage"
+            text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}
           />
         </Grid>
          {/* online machines */}
         <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Online Machines"
-            total={pathName.filter(filterOnline).length}
-            color="info"
-            icon={<img alt="icon" src="/assets/icons/online.png" />}
+        <AppWidgetSummary
+            title="Input Voltage"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}
           />
         </Grid>
         {/* total collection */}
         <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title={machineType==="RECD" ? "Defective Sensor" :"Total Collections"}
-            total={pathName.length ?amountText(pathName.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
-            color="info"
-            icon={<img alt="icon" src="/assets/icons/collection.png" />}
+        <AppWidgetSummary
+            title="Input Voltage"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}
           />
         </Grid>
            {/* item dispensed */}
         <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title={machineType==="RECD" ? "Tempered" :"Item Dispnesed"}
-            total={pathName.length ?(pathName.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):'...'}
-            color="error"
-            icon={<img alt="icon" src="/assets/icons/items.png" />}
+           <AppWidgetSummary
+            title="Input Frequency"
+             text='Hz'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={1}
+          />
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
+        <AppWidgetSummary
+            title="Output Voltage"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>1 ? G3output[2].split('/')[0]:''}
+          />
+        </Grid>
+         {/* online machines */}
+        <Grid xs={12} sm={6} md={3}>
+        <AppWidgetSummary
+            title="Output Voltage"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>1 ? G3output[2].split('/')[1]:''}
+          />
+        </Grid>
+        {/* total collection */}
+        <Grid xs={12} sm={6} md={3}>
+        <AppWidgetSummary
+            title="Output Voltage"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>1 ? G3output[2].split('/')[2]:''}
+          />
+        </Grid>
+           {/* item dispensed */}
+        <Grid xs={12} sm={6} md={3}>
+           <AppWidgetSummary
+            title="Temperature"
+             text='C'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={1}
           />
         </Grid>
 
