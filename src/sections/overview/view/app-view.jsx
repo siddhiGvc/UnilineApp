@@ -1,5 +1,7 @@
 // import moment from "moment";
 // import { faker } from '@faker-js/faker';
+import moment from "moment";
+import Select from 'react-select';
 import { useState,useEffect,useCallback } from 'react';
 
 // import "../calibration.css";
@@ -27,6 +29,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
 import {sendG3,AllMacAddress} from "../../../_mock/macAddress";
+// import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 
 
 
@@ -42,12 +45,16 @@ import {sendG3,AllMacAddress} from "../../../_mock/macAddress";
 // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo")) || [] ;
 export default function AppView() {
   // const [cities,setCities]=useState([]);
-  const [pathName,setPathName]=useState([]);
+  const [pathName]=useState([]);
+  const [options1,setOptions1]=useState([]);
+  const [data,setData]=useState([])
+  const [value1,setValue1]=useState({MacID:'',SNoutput:''});
+  const [selectedOption1, setSelectedOption1] = useState({id:-1});
   // const [G1output,setG1Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
   const G3command=useCallback(()=>{
    
-    sendG3('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
+    sendG3(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG3Output(res);
      
@@ -59,7 +66,7 @@ export default function AppView() {
     //        setG1Output([]);
     //   },5000)
     // })
-  },[])
+  },[value1])
 
   // const G1command=useCallback(()=>{
   
@@ -81,19 +88,40 @@ export default function AppView() {
  
 
   // calling for api data
-  const LoadData=()=>{
+  const LoadData=useCallback(()=>{
     const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
        console.log(UserInfo);
 
     
-    AllMacAddress().then((res)=>{
-      console.log(res);
-      setPathName(res);
-    
-    });
+       AllMacAddress().then((res)=>{
+
+        const filteredData=res.filter((elem)=> online(elem) );
+        setData(filteredData);
+  
+        const formattedData = filteredData.map((option,i) => ({
+          value: option.MacID,
+          label: option.MacID,
+          id:i
+        }));
+  
+      
+  
+        setOptions1(formattedData);
+       
+        if(selectedOption1.id>=0)
+          {
+            // console.log(res[selectedOption1.id]);
+          
+            setValue1(filteredData[selectedOption1.id]);
+           
+          }
+         
+        
+        
+      })
   
    
-  };
+  },[setOptions1,setValue1,selectedOption1])
 
  
 
@@ -118,8 +146,23 @@ export default function AppView() {
 
  
    
-  },[G3command]);
+  },[LoadData,G3command]);
 
+
+  const handleSelectChange1 = (elem) => {
+    setSelectedOption1(elem);
+    
+   
+    AllMacAddress().then((res)=>{
+    
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
+      console.log(data);
+      // setValue1(res[elem.id]);
+      
+    })
+  };
   
   
  
@@ -163,10 +206,29 @@ export default function AppView() {
 //  const sum = (a, b) => a + b;
 
   
-
+const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
 
   return (
     <Container maxWidth="xxl" >
+       <div className="row">
+                    <div className="col-md-12">
+                        <div className="form-group my-2">
+                            <h6>Device:</h6>
+                            <Select
+                                name="board1"
+                                value={selectedOption1}
+                                onChange={handleSelectChange1}
+                                options={options1}
+                                isSearchable // Equivalent to isSearchable={true}
+                                placeholder="Select option..."
+                            />
+                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <div className="invalid-feedback"/>
+                        </div>
+                    </div>
+                   
+              </div>
+           
         
       <Grid container spacing={3} >
         {/* total Machines */}
@@ -220,7 +282,7 @@ export default function AppView() {
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 ? G3output[2].split('/')[0]:''}
+            value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[0]:''}
           />
         </Grid>
          {/* online machines */}
@@ -231,7 +293,7 @@ export default function AppView() {
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 ? G3output[2].split('/')[1]:''}
+            value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[1]:''}
           />
         </Grid>
         {/* total collection */}
@@ -242,7 +304,7 @@ export default function AppView() {
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 ? G3output[2].split('/')[2]:''}
+            value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[2]:''}
           />
         </Grid>
            {/* item dispensed */}

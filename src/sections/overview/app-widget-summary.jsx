@@ -7,7 +7,7 @@ import { Card, Stack, CardHeader } from '@mui/material';
 export default function AppWidgetSummary({ title, text, subheader, value, sx, ...other }) {
   const minRange = 0;
   const maxRange = 500;
-  const percent = (value - minRange) / (maxRange - minRange); // Calculate percentage based on the range
+  const percent = (parseInt(value,10) - minRange) / (maxRange - minRange); // Calculate percentage based on the range
 
   return (
     <Card
