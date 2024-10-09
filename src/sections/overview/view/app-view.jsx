@@ -29,7 +29,7 @@ import StatusLabel from '../statusLabel';
 // import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {sendG3,AllMacAddress} from "../../../_mock/macAddress";
+import {sendG1,sendG3,AllMacAddress} from "../../../_mock/macAddress";
 // import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 
 
@@ -48,10 +48,10 @@ export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName]=useState([]);
   const [options1,setOptions1]=useState([]);
-  const [data,setData]=useState([])
-  const [value1,setValue1]=useState({MacID:'',SNoutput:''});
+  // const [setData]=useState([])
+  const [value1,setValue1]=useState({MacID:'',SNoutput:'GVC-CUPS-4005'});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
-  // const [G1output,setG1Output]=useState([]);
+  const [G1output,setG1Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
   const G3command=useCallback(()=>{
    
@@ -60,14 +60,16 @@ export default function AppView() {
       setG3Output(res);
      
     })
-    // sendG1('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
-    //   console.log(res);
-    //   setG1Output(res);
-    //   setTimeout(()=>{
-    //        setG1Output([]);
-    //   },5000)
-    // })
-  },[value1])
+    setTimeout(()=>{
+      sendG1(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+        console.log(res);
+        setG1Output(res);
+      
+      })
+
+    },5000)
+    
+  },[value1.MacID,value1.SNoutput])
 
   // const G1command=useCallback(()=>{
   
@@ -97,7 +99,7 @@ export default function AppView() {
        AllMacAddress().then((res)=>{
 
         const filteredData=res.filter((elem)=> online(elem) );
-        setData(filteredData);
+        // setData(filteredData);
   
         const formattedData = filteredData.map((option,i) => ({
           value: option.MacID,
@@ -122,7 +124,7 @@ export default function AppView() {
       })
   
    
-  },[setOptions1,setValue1,selectedOption1])
+  },[selectedOption1.id])
 
  
 
@@ -134,11 +136,11 @@ export default function AppView() {
     //  G1command();
     
     const interval=setInterval(()=>{
-       LoadData();
+      //  LoadData();
        G3command();
       //  G1command();
      
-    },5000)
+    },9000)
 
     return(()=>{
       clearInterval(interval);
@@ -154,15 +156,15 @@ export default function AppView() {
     setSelectedOption1(elem);
     
    
-    AllMacAddress().then((res)=>{
+    // AllMacAddress().then((res)=>{
     
-      const filteredData=res.filter((m)=> online(m) )
-      console.log(filteredData)
-      setData(filteredData);
-      console.log(data);
-      // setValue1(res[elem.id]);
+    //   const filteredData=res.filter((m)=> online(m) )
+    //   console.log(filteredData)
+    //   setData(filteredData);
+    //   console.log(data);
+    //   // setValue1(res[elem.id]);
       
-    })
+    // })
   };
   
   
@@ -273,7 +275,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={1}
+            value={G1output.length>2 ? G1output[5]:''}
           />
         </Grid>
         <Grid xs={12} sm={6} md={3}>
@@ -283,7 +285,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[0]:''}
+            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[0]:''}
           />
         </Grid>
          {/* online machines */}
@@ -294,7 +296,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[1]:''}
+            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[1]:''}
           />
         </Grid>
         {/* total collection */}
@@ -305,7 +307,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[2]:''}
+            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[2]:''}
           />
         </Grid>
         
@@ -317,7 +319,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={1}
+            value={G1output.length>2 ? G1output[4]:''}
           />
         </Grid>
 
