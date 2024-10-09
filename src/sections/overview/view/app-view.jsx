@@ -1,7 +1,7 @@
-// import moment from "moment";
-// import { faker } from '@faker-js/faker';
 import moment from "moment";
 import Select from 'react-select';
+// import { faker } from '@faker-js/faker';
+// import moment from "moment";
 import { useState,useEffect,useCallback } from 'react';
 
 // import "../calibration.css";
@@ -21,6 +21,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import Iconify from 'src/components/iconify';
 
 // import AppTasks from '../app-tasks';
+import StatusLabel from '../statusLabel';
 // import AppNewsUpdate from '../app-news-update';
 // import { GetClentNameDetails } from "src/_mock/customers";
 
@@ -232,7 +233,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
         
       <Grid container spacing={3} >
         {/* total Machines */}
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
             title="Input Voltage"
             text='Vsc'
@@ -243,7 +244,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
           />
         </Grid>
          {/* online machines */}
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
             title="Input Voltage"
              text='Vsc'
@@ -254,7 +255,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
           />
         </Grid>
         {/* total collection */}
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
             title="Input Voltage"
              text='Vsc'
@@ -265,7 +266,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
           />
         </Grid>
            {/* item dispensed */}
-        {/* <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
            <AppWidgetSummary
             title="Input Frequency"
              text='Hz'
@@ -274,8 +275,8 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
             value={1}
           />
-        </Grid> */}
-        <Grid xs={12} sm={6} md={4}>
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
             title="Output Voltage"
              text='Vsc'
@@ -286,7 +287,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
           />
         </Grid>
          {/* online machines */}
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
             title="Output Voltage"
              text='Vsc'
@@ -297,7 +298,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
           />
         </Grid>
         {/* total collection */}
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
             title="Output Voltage"
              text='Vsc'
@@ -307,8 +308,9 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             value={G3output.length>2 && G3output[2].includes('/')?G3output.split('/')[2]:''}
           />
         </Grid>
+        
            {/* item dispensed */}
-        {/* <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={3}>
            <AppWidgetSummary
             title="Temperature"
              text='F'
@@ -317,7 +319,34 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
             value={1}
           />
-        </Grid> */}
+        </Grid>
+
+       <Grid xs={6} sm={6} md={6}>
+       <StatusLabel label="Not Communicating With UPS" isOn={false} /> {/* On (Green) */}
+       </Grid>
+       <Grid xs={6} sm={6} md={6}>
+       <StatusLabel label="AC Input Normal" isOn /> {/* On (Green) */}
+       </Grid>
+       <Grid xs={6} sm={6} md={6}>
+       <StatusLabel label="Battery Normal" isOn /> {/* On (Green) */}
+       </Grid>
+       <Grid xs={6} sm={6} md={6}>
+       <StatusLabel label="Battery Bad" isOn /> {/* Off (Red) */}
+  
+       </Grid>
+       <Grid xs={6} sm={6} md={6}>
+       <StatusLabel label="Bypass Mode" isOn /> {/* On (Green) */}
+       </Grid>
+       <Grid xs={6} sm={6} md={6}>
+       <StatusLabel label="UPS Self Test" isOn /> {/* On (Green) */}
+       </Grid>
+     
+     
+      
+      
+      
+     
+     
 
         {/* Machine Status */}
         {/* <Grid xs={12} md={6} lg={6}>
@@ -360,7 +389,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             }}
           />
         </Grid> */}
-     </Grid>
+     {/* </Grid> */}
         {/* <Grid xs={12} md={6} lg={8}>
           <AppConversionRates
             title="Conversion Rates"
@@ -466,8 +495,8 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
               { id: '5', name: 'Sprint Showcase' },
             ]}
           />
-        </Grid>
-      </Grid> */}
+        </Grid> */}
+      </Grid>
     </Container>
   );
 }
