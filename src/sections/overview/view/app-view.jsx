@@ -1,4 +1,4 @@
-import moment from "moment";
+// import moment from "moment";
 // import { faker } from '@faker-js/faker';
 import { useState,useEffect,useCallback } from 'react';
 
@@ -7,7 +7,7 @@ import { useState,useEffect,useCallback } from 'react';
 // import { useLocation } from 'react-router-dom';
 // import { useState} from 'react';
 // import GaugeChart from 'react-gauge-chart';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -23,7 +23,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import { GetClentNameDetails } from "src/_mock/customers";
 
 // import AppOrderTimeline from '../app-order-timeline';
-import AppCurrentVisits from '../app-current-visits';
+// import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
 import {sendG3,AllMacAddress} from "../../../_mock/macAddress";
@@ -43,6 +43,7 @@ import {sendG3,AllMacAddress} from "../../../_mock/macAddress";
 export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName,setPathName]=useState([]);
+  // const [G1output,setG1Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
   const G3command=useCallback(()=>{
    
@@ -51,7 +52,25 @@ export default function AppView() {
       setG3Output(res);
      
     })
+    // sendG1('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
+    //   console.log(res);
+    //   setG1Output(res);
+    //   setTimeout(()=>{
+    //        setG1Output([]);
+    //   },5000)
+    // })
   },[])
+
+  // const G1command=useCallback(()=>{
+  
+  //   sendG1('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
+  //     console.log(res);
+  //     setG1Output(res);
+  //     setTimeout(()=>{
+  //          setG1Output([]);
+  //     },5000)
+  //   })
+  // },[])
   // const [machineType]=useState('');
 
   // const [value, setValue] = useState(50); // Set default value at 50%
@@ -81,12 +100,14 @@ export default function AppView() {
   // calling loadData every 5 seconds
   useEffect(() => {
   
-    LoadData();
-    G3command();
+     LoadData();
+     G3command();
+    //  G1command();
     
     const interval=setInterval(()=>{
        LoadData();
        G3command();
+      //  G1command();
      
     },5000)
 
@@ -102,12 +123,12 @@ export default function AppView() {
   
   
  
-  const theme = useTheme('...');
+  // const theme = useTheme('...');
   // const router=useRouter();
 
 
   // filtering onlines machines
-  const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  // const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
@@ -149,7 +170,7 @@ export default function AppView() {
         
       <Grid container spacing={3} >
         {/* total Machines */}
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
         <AppWidgetSummary
             title="Input Voltage"
             text='Vsc'
@@ -160,7 +181,7 @@ export default function AppView() {
           />
         </Grid>
          {/* online machines */}
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
         <AppWidgetSummary
             title="Input Voltage"
              text='Vsc'
@@ -171,7 +192,7 @@ export default function AppView() {
           />
         </Grid>
         {/* total collection */}
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
         <AppWidgetSummary
             title="Input Voltage"
              text='Vsc'
@@ -182,7 +203,7 @@ export default function AppView() {
           />
         </Grid>
            {/* item dispensed */}
-        <Grid xs={12} sm={6} md={3}>
+        {/* <Grid xs={12} sm={6} md={3}>
            <AppWidgetSummary
             title="Input Frequency"
              text='Hz'
@@ -191,8 +212,8 @@ export default function AppView() {
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
             value={1}
           />
-        </Grid>
-        <Grid xs={12} sm={6} md={3}>
+        </Grid> */}
+        <Grid xs={12} sm={6} md={4}>
         <AppWidgetSummary
             title="Output Voltage"
              text='Vsc'
@@ -203,7 +224,7 @@ export default function AppView() {
           />
         </Grid>
          {/* online machines */}
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
         <AppWidgetSummary
             title="Output Voltage"
              text='Vsc'
@@ -214,7 +235,7 @@ export default function AppView() {
           />
         </Grid>
         {/* total collection */}
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
         <AppWidgetSummary
             title="Output Voltage"
              text='Vsc'
@@ -225,19 +246,19 @@ export default function AppView() {
           />
         </Grid>
            {/* item dispensed */}
-        <Grid xs={12} sm={6} md={3}>
+        {/* <Grid xs={12} sm={6} md={3}>
            <AppWidgetSummary
             title="Temperature"
-             text='C'
+             text='F'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
             value={1}
           />
-        </Grid>
+        </Grid> */}
 
         {/* Machine Status */}
-        <Grid xs={12} md={6} lg={6}>
+        {/* <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
             title="Machine Status"
             chart={{
@@ -252,10 +273,10 @@ export default function AppView() {
               ]
             }}
           />
-        </Grid>
+        </Grid> */}
        
         {/* Stcok Status */}
-        <Grid xs={12} md={6} lg={6}>
+        {/* <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
             title="Stock Status"
             chart={{
@@ -276,7 +297,7 @@ export default function AppView() {
              
             }}
           />
-        </Grid>
+        </Grid> */}
      </Grid>
         {/* <Grid xs={12} md={6} lg={8}>
           <AppConversionRates
