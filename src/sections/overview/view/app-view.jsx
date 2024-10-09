@@ -49,7 +49,7 @@ export default function AppView() {
   const [pathName]=useState([]);
   const [options1,setOptions1]=useState([]);
   // const [setData]=useState([])
-  const [value1,setValue1]=useState({MacID:'',SNoutput:'GVC-CUPS-4005'});
+  const [value1,setValue1]=useState({MacID:'E6:hjhj',SNoutput:'GVC-CUPS-4005'});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [G1output,setG1Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
@@ -67,7 +67,7 @@ export default function AppView() {
       
       })
 
-    },5000)
+    },6000)
     
   },[value1.MacID,value1.SNoutput])
 
@@ -140,7 +140,7 @@ export default function AppView() {
        G3command();
       //  G1command();
      
-    },9000)
+    },10000)
 
     return(()=>{
       clearInterval(interval);

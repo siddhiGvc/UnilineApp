@@ -16,13 +16,13 @@ export default function AppWidgetSummary({ title, text, subheader, value, sx, ..
       direction="column"
       sx={{
         px: 3,
-        py: 1,
+        py: 0.2,
         borderRadius: 2,
         ...sx,
       }}
       {...other}
     >
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
+      <CardHeader title={title} subheader={subheader} sx={{ mb: 1, fontSize:5,marging:0}} />
 
       <GaugeChart
         id="gauge-chart1"
