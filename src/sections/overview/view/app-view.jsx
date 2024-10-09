@@ -222,7 +222,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
                                 isSearchable // Equivalent to isSearchable={true}
                                 placeholder="Select option..."
                             />
-                            {/* <input type="text" className="form-control" name="machine" /> */}
+                        
                             <div className="invalid-feedback"/>
                         </div>
                     </div>

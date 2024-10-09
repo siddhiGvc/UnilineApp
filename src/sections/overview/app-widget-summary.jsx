@@ -7,7 +7,7 @@ import { Card, Stack, CardHeader } from '@mui/material';
 export default function AppWidgetSummary({ title, text, subheader, value, sx, ...other }) {
   const minRange = 0;
   const maxRange = 500;
-  const percent = (parseInt(value,10) - minRange) / (maxRange - minRange); // Calculate percentage based on the range
+  const percent = (value - minRange) / (maxRange - minRange); // Calculate percentage based on the range
 
   return (
     <Card
@@ -35,7 +35,7 @@ export default function AppWidgetSummary({ title, text, subheader, value, sx, ..
         needleBaseColor="#888" // Color of the needle base
         textColor="#000" // Color of the text
         formatTextValue={() => `${value} ${text}`} // Display the exact value in volts (not percentage)
-        needleScale={0.40}
+        needleScale={0.43}
         animate={false}
       />
     </Card>
