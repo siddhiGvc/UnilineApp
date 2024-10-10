@@ -15,8 +15,8 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
+import {AllMacAddress} from 'src/_mock/macAddress';
 import { GetClentNameDetails} from 'src/_mock/customers';
-import { mapping,AllMachines} from 'src/_mock/AllMachines';
 
 import Scrollbar from 'src/components/scrollbar';
 
@@ -107,7 +107,7 @@ export default function MachinePage() {
     const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
   
     // getting data from fecthData function
-    AllMachines().then((res)=>{
+    AllMacAddress().then((res)=>{
     
       setMachines(res);
     })
@@ -141,7 +141,7 @@ export default function MachinePage() {
     console.log("select2function started");
   
     // Use Promise.all() to fetch data from AllMachines() API
-    AllMachines()
+    AllMacAddress()
       .then(response => {
         console.log(response);
         const data = response;
@@ -199,12 +199,12 @@ export default function MachinePage() {
     setMessage("Please seclect date") 
     }
     else{
-      mapping(obj).then((r)=>{
-        showAlertMessage();
-        setType("success");
-        setMessage("Successfully Created") ;
-        handleModalClose();
-      })
+      // mapping(obj).then((r)=>{
+      //   showAlertMessage();
+      //   setType("success");
+      //   setMessage("Successfully Created") ;
+      //   handleModalClose();
+      // })
     }
    
    
@@ -338,7 +338,7 @@ export default function MachinePage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'id', label: 'Sr.No' },
-                  { id: 'name', label: 'Serial'},
+                  { id: 'name', label: 'MacID'},
                   { id: 'email', label: 'Uid' },
                   { id: 'zone', label: `${cInfo[1]}` },
                   { id: 'ward', label: `${cInfo[2]}` },

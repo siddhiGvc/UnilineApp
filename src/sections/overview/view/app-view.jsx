@@ -1,19 +1,14 @@
 import moment from "moment";
-import Select from 'react-select';
 // import { faker } from '@faker-js/faker';
-// import moment from "moment";
-import { useState,useEffect,useCallback } from 'react';
-
-// import "../calibration.css";
+import { useState,useEffect } from 'react';
 
 // import { useLocation } from 'react-router-dom';
 // import { useState} from 'react';
-// import GaugeChart from 'react-gauge-chart';
-// import { useTheme } from '@mui/material/styles';
+
+
+import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-
-
 
 // import Typography from '@mui/material/Typography';
 // import { useRouter } from 'src/routes/hooks';
@@ -21,18 +16,14 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import Iconify from 'src/components/iconify';
 
 // import AppTasks from '../app-tasks';
-import StatusLabel from '../statusLabel';
 // import AppNewsUpdate from '../app-news-update';
 // import { GetClentNameDetails } from "src/_mock/customers";
 
 // import AppOrderTimeline from '../app-order-timeline';
-// import AppCurrentVisits from '../app-current-visits';
+import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {sendG1,sendG3,AllMacAddress} from "../../../_mock/macAddress";
-// import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
-
-
+import {AllMacAddress} from "../../../_mock/macAddress";
 
 // import AppTrafficBySite from '../app-traffic-by-site';
 // import AppCurrentSubject from '../app-current-subject';
@@ -46,101 +37,36 @@ import {sendG1,sendG3,AllMacAddress} from "../../../_mock/macAddress";
 // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo")) || [] ;
 export default function AppView() {
   // const [cities,setCities]=useState([]);
-  const [pathName]=useState([]);
-  const [options1,setOptions1]=useState([]);
-  // const [setData]=useState([])
-  const [value1,setValue1]=useState({MacID:'E6:hjhj',SNoutput:'GVC-CUPS-4005'});
-  const [selectedOption1, setSelectedOption1] = useState({id:-1});
-  const [G1output,setG1Output]=useState([]);
-  const [G3output,setG3Output]=useState([]);
-  const G3command=useCallback(()=>{
-   
-    sendG3(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-      console.log(res);
-      setG3Output(res);
-     
-    })
-    setTimeout(()=>{
-      sendG1(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-        console.log(res);
-        setG1Output(res);
-      
-      })
-
-    },6000)
-    
-  },[value1.MacID,value1.SNoutput])
-
-  // const G1command=useCallback(()=>{
-  
-  //   sendG1('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
-  //     console.log(res);
-  //     setG1Output(res);
-  //     setTimeout(()=>{
-  //          setG1Output([]);
-  //     },5000)
-  //   })
-  // },[])
-  // const [machineType]=useState('');
-
-  // const [value, setValue] = useState(50); // Set default value at 50%
-
-  // const handleChange = (e) => {
-  //   setValue(e.target.value);
-  // };
+  const [pathName,setPathName]=useState([]);
+  const [machineType]=useState('');
  
 
   // calling for api data
-  const LoadData=useCallback(()=>{
+  const LoadData=()=>{
     const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
        console.log(UserInfo);
 
     
-       AllMacAddress().then((res)=>{
-
-        const filteredData=res.filter((elem)=> online(elem) );
-        // setData(filteredData);
-  
-        const formattedData = filteredData.map((option,i) => ({
-          value: option.MacID,
-          label: option.MacID,
-          id:i
-        }));
-  
-      
-  
-        setOptions1(formattedData);
-       
-        if(selectedOption1.id>=0)
-          {
-            // console.log(res[selectedOption1.id]);
-          
-            setValue1(filteredData[selectedOption1.id]);
-           
-          }
-         
-        
-        
-      })
+    AllMacAddress().then((res)=>{
+      console.log(res);
+      setPathName(res);
+    
+    });
   
    
-  },[selectedOption1.id])
+  };
 
  
 
   // calling loadData every 5 seconds
   useEffect(() => {
   
-     LoadData();
-     G3command();
-    //  G1command();
+    LoadData();
     
     const interval=setInterval(()=>{
-      //  LoadData();
-       G3command();
-      //  G1command();
+       LoadData();
      
-    },10000)
+    },5000)
 
     return(()=>{
       clearInterval(interval);
@@ -149,209 +75,97 @@ export default function AppView() {
 
  
    
-  },[LoadData,G3command]);
+  },[]);
 
-
-  const handleSelectChange1 = (elem) => {
-    setSelectedOption1(elem);
-    
-   
-    // AllMacAddress().then((res)=>{
-    
-    //   const filteredData=res.filter((m)=> online(m) )
-    //   console.log(filteredData)
-    //   setData(filteredData);
-    //   console.log(data);
-    //   // setValue1(res[elem.id]);
-      
-    // })
-  };
   
   
  
-  // const theme = useTheme('...');
+  const theme = useTheme('...');
   // const router=useRouter();
 
 
   // filtering onlines machines
-  // const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // converting value in the form of lacks, thousand ,Coror
-//   const amountText = amt => {
-//     amt = amt || 0;
+  const amountText = amt => {
+    amt = amt || 0;
  
-//     if(amt>=10000000) {
-//         const cr = parseInt(amt / 100000, 10) / 100;
-//         const Cr = parseFloat(cr.toFixed(2));
-//         return `${Cr} Cr`;
-//     } 
-//     if(amt>=1000000) {
-//         const l = parseInt(amt / 1000 ,10) / 100;
-//         const L = parseFloat(l.toFixed(6));
-//         return  `${L} L`;
-//     } 
-//     if(amt>=1000) {
-//         const k = parseInt(amt / 10 ,10) / 100;
-//         const K = parseFloat(k.toFixed(2));
-//         return  `${K} K`;
-//     }
+    if(amt>=10000000) {
+        const cr = parseInt(amt / 100000, 10) / 100;
+        const Cr = parseFloat(cr.toFixed(2));
+        return `${Cr} Cr`;
+    } 
+    if(amt>=1000000) {
+        const l = parseInt(amt / 1000 ,10) / 100;
+        const L = parseFloat(l.toFixed(6));
+        return  `${L} L`;
+    } 
+    if(amt>=1000) {
+        const k = parseInt(amt / 10 ,10) / 100;
+        const K = parseFloat(k.toFixed(2));
+        return  `${K} K`;
+    }
 
-//     // Remove the unnecessary else statement
-//     return amt;
-// }
+    // Remove the unnecessary else statement
+    return amt;
+}
 
 
 
  // calulating some of two numbers
-//  const sum = (a, b) => a + b;
+ const sum = (a, b) => a + b;
 
   
-const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+
 
   return (
     <Container maxWidth="xxl" >
-       <div className="row">
-                    <div className="col-md-12">
-                        <div className="form-group my-2">
-                            <h6>Device:</h6>
-                            <Select
-                                name="board1"
-                                value={selectedOption1}
-                                onChange={handleSelectChange1}
-                                options={options1}
-                                isSearchable // Equivalent to isSearchable={true}
-                                placeholder="Select option..."
-                            />
-                        
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
-                   
-              </div>
-           
-        
+      
+
       <Grid container spacing={3} >
         {/* total Machines */}
         <Grid xs={12} sm={6} md={3}>
-        <AppWidgetSummary
-            title="Input Voltage"
-            text='Vsc'
+          <AppWidgetSummary
+            title="Total Machines"
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}
           />
         </Grid>
          {/* online machines */}
         <Grid xs={12} sm={6} md={3}>
-        <AppWidgetSummary
-            title="Input Voltage"
-             text='Vsc'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}
+          <AppWidgetSummary
+            title="Online Machines"
+            total={pathName.filter(filterOnline).length}
+            color="info"
+            icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
         </Grid>
         {/* total collection */}
         <Grid xs={12} sm={6} md={3}>
-        <AppWidgetSummary
-            title="Input Voltage"
-             text='Vsc'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}
+          <AppWidgetSummary
+            title={machineType==="RECD" ? "Defective Sensor" :"Total Collections"}
+            total={pathName.length ?amountText(pathName.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
+            color="info"
+            icon={<img alt="icon" src="/assets/icons/collection.png" />}
           />
         </Grid>
            {/* item dispensed */}
         <Grid xs={12} sm={6} md={3}>
-           <AppWidgetSummary
-            title="Input Frequency"
-             text='Hz'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G1output.length>2 ? G1output[5]:''}
+          <AppWidgetSummary
+            title={machineType==="RECD" ? "Tempered" :"Item Dispnesed"}
+            total={pathName.length ?(pathName.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):'...'}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/items.png" />}
           />
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
-        <AppWidgetSummary
-            title="Output Voltage"
-             text='Vsc'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[0]:''}
-          />
-        </Grid>
-         {/* online machines */}
-        <Grid xs={12} sm={6} md={3}>
-        <AppWidgetSummary
-            title="Output Voltage"
-             text='Vsc'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[1]:''}
-          />
-        </Grid>
-        {/* total collection */}
-        <Grid xs={12} sm={6} md={3}>
-        <AppWidgetSummary
-            title="Output Voltage"
-             text='Vsc'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[2]:''}
-          />
-        </Grid>
-        
-           {/* item dispensed */}
-        <Grid xs={12} sm={6} md={3}>
-           <AppWidgetSummary
-            title="Temperature"
-             text='F'
-            total={pathName.length}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G1output.length>2 ? G1output[4]:''}
-          />
-        </Grid>
-
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Not Communicating With UPS" isOn={false} /> {/* On (Green) */}
-       </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="AC Input Normal" isOn /> {/* On (Green) */}
-       </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Battery Normal" isOn /> {/* On (Green) */}
-       </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Battery Bad" isOn /> {/* Off (Red) */}
-  
-       </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Bypass Mode" isOn /> {/* On (Green) */}
-       </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="UPS Self Test" isOn /> {/* On (Green) */}
-       </Grid>
-     
-     
-      
-      
-      
-     
-     
 
         {/* Machine Status */}
-        {/* <Grid xs={12} md={6} lg={6}>
+        <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
             title="Machine Status"
             chart={{
@@ -366,10 +180,10 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
               ]
             }}
           />
-        </Grid> */}
+        </Grid>
        
         {/* Stcok Status */}
-        {/* <Grid xs={12} md={6} lg={6}>
+        <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
             title="Stock Status"
             chart={{
@@ -390,8 +204,8 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
              
             }}
           />
-        </Grid> */}
-     {/* </Grid> */}
+        </Grid>
+     </Grid>
         {/* <Grid xs={12} md={6} lg={8}>
           <AppConversionRates
             title="Conversion Rates"
@@ -497,8 +311,8 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
               { id: '5', name: 'Sprint Showcase' },
             ]}
           />
-        </Grid> */}
-      </Grid>
+        </Grid>
+      </Grid> */}
     </Container>
   );
 }

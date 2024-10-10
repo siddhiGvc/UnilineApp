@@ -1,51 +1,45 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import GaugeChart from 'react-gauge-chart';
 
-import { Card, Stack, CardHeader } from '@mui/material';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-export default function AppWidgetSummary({ title, text, subheader, value, sx, ...other }) {
-  const minRange = 0;
-  const maxRange = 500;
-  const percent = (value - minRange) / (maxRange - minRange); // Calculate percentage based on the range
+// import { fShortenNumber } from 'src/utils/format-number';
 
+// ----------------------------------------------------------------------
+
+export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }) {
   return (
     <Card
       component={Stack}
       spacing={3}
-      direction="column"
+      direction="row"
       sx={{
         px: 3,
-        py: 0.2,
+        py: 5,
         borderRadius: 2,
         ...sx,
       }}
       {...other}
     >
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 1, fontSize:5,marging:0}} />
+      {icon && <Box sx={{ width: 64, height: 64 }}>{icon}</Box>}
 
-      <GaugeChart
-        id="gauge-chart1"
-        nrOfLevels={500}
-        arcsLength={[0.3, 0.5, 0.2]} // Different arc colors
-        colors={['#00FF00', '#FFC371', '#FF5F6D']}
-        percent={percent} // Pass percentage to position the needle correctly
-        arcPadding={0.02}
-        needleColor="#345243" // Color of the needle
-        needleBaseColor="#888" // Color of the needle base
-        textColor="#000" // Color of the text
-        formatTextValue={() => `${value} ${text}`} // Display the exact value in volts (not percentage)
-        needleScale={0.43}
-        animate={false}
-      />
+      <Stack spacing={0.5}>
+        <Typography variant="h4">{total}</Typography>
+
+        <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
+          {title}
+        </Typography>
+      </Stack>
     </Card>
   );
 }
 
 AppWidgetSummary.propTypes = {
-  title: PropTypes.string.isRequired,
-  subheader: PropTypes.string,
-  value: PropTypes.number.isRequired, // Ensure value is required
+  color: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   sx: PropTypes.object,
-  text: PropTypes.any,
+  title: PropTypes.string,
+  total: PropTypes.number,
 };

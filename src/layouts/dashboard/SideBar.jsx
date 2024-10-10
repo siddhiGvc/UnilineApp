@@ -85,41 +85,35 @@ export default function SideBar(){
                <li className="mt-1">
                      <NavItem path="/dashboard" icon={ <i className="fa-solid fa-chart-line" />} title='Dashboard'/>
                 </li>
-                <li  className=" mt-1">
-                      <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='Kwikpay Single'/>
-                 </li>
-                 <li  className=" mt-1">
-                      <NavItem path="/KwikpayTriple" icon={ <i className="fa-solid fa-fan" />} title='Kwikpay Triple'/>
-                 </li>
-                 <li  className=" mt-1">
-                      <NavItem path="/MacTable2" icon={ <i className="fa-solid fa-fan" />} title='Kwikpay 6 Boards'/>
+                <li  className="ra mt-1">
+                      <NavItem path="/UnilineTest" icon={ <i className="fa-solid fa-fan" />} title='Uniline Test'/>
                  </li>
                  <li  className=" mt-1">
                       <NavItem path="/TableTesting" icon={ <i className="fa-solid fa-fan" />} title='UNILINE Demo'/>
                  </li>
-                
-                 <li  className=" mt-1">
-                      <NavItem path="/testing" icon={ <i className="fa-solid fa-fan" />} title='Testing'/>
-                 </li>
 
-                <li  className="ra mt-1">
-                      <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>
+                 <li  className=" mt-1">
+                      <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='Devices'/>
                  </li>
+                
+              
+             
+                {/* <li  className="ra mt-1">
+                      <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>
+                 </li> */}
                  <li className="ra mt-1">
                        <NavItem  path="/customers" icon={ <i className="fa-solid fa-people-group"/>} title='Customers'/>
                   </li>
-                  <li className=" mt-1"> 
+                  {/* <li className=" mt-1"> 
                         <NavItem  path="/machineData" icon={ <i className="fa-solid fa-database"/>} title='Machine Data'/>
                   </li>
                   <li className=" mt-1">
                      <NavItem  path="/machineMap" icon={ <i className="fa-solid fa-location-dot"/>} title='Machine Map'/>
-                 </li>
+                 </li> */}
                  <li className="ra mt-1">
                      <NavItem  path="/user" icon={ <i className="fa-solid fa-users-line"/>} title='Users'/>
                  </li>
-                 <li className="mt-1">
-                     <NavItem  path="/inventory" icon={ <i className="fa-solid fa-hand-holding-dollar" />} title='Inventory'/>
-                  </li>
+                
                   <li>
                   <a className="mt-3" role="button" tabIndex={0} onClick={OpenLocationMap}   onKeyPress={handleKeyPress}>
                   <NavItem  icon={ <i className="fa-solid fa-globe" />} title={`${sessionStorage.getItem("Lattitude")},${sessionStorage.getItem("Longitude")}`}/>
@@ -134,13 +128,13 @@ export default function SideBar(){
                     </a>
                     <div className="dropdown-menu row direction-col" aria-labelledby="navbarDropdown" >
                         <ul>
-                           <li className="mt-0">
+                           {/* <li className="mt-0">
                              <NavItem  color='#343957' path="/dailyReports" icon={ <i className="fa-regular fa-file-lines"/>} title='Daily Reports'/>
-                           </li>
+                           </li> */}
                            <li  className="ra mt-0">
                             <NavItem color='#343957' path="/loginLogs" icon={ <i className="fa-solid fa-arrow-right-to-bracket" />} title='Login Logs'/>
                             </li>
-                            <li className="ra mt-0">
+                            {/* <li className="ra mt-0">
                              <NavItem  color='#343957' path="/svLogs" icon={   <i className="fa-solid fa-chart-simple"/>} title='SV Logs'/>
                              </li>
                              <li className="ra mt-0">
@@ -148,20 +142,20 @@ export default function SideBar(){
                            </li>
                            <li className="ra mt-0">
                              <NavItem  color='#343957' path="/paytmTransactions" icon={  <i className="fa-solid fa-credit-card" />} title='Paytm Transactions'/>
-                             </li>
+                             </li> */}
                              <li className="ra mt-0">
                             <NavItem  color='#343957' path="/hourlyReport" icon={ <i className="fa-solid fa-clock" />} title='Hourly Report'/>
                             </li>
                             <li className="mt-0">
                              <NavItem  color='#343957' path="/faultReport" icon={ <i className="fa-solid fa-wrench" />} title='Technician Report'/>
                              </li>
-                             <li className="ra mt-0">
+                             {/* <li className="ra mt-0">
                              <NavItem  color='#343957' path="/ssnReport" icon={ <i className="fa-solid fa-list-ol"/>} title='SSN Report'/>
-                             </li>
+                             </li> */}
                     </ul>
                     </div>
                 </li> 
-                <li className="nav-item dropdown mt-1">
+                {/* <li className="nav-item dropdown mt-1">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Settings
                     </a>
@@ -176,7 +170,7 @@ export default function SideBar(){
                                 <NavItem color='#343957' path="/colorSetting" icon={ <i className="fa-solid fa-palette" />} title='Color Setting'/>
                                 </li>
                             </div>
-                  </li>
+                  </li> */}
                
                 </ul>
             </div>

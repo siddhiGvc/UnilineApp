@@ -94,15 +94,15 @@ export default function AccountPopover() {
     setOpen(null);
   }; 
 
-  const handleModalOpen = () => {
+  // const handleModalOpen = () => {
    
  
-    setOpenModal(true);
-    // setTimeout(()=>{
-    //   $('[name="machine"]').val(machineId);
-    //   $('[name="userName"]').val(sessionStorage.getItem("name"));
-    // },200)
-  };
+  //   setOpenModal(true);
+  //   // setTimeout(()=>{
+  //   //   $('[name="machine"]').val(machineId);
+  //   //   $('[name="userName"]').val(sessionStorage.getItem("name"));
+  //   // },200)
+  // };
   const handleModalClose = () => {
     setOpenModal(false);
   };
@@ -144,16 +144,16 @@ export default function AccountPopover() {
      })
   }
 
-  const CheckOuT=()=>{
-    sendLattLon("CheckOut", sessionStorage.getItem("chechInMachine")).then(()=>{
-      showAlertMessage();
-      setType('success');
-      setMessage("CheckOut done");
-      $('.checkIn').show();
-      $('.checkOut').hide();
-    });
+  // const CheckOuT=()=>{
+  //   sendLattLon("CheckOut", sessionStorage.getItem("chechInMachine")).then(()=>{
+  //     showAlertMessage();
+  //     setType('success');
+  //     setMessage("CheckOut done");
+  //     $('.checkIn').show();
+  //     $('.checkOut').hide();
+  //   });
 
-  }
+  // }
   
 
   return (
@@ -170,13 +170,13 @@ export default function AccountPopover() {
      </Stack>
       </div>
     
-      <div>
+      {/* <div>
                   <button type="button" className="btn btn-primary text-white checkIn" onClick={handleModalOpen}>Check In 
                                     <i className="fa-solid fa-person-walking-arrow-right" /></button>
                                       <button type="button" className="btn btn-primary text-white checkOut" onClick={CheckOuT} >Check Out
                                     <i className="fa-solid fa-person-walking-arrow-loop-left" />
                             </button>
-      </div>
+      </div> */}
        <Typography variant="subtitle2" sx={{color:'black'}} noWrap>
             {sessionStorage.getItem("clientName")!=='null' ? sessionStorage.getItem("clientName"):''}
           </Typography>

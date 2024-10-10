@@ -7,6 +7,7 @@ import SvLogs from 'src/sections/Reports/svLogs';
 import LockLogs from 'src/sections/Reports/lockLogs';
 import LoginLogs from 'src/sections/Reports/loginLogs';
 import SSNReport from 'src/sections/Reports/ssnReport';
+import { Uniline } from 'src/sections/UnilineTest/view';
 import FaultReport from 'src/sections/Reports/faultReport';
 import {TestingView} from "src/sections/testingTable/view";
 import { ProductsView } from 'src/sections/MachineData/view';
@@ -83,7 +84,8 @@ export default function Router() {
         { path: 'MacTable2', element: <MacTableView/>},
         { path: 'testing', element: <TestingView/>},
         { path: 'KwikpayTriple', element: <KwikpayTriple/>},
-         {path:'TableTesting',element:<TableTesting/>}
+         {path:'TableTesting',element:<TableTesting/>},
+         {path:'UnilineTest',element:<Uniline/>}
       ],
     },
     {
