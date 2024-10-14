@@ -21,6 +21,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 // import Iconify from 'src/components/iconify';
 
 // import AppTasks from '../app-tasks';
+// import Barchart from '../barchart'
 import StatusLabel from '../statusLabel';
 // import AppNewsUpdate from '../app-news-update';
 // import { GetClentNameDetails } from "src/_mock/customers";
@@ -29,7 +30,7 @@ import StatusLabel from '../statusLabel';
 // import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {sendG1,sendG3,AllMacAddress} from "../../../_mock/macAddress";
+import {sendG1,sendG2,sendG3,AllMacAddress} from "../../../_mock/macAddress";
 // import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 
 
@@ -48,26 +49,31 @@ export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName]=useState([]);
   const [options1,setOptions1]=useState([]);
-  // const [setData]=useState([])
+  const [data,setData]=useState([])
   const [value1,setValue1]=useState({MacID:'E4:65:B8:14:A4:44',SNoutput:'GVC-CUPS-4005'});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [G1output,setG1Output]=useState([]);
+  const [G2output,setG2Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
-  const G3command=useCallback(()=>{
+  const G3command=useCallback(async()=>{
+    await sendG1(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setG1Output(res);
+    
+    })
+    await sendG2(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setG2Output(res);
+    
+    })
    
-    sendG3(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+    await sendG3(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG3Output(res);
      
     })
-    setTimeout(()=>{
-      sendG1(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
-        console.log(res);
-        setG1Output(res);
-      
-      })
-
-    },3000)
+ 
+     
     
   },[value1.MacID,value1.SNoutput])
 
@@ -140,7 +146,7 @@ export default function AppView() {
        G3command();
       //  G1command();
      
-    },10000)
+    },15000)
 
     return(()=>{
       clearInterval(interval);
@@ -156,59 +162,35 @@ export default function AppView() {
     setSelectedOption1(elem);
     
    
-    // AllMacAddress().then((res)=>{
+    AllMacAddress().then((res)=>{
     
-    //   const filteredData=res.filter((m)=> online(m) )
-    //   console.log(filteredData)
-    //   setData(filteredData);
-    //   console.log(data);
-    //   // setValue1(res[elem.id]);
+      const filteredData=res.filter((m)=> online(m) )
+      console.log(filteredData)
+      setData(filteredData);
+      console.log(data);
+      // setValue1(res[elem.id]);
       
-    // })
+    })
   };
   
+
+  const thirdChar = G2output.length > 2 ? G2output[0].split('')[3] : null;
+const fourthChar = G2output.length > 2 ? G2output[0].split('')[4] : null;
+
+let statusLabel;
+if (thirdChar === fourthChar) {
+  statusLabel = <StatusLabel label="Battery Okay" isOn color='green' />; // On (Green)
+} else if (thirdChar === '0' && fourthChar === '1') {
+  statusLabel = <StatusLabel label="Battery Low" isOn color='orange'/>; // On (Green)
+} else if((thirdChar === '1' && fourthChar==='0') || (thirdChar === '1' && fourthChar==='1')) {
+  statusLabel = <StatusLabel label="Low Battery Shutdown" isOn={false} color='red' />; // Off
+}
+else{
+  statusLabel = <StatusLabel label="Battery Off" isOn={false} color='red' />;
+}
   
  
-  // const theme = useTheme('...');
-  // const router=useRouter();
 
-
-  // filtering onlines machines
-  // const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
-  
-  // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
-
-
-  // converting value in the form of lacks, thousand ,Coror
-//   const amountText = amt => {
-//     amt = amt || 0;
- 
-//     if(amt>=10000000) {
-//         const cr = parseInt(amt / 100000, 10) / 100;
-//         const Cr = parseFloat(cr.toFixed(2));
-//         return `${Cr} Cr`;
-//     } 
-//     if(amt>=1000000) {
-//         const l = parseInt(amt / 1000 ,10) / 100;
-//         const L = parseFloat(l.toFixed(6));
-//         return  `${L} L`;
-//     } 
-//     if(amt>=1000) {
-//         const k = parseInt(amt / 10 ,10) / 100;
-//         const K = parseFloat(k.toFixed(2));
-//         return  `${K} K`;
-//     }
-
-//     // Remove the unnecessary else statement
-//     return amt;
-// }
-
-
-
- // calulating some of two numbers
-//  const sum = (a, b) => a + b;
-
-  
 const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
 
   return (
@@ -242,7 +224,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}
+            value={G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}
           />
         </Grid>
          {/* online machines */}
@@ -253,7 +235,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}
+            value={G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}
           />
         </Grid>
         {/* total collection */}
@@ -264,7 +246,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>1 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}
+            value={G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}
           />
         </Grid>
            {/* item dispensed */}
@@ -322,31 +304,74 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             value={G1output.length>2 ? G1output[4]:''}
           />
         </Grid>
+        <Grid container md={12}>
+       <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output.length>2 && G3output.length>2 ?
+       <StatusLabel label="Communicating With UPS" isOn={false} color='green' /> :<StatusLabel label="Not Communicating With UPS" isOn={false} color='red' />
+        }
+       </Grid>
 
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Not Communicating With UPS" isOn={false} /> {/* On (Green) */}
+       <Grid xs={4} sm={4} md={4}>
+        {statusLabel}
+      </Grid>
+ 
+      <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[0].split('')[6] === 1 ? 
+       <StatusLabel label="Inverter On" isOn color='green' /> :  <StatusLabel label="Inverter Bad" isOn color='red' />}
+     
+      </Grid>
+     
+      <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[0].split('')[6] === 1 && G2output[1].split('')[7]===1? 
+       <StatusLabel label="Mains On" isOn color='green' /> :  <StatusLabel label="Mains Off" isOn color='red' />}
+     
+      </Grid>
+      {G2output.length>2 && G2output[0].split('')[6] === 1  && G2output[1].split('')[7]===0 && 
+      <Grid xs={4} sm={4} md={4}>
+       
+       <StatusLabel label="Mains On-Inverter Bad" isOn color='orange' /> 
+     
+      </Grid>
+        }
+     
+ 
+       <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[2].split('')[1] ===1 ?
+       <StatusLabel label="Emergency Stop" isOn={false} color='red' /> : <StatusLabel label="Unit Running" isOn={false} color='green' />
+        }
        </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="AC Input Normal" isOn /> {/* On (Green) */}
+       <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[2].split('')[2] ===1 ?
+       <StatusLabel label="High DC" isOn={false} color='red' /> : <StatusLabel label="DC Okay" isOn={false} color='green' />
+        }
        </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Battery Normal" isOn /> {/* On (Green) */}
+       <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[2].split('')[4] ===1 ?
+       <StatusLabel label="Show Overload" isOn={false} color='red' /> : <StatusLabel label="No Overload" isOn={false} color='green' />
+        }
        </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Battery Bad" isOn /> {/* Off (Red) */}
-  
+       <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[2].split('')[6] ===1 ?
+       <StatusLabel label="Over Temperature" isOn={false} color='red' /> : <StatusLabel label="Temperature Okay" isOn={false} color='green' />
+        }
        </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="Bypass Mode" isOn /> {/* On (Green) */}
+       <Grid xs={4} sm={4} md={4}>
+        {G2output.length>2 && G2output[2].split('')[7] ===1 ?
+       <StatusLabel label="Short Circuit" isOn={false} color='red' /> : <StatusLabel label="Working" isOn={false} color='green' />
+        }
        </Grid>
-       <Grid xs={6} sm={6} md={6}>
-       <StatusLabel label="UPS Self Test" isOn /> {/* On (Green) */}
+        
        </Grid>
+
+   
+      
      
      
       
       
-      
+      {/* <Grid container xs={4} sm={4} md={4}>
+         <Barchart/>
+      </Grid> */}
      
      
 

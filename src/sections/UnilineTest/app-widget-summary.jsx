@@ -16,8 +16,9 @@ export default function AppWidgetSummary({ title, text, subheader, value, sx, ..
       direction="column"
       sx={{
         px: 3,
-        py: 0.1,
+        py: 1,
         borderRadius: 2,
+      
         ...sx,
       }}
       {...other}
@@ -37,6 +38,10 @@ export default function AppWidgetSummary({ title, text, subheader, value, sx, ..
         formatTextValue={() => `${value} ${text}`} // Display the exact value in volts (not percentage)
         needleScale={0.43}
         animate={false}
+        style={{
+          width: 250,  // Set your custom width
+          height: 110  // Set your custom height
+        }}
       />
     </Card>
   );
