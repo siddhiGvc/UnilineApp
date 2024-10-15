@@ -10,8 +10,10 @@ import { useState,useEffect,useCallback } from 'react';
 // import { useState} from 'react';
 // import GaugeChart from 'react-gauge-chart';
 // import { useTheme } from '@mui/material/styles';
+// import {Card} from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
+
 
 
 
@@ -22,6 +24,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 // import AppTasks from '../app-tasks';
 // import Barchart from '../barchart'
+import BoosterBar from '../booster';
 import StatusLabel from '../statusLabel';
 // import AppNewsUpdate from '../app-news-update';
 // import { GetClentNameDetails } from "src/_mock/customers";
@@ -50,11 +53,15 @@ export default function AppView() {
   const [pathName]=useState([]);
   const [options1,setOptions1]=useState([]);
   const [data,setData]=useState([])
-  const [value1,setValue1]=useState({MacID:'E4:65:B8:14:A4:44',SNoutput:'GVC-CUPS-4005'});
+  const [value]=useState(0);
+  const [value1,setValue1]=useState({MacID:'',SNoutput:''});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [G1output,setG1Output]=useState([]);
   const [G2output,setG2Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
+
+
+  const max=100;
   const G3command=useCallback(async()=>{
     await sendG1(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
@@ -132,30 +139,21 @@ export default function AppView() {
    
   },[selectedOption1.id])
 
- 
 
-  // calling loadData every 5 seconds
-  useEffect(() => {
-  
-     LoadData();
-     G3command();
-    //  G1command();
-    
-    const interval=setInterval(()=>{
+  useEffect(()=>{
+    LoadData();
+   const interval= setInterval(()=>{
       //  LoadData();
-       G3command();
+     LoadData();
       //  G1command();
      
-    },15000)
+    },10000)
 
-    return(()=>{
-      clearInterval(interval);
-    })
-  
+    return ()=>clearInterval(interval);
+
+  },[LoadData])
 
  
-   
-  },[LoadData,G3command]);
 
 
   const handleSelectChange1 = (elem) => {
@@ -171,6 +169,18 @@ export default function AppView() {
       // setValue1(res[elem.id]);
       
     })
+
+   
+    G3command();
+   //  G1command();
+   
+   setInterval(()=>{
+     //  LoadData();
+      G3command();
+     //  G1command();
+    
+   },15000)
+    
   };
   
 
@@ -304,7 +314,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             value={G1output.length>2 ? G1output[4]:''}
           />
         </Grid>
-        <Grid container md={12}>
+        <Grid container md={7}>
        <Grid xs={4} sm={4} md={4}>
         {G2output.length>2 && G2output.length>2 && G3output.length>2 ?
        <StatusLabel label="Communicating With UPS" isOn={false} color='green' /> :<StatusLabel label="Not Communicating With UPS" isOn={false} color='red' />
@@ -316,7 +326,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
       </Grid>
  
       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[0].split('')[6] === 1 ? 
+        {G2output.length>2 && G2output[0].split('')[6] === 0? 
        <StatusLabel label="Inverter On" isOn color='green' /> :  <StatusLabel label="Inverter Bad" isOn color='red' />}
      
       </Grid>
@@ -368,10 +378,22 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
      
      
       
+       
+      <Grid container spacing={4} md={5}>
       
-      {/* <Grid container xs={4} sm={4} md={4}>
-         <Barchart/>
-      </Grid> */}
+          <Grid xs={4} sm={4} md={6}>
+         <BoosterBar value={value} max={max} title='Battery Charge'/>
+         </Grid>
+          <Grid xs={4} sm={4} md={6}>
+         <BoosterBar value={value} max={max} title='UPS Load'/>
+         {/* <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '20px' }}>
+        <button type="button" onClick={() => setValue(value + 10)} style={{ marginBottom: '10px' }}>Boost</button>
+        <button type="button" onClick={() => setValue(value - 10)}>Reduce</button>
+        </div> */}
+           </Grid>
+         
+      </Grid>
+    
      
      
 

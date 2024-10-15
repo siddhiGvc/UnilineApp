@@ -38,7 +38,7 @@ import {AllMacAddress} from "../../../_mock/macAddress";
 export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName,setPathName]=useState([]);
-  const [machineType]=useState('');
+  
  
 
   // calling for api data
@@ -50,7 +50,7 @@ export default function AppView() {
     AllMacAddress().then((res)=>{
       console.log(res);
       setPathName(res);
-    
+       
     });
   
    
@@ -86,38 +86,39 @@ export default function AppView() {
 
   // filtering onlines machines
   const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const filterInverterOnline = a => a.G2.length>2 && a.G2[0].split('')[6] === 0;
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
   // converting value in the form of lacks, thousand ,Coror
-  const amountText = amt => {
-    amt = amt || 0;
+//   const amountText = amt => {
+//     amt = amt || 0;
  
-    if(amt>=10000000) {
-        const cr = parseInt(amt / 100000, 10) / 100;
-        const Cr = parseFloat(cr.toFixed(2));
-        return `${Cr} Cr`;
-    } 
-    if(amt>=1000000) {
-        const l = parseInt(amt / 1000 ,10) / 100;
-        const L = parseFloat(l.toFixed(6));
-        return  `${L} L`;
-    } 
-    if(amt>=1000) {
-        const k = parseInt(amt / 10 ,10) / 100;
-        const K = parseFloat(k.toFixed(2));
-        return  `${K} K`;
-    }
+//     if(amt>=10000000) {
+//         const cr = parseInt(amt / 100000, 10) / 100;
+//         const Cr = parseFloat(cr.toFixed(2));
+//         return `${Cr} Cr`;
+//     } 
+//     if(amt>=1000000) {
+//         const l = parseInt(amt / 1000 ,10) / 100;
+//         const L = parseFloat(l.toFixed(6));
+//         return  `${L} L`;
+//     } 
+//     if(amt>=1000) {
+//         const k = parseInt(amt / 10 ,10) / 100;
+//         const K = parseFloat(k.toFixed(2));
+//         return  `${K} K`;
+//     }
 
-    // Remove the unnecessary else statement
-    return amt;
-}
+//     // Remove the unnecessary else statement
+//     return amt;
+// }
 
 
 
  // calulating some of two numbers
- const sum = (a, b) => a + b;
+//  const sum = (a, b) => a + b;
 
   
 
@@ -140,7 +141,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Online Machines"
-            total={pathName.filter(filterOnline).length}
+            total= {pathName.filter(filterOnline).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
@@ -148,19 +149,19 @@ export default function AppView() {
         {/* total collection */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title={machineType==="RECD" ? "Defective Sensor" :"Total Collections"}
-            total={pathName.length ?amountText(pathName.map(q => (q.cashCurrent + q.cashLife)).reduce(sum)):'...'}
+            title='Total Inverters'
+            total={pathName.length}
             color="info"
-            icon={<img alt="icon" src="/assets/icons/collection.png" />}
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
         </Grid>
            {/* item dispensed */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title={machineType==="RECD" ? "Tempered" :"Item Dispnesed"}
-            total={pathName.length ?(pathName.map(q => (q.qtyCurrent +  q.qtyLife)).reduce(sum)):'...'}
+            title="Online Inverters"
+            total={pathName.filter(filterInverterOnline).length}
             color="error"
-            icon={<img alt="icon" src="/assets/icons/items.png" />}
+            icon={<img alt="icon" src="/assets/icons/online.png" />}
           />
         </Grid>
 
@@ -181,9 +182,28 @@ export default function AppView() {
             }}
           />
         </Grid>
+        {/* Inverter Staus */}
+
+        <Grid xs={12} md={6} lg={6}>
+          <AppCurrentVisits
+            title="Inverter Status"
+            chart={{
+              series: [
+                { label: 'Online', value:pathName.filter(filterInverterOnline).length||0 },
+                { label: 'Offline', value:(pathName.length - pathName.filter(filterInverterOnline).length) ||0},
+             
+              ],
+              colors:[
+                theme.palette.success.main,
+                theme.palette.error.main,
+              ]
+            }}
+          />
+        </Grid>
+       
        
         {/* Stcok Status */}
-        <Grid xs={12} md={6} lg={6}>
+        {/* <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
             title="Stock Status"
             chart={{
@@ -204,7 +224,7 @@ export default function AppView() {
              
             }}
           />
-        </Grid>
+        </Grid> */}
      </Grid>
         {/* <Grid xs={12} md={6} lg={8}>
           <AppConversionRates

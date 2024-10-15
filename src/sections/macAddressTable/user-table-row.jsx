@@ -20,7 +20,7 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 import { SaveFaultReport } from 'src/_mock/faultReportData';
-import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,modeNone,sendSSID1,sendLight,sendReset,modeTest1,modeTest2,sendFotaUrl} from 'src/_mock/macAddress';
+import {sendV,askCA,sendCA,sendCC,sendTV,sendFW,sendTC,askUrl,sendHBT,sendSIP,sendPWD,sendSSID,sendFota,sendPWD1,sendSSID1,sendLight,sendReset,sendFotaUrl} from 'src/_mock/macAddress';
 
 import Label from 'src/components/label';
 
@@ -76,27 +76,19 @@ export default function UserTableRow({
   const [NumValue,setNumValue]=useState("");
   const [Polarity,setPolarity]=useState("");
 
-  const [mode,setMode]=useState('');
+  const [setMode]=useState('');
 
-  const [disable,setDisable]=useState(false);
+  const [disable]=useState(false);
+  const [G1output,setG1output]=useState([]);
+  // const [G2output,setG2output]=useState([]);
+  const [G3output,setG3output]=useState([]);
 
   useEffect(()=>{
-     if(mode==="")
-      {
-        setDisable(false);
-        modeNone(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-      }
-      else if(mode!=="") {
-        setDisable(true);
-        if(mode==="tm1")
-        {
-          modeTest1(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-        }
-        else{
-          modeTest2(m.MacID,m.SocketNumber,sessionStorage.getItem("name"));
-        }
-      }
-  },[mode, m.MacID, m.SocketNumber])
+    setG1output(m.G1.toString().split(','));
+    // setG2output(m.G2.join(' '));
+    setG3output(m.G3.toString().split(','));
+
+  },[m])
 
 
   const showAlertMessage = () => {
@@ -109,9 +101,9 @@ export default function UserTableRow({
 };
 
 // view mwnu open function
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
+  // const handleOpenMenu = (event) => {
+  //   setOpen(event.currentTarget);
+  // };
 
   // view menu clsoe function
   const handleCloseMenu = () => {
@@ -189,14 +181,7 @@ const handleChange = () => {
       <TableRow hover tabIndex={-1} role="checkbox">
         
       <TableCell>{sr}</TableCell>
-        <TableCell component="th" scope="row" padding="none">
-          <Stack direction="row" alignItems="center" spacing={2}>
-           
-            <Typography variant="subtitle2" noWrap tabIndex={0}>
-           <span>{m.UID}</span>
-            </Typography>
-          </Stack>
-        </TableCell>
+       
         <TableCell>
            <Typography>
 
@@ -214,9 +199,54 @@ const handleChange = () => {
         <TableCell>
            <Typography>
 
-           {m.SocketNumber}
+           {G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}
            </Typography>
            
+        </TableCell>
+        <TableCell>
+           <Typography>
+
+           {G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           <Typography>
+
+           {G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           <Typography>
+
+           {G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[0]:''}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           <Typography>
+
+           {G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[1]:''}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           <Typography>
+
+           {G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[2]:''}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           <Typography>
+
+           {G1output.length>2 ? G1output[5]:''}
+           </Typography>
+           
+        </TableCell>
+        <TableCell>
+           {G1output.length>2 ? G1output[4]:''}
         </TableCell>
         <TableCell>
            <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label>
@@ -225,7 +255,7 @@ const handleChange = () => {
         
         
      
-        <TableCell>
+        {/* <TableCell>
       <button
         type="button"
         className="btn btn-sm btn-outline-success btn-tt heading6"
@@ -234,7 +264,7 @@ const handleChange = () => {
       >
         View
       </button>
-    </TableCell>
+    </TableCell> */}
   
       </TableRow>
 

@@ -101,9 +101,9 @@ export default function SideBar(){
                 {/* <li  className="ra mt-1">
                       <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>
                  </li> */}
-                 <li className="ra mt-1">
+                 {/* <li className="ra mt-1">
                        <NavItem  path="/customers" icon={ <i className="fa-solid fa-people-group"/>} title='Customers'/>
-                  </li>
+                  </li> */}
                   {/* <li className=" mt-1"> 
                         <NavItem  path="/machineData" icon={ <i className="fa-solid fa-database"/>} title='Machine Data'/>
                   </li>
@@ -123,17 +123,17 @@ export default function SideBar(){
                  
                  
                  <li className="nav-item dropdown mt-1">
-                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {/* <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Reports
-                    </a>
+                    </a> */}
                     <div className="dropdown-menu row direction-col" aria-labelledby="navbarDropdown" >
                         <ul>
                            {/* <li className="mt-0">
                              <NavItem  color='#343957' path="/dailyReports" icon={ <i className="fa-regular fa-file-lines"/>} title='Daily Reports'/>
                            </li> */}
-                           <li  className="ra mt-0">
+                           {/* <li  className="ra mt-0">
                             <NavItem color='#343957' path="/loginLogs" icon={ <i className="fa-solid fa-arrow-right-to-bracket" />} title='Login Logs'/>
-                            </li>
+                            </li> */}
                             {/* <li className="ra mt-0">
                              <NavItem  color='#343957' path="/svLogs" icon={   <i className="fa-solid fa-chart-simple"/>} title='SV Logs'/>
                              </li>
@@ -143,12 +143,12 @@ export default function SideBar(){
                            <li className="ra mt-0">
                              <NavItem  color='#343957' path="/paytmTransactions" icon={  <i className="fa-solid fa-credit-card" />} title='Paytm Transactions'/>
                              </li> */}
-                             <li className="ra mt-0">
+                             {/* <li className="ra mt-0">
                             <NavItem  color='#343957' path="/hourlyReport" icon={ <i className="fa-solid fa-clock" />} title='Hourly Report'/>
                             </li>
                             <li className="mt-0">
                              <NavItem  color='#343957' path="/faultReport" icon={ <i className="fa-solid fa-wrench" />} title='Technician Report'/>
-                             </li>
+                             </li> */}
                              {/* <li className="ra mt-0">
                              <NavItem  color='#343957' path="/ssnReport" icon={ <i className="fa-solid fa-list-ol"/>} title='SSN Report'/>
                              </li> */}
