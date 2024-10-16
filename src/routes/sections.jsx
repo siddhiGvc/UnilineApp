@@ -10,6 +10,7 @@ import SSNReport from 'src/sections/Reports/ssnReport';
 import { Uniline } from 'src/sections/UnilineTest/view';
 import FaultReport from 'src/sections/Reports/faultReport';
 import {TestingView} from "src/sections/testingTable/view";
+import ControlsSetting from 'src/sections/Controls/controls';
 import { ProductsView } from 'src/sections/MachineData/view';
 import { UserView } from 'src/sections/macAddressTable/view';
 import SelfMap from 'src/sections/Reports/LoginMaps/selfMap';
@@ -26,6 +27,7 @@ import MachineSetting from 'src/sections/Settings/machineSetting';
 import PaytmTransactions from 'src/sections/Reports/paytmTransactions';
 import MachineMapView from 'src/sections/MachineMap/view/products-view';
 import { MacTableView } from 'src/sections/macAddressTabletesting/view';
+
 
 
 
@@ -85,7 +87,9 @@ export default function Router() {
         { path: 'testing', element: <TestingView/>},
         { path: 'KwikpayTriple', element: <KwikpayTriple/>},
          {path:'TableTesting',element:<TableTesting/>},
-         {path:'UnilineTest',element:<Uniline/>}
+         {path:'UnilineTest',element:<Uniline/>},
+         {path:'Controls',element:<ControlsSetting/>},
+
       ],
     },
     {

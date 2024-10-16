@@ -12,10 +12,34 @@ export const AllMacAddress=async()=> {
         'x-token': sessionStorage.getItem('token'),
       });
 
-      const response = await fetch(`http://165.232.180.111:8080/kwikpay/getMacAddress`, { method: 'GET', headers });
+      const response = await fetch(`http://165.232.180.111:8080/testingBoard/getMacAddress`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json)
       return json.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+  
+      return [];
+    }
+  }
+
+  export const ReportData=async(serialNumbers,startDate,endDate)=> {
+  
+    try {
+        const obj={
+         
+            devices:serialNumbers.join(),
+            startDate,
+            endDate,
+        }
+        console.log(obj);
+      const headers = new Headers({
+        "Content-type":"application/json",
+        'x-token': sessionStorage.getItem('token'),
+      });
+      const response = await fetch(`http://165.232.180.111:8080/testingBoard/report`, { method: 'POST', headers ,body:JSON.stringify(obj) });
+      const json = await response.json();
+      return json;
     } catch (error) {
       console.error('Error fetching data:', error);
   
