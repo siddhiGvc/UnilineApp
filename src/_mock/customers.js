@@ -1,5 +1,7 @@
 
-const API = import.meta.env.VITE_REACT_APP_API;
+// const API = import.meta.env.VITE_REACT_APP_API;
+
+const API='http://localhost:8080'
 
 export const getCustomerData=async()=> {
   
@@ -9,7 +11,7 @@ export const getCustomerData=async()=> {
         "Content-type":"application/json",
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/getAllCustomerData`, { method: 'GET', headers  });
+      const response = await fetch(`${API}/unilineCustomers/getAllCustomerData`, { method: 'GET', headers  });
       const json = await response.json();
       return json;
     } catch (error) {
@@ -28,7 +30,7 @@ export const getCustomerData=async()=> {
         "Content-type":"application/json",
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/getAllCustomerInfo`, { method: 'GET', headers });
+      const response = await fetch(`${API}/unilineCustomers/getAllCustomerInfo`, { method: 'GET', headers });
       const json = await response.json();
       return json;
     } catch (error) {
@@ -46,7 +48,7 @@ export const getCustomerData=async()=> {
       "Content-type":"application/json",
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/customers/postCustomerData`, { method: 'POST', headers ,body:JSON.stringify(obj) });
+    const response = await fetch(`${API}/unilineCustomers/postCustomerData`, { method: 'POST', headers ,body:JSON.stringify(obj) });
     const json = await response.json();
     return json;
   } catch (error) {
@@ -64,7 +66,7 @@ export const getCustomerData=async()=> {
       "Content-type":"application/json",
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/customers/postCustomerInfo`, { method: 'POST', headers ,body:JSON.stringify(obj) });
+    const response = await fetch(`${API}/unilineCustomers/postCustomerInfo`, { method: 'POST', headers ,body:JSON.stringify(obj) });
     const json = await response.json();
     return json;
   } catch (error) {
@@ -83,7 +85,7 @@ export const getCustomerData=async()=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/deleteCustomerData?id=${id}`,{ method: 'GET', headers });
+      const response = await fetch(`${API}/unilineCustomers/deleteCustomerData?id=${id}`,{ method: 'GET', headers });
       const users = await response.json();
       return users;
     } catch (error) {
@@ -102,7 +104,7 @@ export const getCustomerData=async()=> {
         "Content-type":'application/json',
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/updateCustomerData?id=${id}`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
+      const response = await fetch(`${API}/unilineCustomers/updateCustomerData?id=${id}`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
       const users = await response.json();
       return users;
     } catch (error) {
@@ -120,7 +122,7 @@ export const getCustomerData=async()=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/customers/deleteCustomerInfo?id=${id}`,{ method: 'GET', headers });
+      const response = await fetch(`${API}/api/unilineCustomers/deleteCustomerInfo?id=${id}`,{ method: 'GET', headers });
       const users = await response.json();
       return users;
     } catch (error) {
@@ -139,7 +141,7 @@ export const getCustomerData=async()=> {
         "Content-type":'application/json',
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/updateCustomerData?id=${id}`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
+      const response = await fetch(`${API}/unilineCustomers/updateCustomerData?id=${id}`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
       const users = await response.json();
       return users;
     } catch (error) {
@@ -157,7 +159,7 @@ export const getCustomerData=async()=> {
         "Content-type":'application/json',
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/getCustomerDataByName`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
+      const response = await fetch(`${API}/unilineCustomers/getCustomerDataByName`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
       const users = await response.json();
       return users;
     } catch (error) {
@@ -174,7 +176,7 @@ export const getCustomerData=async()=> {
         "Content-type":'application/json',
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/customers/getCustomerInfoByName`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
+      const response = await fetch(`${API}/unilineCustomers/getCustomerInfoByName`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
       const users = await response.json();
       return users;
     } catch (error) {

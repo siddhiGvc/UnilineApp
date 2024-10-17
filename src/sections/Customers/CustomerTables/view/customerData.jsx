@@ -171,7 +171,7 @@ export default function CustomerDataView({users,LoadData}) {
                   {id:'cInfo2',label:'CInfo2'},
                   {id:'cInfo3',label:'CInfo3'},
                   {id:'cInfo4',label:'CInfo4'},
-                  {id:'type',label:'Machine Type'},
+               
                   {id:''}
                 
                 

@@ -111,9 +111,9 @@ export default function SideBar(){
                 {/* <li  className="ra mt-1">
                       <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>
                  </li> */}
-                 {/* <li className="ra mt-1">
+                 <li className="ra mt-1">
                        <NavItem  path="/customers" icon={ <i className="fa-solid fa-people-group"/>} title='Customers'/>
-                  </li> */}
+                  </li>
                 
                   {/* <li className=" mt-1">
                      <NavItem  path="/machineMap" icon={ <i className="fa-solid fa-location-dot"/>} title='Machine Map'/>

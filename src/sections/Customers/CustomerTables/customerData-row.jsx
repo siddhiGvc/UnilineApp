@@ -90,7 +90,7 @@ export default function CustomerDataRow({
      $('#mdlEditData [name="CInfo2"]').val(row.CInfo2)
      $('#mdlEditData [name="CInfo3"]').val(row.CInfo3)
      $('#mdlEditData [name="CInfo4"]').val(row.CInfo4)
-     $('#mdlEditData [name="MachineType"]').val(row.MachineType)
+    
     },200)
   };
   const handleModalClose = () => {
@@ -112,7 +112,7 @@ export default function CustomerDataRow({
       CInfo2: $('#mdlEditData [name="CInfo2"]').val(),
       CInfo3: $('#mdlEditData [name="CInfo3"]').val(),
       CInfo4: $('#mdlEditData [name="CInfo4"]').val(),
-      MachineType:$('#mdlEditData [name="MachineType"]').val(),
+    
      
   };
      EditCustomerData(obj,row.id).then((r)=>{
@@ -181,7 +181,7 @@ export default function CustomerDataRow({
        <TableCell>{row.CInfo2}</TableCell>
        <TableCell>{row.CInfo3}</TableCell>
        <TableCell>{row.CInfo4}</TableCell>
-       <TableCell>{row.MachineType}</TableCell>
+      
       
        
       
