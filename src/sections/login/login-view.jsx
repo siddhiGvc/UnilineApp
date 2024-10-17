@@ -16,7 +16,8 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 
-const API =import.meta.env.VITE_REACT_APP_API;
+// const API =import.meta.env.VITE_REACT_APP_API;
+const API='http://localhost:8080'
 const GEOLOCATION=import.meta.env.VITE_REACT_APP_GEOLOCATION;
 
 // Alert Component defined here for popup
@@ -140,7 +141,7 @@ export default function LoginView() {
       setTimeout(()=>{
       
          
-        fetch(`${API}/pub/login`, {
+        fetch(`${API}/unilineAdmin/login`, {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
@@ -149,6 +150,7 @@ export default function LoginView() {
         })
           .then((res) => res.json()) // Return the result here
           .then((json) => {
+            console.log(json)
             window.sessionStorage.setItem("userInfo",JSON.stringify(json.data.user))
             window.sessionStorage.setItem("clientName",json.data.user.clientName)
             window.sessionStorage.setItem("isAdmin",json.data.user.isAdmin)

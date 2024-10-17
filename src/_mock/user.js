@@ -2,7 +2,7 @@
 // import { faker } from '@faker-js/faker';
 
 // ----------------------------------------------------------------------
-const API =import.meta.env.VITE_REACT_APP_API;
+const API ='http://localhost:8080';
  
 // export const users = [...Array(24)].map((_, index) => ({
 //   id: faker.string.uuid(),
@@ -30,9 +30,9 @@ const API =import.meta.env.VITE_REACT_APP_API;
     const headers = new Headers({
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/api/admin/users`,{ method: 'GET', headers });
+    const response = await fetch(`${API}/unilineAdmin/UnilineUsers`,{ method: 'GET', headers });
     const users = await response.json();
-    return users.data.users;
+    return users.data.Users;
   } catch (error) {
     console.error('Error fetching users:', error);
     return [];
@@ -71,7 +71,7 @@ export const deleteUser=async(id)=>{
     const headers = new Headers({
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/api/admin/user/delete?id=${id}`,{ method: 'GET', headers });
+    const response = await fetch(`${API}/UnilineAdmin/UnilineUser/delete?id=${id}`,{ method: 'GET', headers });
     const users = await response.json();
     return users.data.users;
   } catch (error) {
@@ -90,7 +90,7 @@ export const setPassword=async(obj)=>{
       "Content-type":'application/json',
       'x-token': sessionStorage.getItem('token'),
     });
-    const response = await fetch(`${API}/api/admin/user/changePassword`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
+    const response = await fetch(`${API}/unilineAdmin/UnilineUser/changePassword`,{ method: 'POST', headers ,body:JSON.stringify(obj)});
     const users = await response.json();
     return users.data.users;
   } catch (error) {

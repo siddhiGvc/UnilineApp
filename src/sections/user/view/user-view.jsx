@@ -37,7 +37,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
 
-const API = import.meta.env.VITE_REACT_APP_API;
+const API = 'http://localhost:8080';
 
 // error || succes popup compnet defined here
 const Alert = React.forwardRef((props, ref) => (
@@ -81,7 +81,7 @@ export default function UserPage() {
   const [wards,setWards]=useState([]);
   const [beats,setBeats]=useState([]);
 
-  const [cityName, setCitiesName] = useState(['Mumbai']);
+  const [cityName, setCitiesName] = useState(['Delhi']);
   const [zoneName,setZonesName]=useState([]);
   const [wardName,setWardsName]=useState([]);
   const [beatName,setBeatsName]=useState([]);
@@ -156,7 +156,7 @@ export default function UserPage() {
   },[])
  const LoadUsers=()=>{
   fetchUsers().then((res)=>{
-    
+    console.log(res);
     setUsers(res);
   })
  }
@@ -441,7 +441,7 @@ export default function UserPage() {
           'x-token': sessionStorage.getItem('token'),
 
         });
-         fetch(`${API}/api/admin/user`, { method: 'POST', headers ,body:JSON.stringify(obj)})
+         fetch(`${API}/unilineAdmin/saveUnilineUser`, { method: 'POST', headers ,body:JSON.stringify(obj)})
          .then((res)=>
               res.json()
          )
@@ -537,10 +537,10 @@ export default function UserPage() {
                       name={row.name}
                       role={row.isAdmin}
                       email={row.email}
-                      city={row.city}
-                      zone={row.zone}
-                      ward={row.ward}
-                      beat={row.beat}
+                      city={row.City}
+                      zone={row.Zone}
+                      ward={row.Ward}
+                      beat={row.Beat}
                       row={row}
                       LoadUsers={LoadUsers}
                       // isVerified={row.isVerified}
