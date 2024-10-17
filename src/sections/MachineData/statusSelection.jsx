@@ -8,17 +8,18 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 
-// import {getAllData } from 'src/_mock/fildData';
+import {getAllData } from 'src/_mock/fildData';
 
 function StatusSelection({MachineType, sx, ...other }) {
   // const [mStatus] = useState(['Online', 'Offline']);
   const [machineStatus, setMachineStatus] = useState(['Online', 'Offline']);
+  const [inverterStatus, setInverterStatus] = useState(['Online', 'Offline']);
   // const [sStatus] = useState(['Ok', 'Low','Empty']);
-  const [stockStatus, setStockStatus] = useState([]);
+  const [stockStatus] = useState([]);
   // const [bStatus] = useState(['Idle', 'Burning','Error']);
-  const [burnStatus, setBurnStatus] = useState([]);
+  const [burnStatus] = useState([]);
   // const [dStatus] = useState(['0', '1','2']);
-  const [doorStatus, setDoorStatus] = useState([]);
+  const [doorStatus] = useState([]);
   // Other state variables for stock status, burn status, door status, etc.
 
 
@@ -32,6 +33,7 @@ function StatusSelection({MachineType, sx, ...other }) {
       $('.incinerator').remove();
     }
     sessionStorage.setItem('machineStatus',JSON.stringify(machineStatus));
+    sessionStorage.setItem('inverterStatus',JSON.stringify(inverterStatus));
     sessionStorage.setItem('stockStatus',JSON.stringify(stockStatus));
     sessionStorage.setItem('burnStatus',JSON.stringify(burnStatus));
     sessionStorage.setItem('doorStatus',JSON.stringify(doorStatus));
@@ -42,27 +44,34 @@ function StatusSelection({MachineType, sx, ...other }) {
   const handleMachineStatusChange = (event) => {
     sessionStorage.setItem('machineStatus',JSON.stringify(event.target.value));
     setMachineStatus(event.target.value);
-    // getAllData();
+    getAllData();
     // Handle other logic as needed
   };
-  const handleStockStatusChange = (event) => {
-    sessionStorage.setItem('stockStatus',JSON.stringify(event.target.value));
-    setStockStatus(event.target.value);
-    // getAllData();
+
+  const handleInverterStatusChange = (event) => {
+    sessionStorage.setItem('inverterStatus',JSON.stringify(event.target.value));
+    setInverterStatus(event.target.value);
+    getAllData();
     // Handle other logic as needed
   };
-  const handleBurnStatusChange = (event) => {
-    sessionStorage.setItem('burnStatus',JSON.stringify(event.target.value));
-    setBurnStatus(event.target.value);
-    // getAllData();
-    // Handle other logic as needed
-  };
-  const handleDoorStatusChange = (event) => {
-    sessionStorage.setItem('dorStatus',JSON.stringify(event.target.value));
-    setDoorStatus(event.target.value);
-    // getAllData();
-    // Handle other logic as needed
-  };
+  // const handleStockStatusChange = (event) => {
+  //   sessionStorage.setItem('stockStatus',JSON.stringify(event.target.value));
+  //   setStockStatus(event.target.value);
+  //   getAllData();
+  //   // Handle other logic as needed
+  // };
+  // const handleBurnStatusChange = (event) => {
+  //   sessionStorage.setItem('burnStatus',JSON.stringify(event.target.value));
+  //   setBurnStatus(event.target.value);
+  //   getAllData();
+  //   // Handle other logic as needed
+  // };
+  // const handleDoorStatusChange = (event) => {
+  //   sessionStorage.setItem('dorStatus',JSON.stringify(event.target.value));
+  //   setDoorStatus(event.target.value);
+  //   getAllData();
+  //   // Handle other logic as needed
+  // };
 
   // Other similar handler functions for different dropdowns
 
@@ -82,7 +91,7 @@ function StatusSelection({MachineType, sx, ...other }) {
       <Stack spacing={0.1}>
         {/* Machine Status Dropdown */}
         <div className="mt-2 pb-2 border-bottom-1">
-          <h5 className="text-primary d-inline">Machine Status</h5>
+          <h5 className="text-primary d-inline">Device Status</h5>
           <div className="row">
             <div className="col-12 d-flex">
               <Select
@@ -104,7 +113,30 @@ function StatusSelection({MachineType, sx, ...other }) {
             </div>
           </div>
         </div>
-        <div className="mt-2 pb-2 border-bottom-1 vending">
+        <div className="mt-2 pb-2 border-bottom-1">
+          <h5 className="text-primary d-inline">Inverter Status</h5>
+          <div className="row">
+            <div className="col-12 d-flex">
+              <Select
+                multiple
+                value={inverterStatus}
+                onChange={handleInverterStatusChange}
+                style={{ borderBlockStyle: 'inherit',height:'40px',width:'100%' }}
+                renderValue={(selected ) =>selected.join(',')}
+              >
+                 <MenuItem value="Online">
+                  <Checkbox checked={inverterStatus.indexOf('Online') > -1} />
+                  Online
+                </MenuItem>
+                <MenuItem value="Offline">
+                  <Checkbox checked={inverterStatus.indexOf('Offline') > -1} />
+                  Offline
+                </MenuItem>
+              </Select>
+            </div>
+          </div>
+        </div>
+        {/* <div className="mt-2 pb-2 border-bottom-1 vending">
           <h5 className="text-primary d-inline">{MachineType!=="RECD" ?"Stock Status":"Temperature Status"}</h5>
           <div className="row">
             <div className="col-12 d-flex">
@@ -291,7 +323,7 @@ function StatusSelection({MachineType, sx, ...other }) {
               )}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Other Dropdowns */}
         {/* ... */}

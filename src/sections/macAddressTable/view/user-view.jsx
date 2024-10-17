@@ -218,16 +218,7 @@ export default function UserPage() {
                   { id: 'sr', label: 'Sr.No' },
                   { id: 'MacID', label: 'MACAddress' },
                   { id: 'SerialNumber', label: 'SerialNumber' },
-                  { id: 'Input Voltage/ Phase 1', label: 'Input Voltage/ Phase 1' },
-                  { id: 'Input Voltage/ Phase 2', label: 'Input Voltage/ Phase 2' },
-                  { id: 'Input Voltage/ Phase 3', label: 'Input Voltage/ Phase 3' },
-                  { id: 'Output Voltage/ Phase 1', label: 'Output Voltage/ Phase 1' },
-                  { id: 'Output Voltage/ Phase 2', label: 'Output Voltage/ Phase 2' },
-                  { id: 'Output Voltage/ Phase 3', label: 'Output Voltage/ Phase 3' },
-                  { id: 'Input Frequence', label: 'Input Frequency' },
-                  { id: 'Temperature', label: 'Temperature' },
-                 
-                 
+               
                   { id: 'Status', label: 'Status' },
                   { id: '' },
                 ]}

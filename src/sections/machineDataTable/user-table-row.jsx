@@ -246,7 +246,7 @@ const amountText = amt => {
           <Stack direction="row" alignItems="center" spacing={2}>
            
             <Typography variant="subtitle2" noWrap onKeyDown={handleKeyDown} onClick={handleModalOpen} role="button"  tabIndex={0}>
-           <span> <span ><b>{uid}</b> [S/N: {serial}]</span><br/><small className="text-muted">zone: {zone} / ward: {ward} / beat: {beat}</small><br/>{address(m)}</span>
+           <span> <span ><b>{m.MacID}</b> [S/N: {m.SNoutput}]</span><br/><small className="text-muted">zone: {m.Zone} / ward: {m.Ward} / beat: {m.Beat}</small><br/>{address(m)}</span>
             </Typography>
           </Stack>
         </TableCell>

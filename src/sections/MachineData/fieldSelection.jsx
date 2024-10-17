@@ -8,17 +8,16 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 
-import {getData} from 'src/_mock/macAddress';
-import {zoneData,wardData,beatData} from 'src/_mock/fildData';
-import { GetClentInfoDetails,GetClentNameDetails} from 'src/_mock/customers';
+import {zoneData,wardData,beatData,getAllData} from 'src/_mock/fildData';
+// import { GetClentInfoDetails,GetClentNameDetails} from 'src/_mock/customers';
 
 function FieldSelection({ sx, ...other }) {
   const [cities,setCities] = useState(['Mumbai','Delhi','SS-UK','DoE-HAR']);
   const [zones,setZones]=useState([]);
   const [wards,setWards]=useState([]);
   const [beats,setBeats]=useState([]);
-  const [cInfo,setCInfo]=useState(["City","Zone","Ward","Beat"]);
-  const [cityName, setCitiesName] = useState(['Mumbai']);
+  const [cInfo]=useState(["City","Zone","Ward","Beat"]);
+  const [cityName, setCitiesName] = useState(['Delhi']);
   const [zoneName,setZonesName]=useState([]);
   const [wardName,setWardsName]=useState([]);
   const [beatName,setBeatsName]=useState([]);
@@ -33,9 +32,9 @@ function FieldSelection({ sx, ...other }) {
     // console.log(UserInfo);
     if (!UserInfo.isAdmin) {
                                       
-      if (UserInfo.city){
+      if (UserInfo.City){
         
-       const Cities=(UserInfo.city).split(',')
+       const Cities=(UserInfo.City).split(',')
         setCitiesName(Cities);
         setCities(Cities);
         sessionStorage.setItem("cities",JSON.stringify(Cities));
@@ -52,52 +51,52 @@ function FieldSelection({ sx, ...other }) {
     sessionStorage.setItem("cities",JSON.stringify(Cities));
 
   }
-  if(UserInfo.clientName)
-  {
-    const obj={
-      clientName:UserInfo.clientName
-    }
-     GetClentInfoDetails(obj).then((r)=>{
-        //  console.log(r);
-         setCities([]);
-         setCitiesName([]);
-         const cityArray=[];
-           r.data.map((elem)=>
-            cityArray.push(elem.City)
-           )
-           setCities(cityArray);
-           setCitiesName(cityArray)
-     })
+  // if(UserInfo.clientName)
+  // {
+  //   const obj={
+  //     clientName:UserInfo.clientName
+  //   }
+  //    GetClentInfoDetails(obj).then((r)=>{
+  //       //  console.log(r);
+  //        setCities([]);
+  //        setCitiesName([]);
+  //        const cityArray=[];
+  //          r.data.map((elem)=>
+  //           cityArray.push(elem.City)
+  //          )
+  //          setCities(cityArray);
+  //          setCitiesName(cityArray)
+  //    })
 
-     GetClentNameDetails(obj).then((r)=>{
-        //  console.log(r);
-         const Data=r.data;
-         $('.CInfo1').text(Data[0].CInfo1);
-         if(Data[0].CInfo1===''){
-            $('.City').remove();
-         }
-         $('.CInfo2').text(Data[0].CInfo2);
-          if(Data[0].CInfo2===''){
-            $('.Zone').remove();
-         }
-         $('.CInfo3').text(Data[0].CInfo3);
-          if(Data[0].CInfo3===''){
-            $('.Ward').remove();
-         }
-         $('.CInfo4').text(Data[0].CInfo4);
-          if(Data[0].CInfo4===''){
-            $('.Beat').remove();
-         }
-          setCInfo([]);
-          const CInfos=[];
-           CInfos.push(r.data[0].CInfo1);
-           CInfos.push(r.data[0].CInfo2);
-           CInfos.push(r.data[0].CInfo3);
-           CInfos.push(r.data[0].CInfo4);
+  //    GetClentNameDetails(obj).then((r)=>{
+  //       //  console.log(r);
+  //        const Data=r.data;
+  //        $('.CInfo1').text(Data[0].CInfo1);
+  //        if(Data[0].CInfo1===''){
+  //           $('.City').remove();
+  //        }
+  //        $('.CInfo2').text(Data[0].CInfo2);
+  //         if(Data[0].CInfo2===''){
+  //           $('.Zone').remove();
+  //        }
+  //        $('.CInfo3').text(Data[0].CInfo3);
+  //         if(Data[0].CInfo3===''){
+  //           $('.Ward').remove();
+  //        }
+  //        $('.CInfo4').text(Data[0].CInfo4);
+  //         if(Data[0].CInfo4===''){
+  //           $('.Beat').remove();
+  //        }
+  //         setCInfo([]);
+  //         const CInfos=[];
+  //          CInfos.push(r.data[0].CInfo1);
+  //          CInfos.push(r.data[0].CInfo2);
+  //          CInfos.push(r.data[0].CInfo3);
+  //          CInfos.push(r.data[0].CInfo4);
 
-           setCInfo(CInfos)
-     })
-  }
+  //          setCInfo(CInfos)
+  //    })
+  // }
 
 
   },[])
@@ -120,7 +119,7 @@ function FieldSelection({ sx, ...other }) {
   
   });
 
-  getData();
+  getAllData();
 
    
 

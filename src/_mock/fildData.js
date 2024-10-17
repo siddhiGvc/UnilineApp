@@ -4,7 +4,7 @@ import { store } from "../Redux/store";
 import { saveData } from "../Redux/action";
 
 
-const API = import.meta.env.VITE_REACT_APP_API;
+const API = 'http://localhost:8080';
 
 
 export const getAllData = async () => {
@@ -18,10 +18,10 @@ export const getAllData = async () => {
       const ward=JSON.parse(sessionStorage.getItem("wards"));
       const beat=JSON.parse(sessionStorage.getItem("beats"))
       const machineStatus=JSON.parse(sessionStorage.getItem("machineStatus"));
-      const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
-      const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
+      // const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
+      // const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
   
-      const response = await fetch(`${API}/api/machine/data?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}&burn_status=${burn_status.join()}&stock_status=${stockStatus.join()}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getData?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json.data);
 
@@ -48,7 +48,7 @@ export const zoneData=async(city)=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/master/zone?city=${city}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getZones?city=${city}`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {
@@ -65,7 +65,7 @@ export const zoneData=async(city)=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/master/ward?city=${city}&zone=${zone}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getWards?city=${city}&zone=${zone}`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {
@@ -83,7 +83,7 @@ export const zoneData=async(city)=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/master/beat?city=${city}&zone=${zone}&ward=${ward}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getBeats?city=${city}&zone=${zone}&ward=${ward}`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {

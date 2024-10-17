@@ -339,7 +339,7 @@ export default function MachinePage() {
                 headLabel={[
                   { id: 'id', label: 'Sr.No' },
                   { id: 'name', label: 'MacID'},
-                  { id: 'email', label: 'Uid' },
+                  { id: 'email', label: 'Serial Number' },
                   { id: 'zone', label: `${cInfo[1]}` },
                   { id: 'ward', label: `${cInfo[2]}` },
                   { id: 'beat', label: `${cInfo[3]}` },

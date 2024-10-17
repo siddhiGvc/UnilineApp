@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_REACT_APP_API;
+const API = 'http://localhost:8080';
 
 export const AllMachines=async()=> {
   
@@ -6,7 +6,7 @@ export const AllMachines=async()=> {
       const headers = new Headers({
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getMacAddress`, { method: 'GET', headers });
       const json = await response.json();
       return json.data;
     } catch (error) {

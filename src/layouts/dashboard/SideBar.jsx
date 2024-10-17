@@ -85,9 +85,15 @@ export default function SideBar(){
                <li className="mt-1">
                      <NavItem path="/dashboard" icon={ <i className="fa-solid fa-chart-line" />} title='Dashboard'/>
                 </li>
-                <li  className=" mt-1">
-                      <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='Devices'/>
+                 <li  className="ra mt-1">
+                      <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>
                  </li>
+                 <li className=" mt-1"> 
+                        <NavItem  path="/machineData" icon={ <i className="fa-solid fa-database"/>} title='Device Data'/>
+                  </li>
+                {/* <li  className=" mt-1">
+                      <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='Devices'/>
+                 </li> */}
                 <li  className="ra mt-1">
                       <NavItem path="/UnilineTest" icon={ <i className="fa-solid fa-fan" />} title='Uniline Test'/>
                  </li>
@@ -108,10 +114,8 @@ export default function SideBar(){
                  {/* <li className="ra mt-1">
                        <NavItem  path="/customers" icon={ <i className="fa-solid fa-people-group"/>} title='Customers'/>
                   </li> */}
-                  {/* <li className=" mt-1"> 
-                        <NavItem  path="/machineData" icon={ <i className="fa-solid fa-database"/>} title='Machine Data'/>
-                  </li>
-                  <li className=" mt-1">
+                
+                  {/* <li className=" mt-1">
                      <NavItem  path="/machineMap" icon={ <i className="fa-solid fa-location-dot"/>} title='Machine Map'/>
                  </li> */}
                  <li className="ra mt-1">
