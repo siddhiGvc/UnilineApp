@@ -2,7 +2,7 @@
 // import { faker } from '@faker-js/faker';
 
 // ----------------------------------------------------------------------
-const API ='http://localhost:8080';
+const API ='http://165.232.180.111:8080';
  
 // export const users = [...Array(24)].map((_, index) => ({
 //   id: faker.string.uuid(),

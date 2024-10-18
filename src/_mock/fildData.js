@@ -4,7 +4,7 @@ import { store } from "../Redux/store";
 import { saveData } from "../Redux/action";
 
 
-const API = 'http://localhost:8080';
+const API = 'http://165.232.180.111:8080';
 
 
 export const getAllData = async () => {
@@ -18,10 +18,11 @@ export const getAllData = async () => {
       const ward=JSON.parse(sessionStorage.getItem("wards"));
       const beat=JSON.parse(sessionStorage.getItem("beats"))
       const machineStatus=JSON.parse(sessionStorage.getItem("machineStatus"));
+      const inverterStatus=JSON.parse(sessionStorage.getItem("inverterStatus"));
       // const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
       // const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
   
-      const response = await fetch(`${API}/testingBoard/getData?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getData?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}&inverterStatus=${inverterStatus.join()}`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json.data);
 

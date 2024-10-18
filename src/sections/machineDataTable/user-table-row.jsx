@@ -48,23 +48,9 @@ export default function UserTableRow({
   sr,
   key,
   machineId,
-  serial,
-  addresss,
-  lat,
-  lon,
-  zone,
-  ward,
-  beat,
-  uid,
-  spiralAStatus,
-  spiralBStatus,
-  doorCurrent,
-  qtyCurrent,
-  burnCycleCurrent,
-  burStatus,
-  lastStatus,
-  rssi,
-  handleClick,
+  G1output,
+  G2output,
+  G3output,
   MachineType
 }) {
   const [open, setOpen] = useState(null);
@@ -150,76 +136,76 @@ export default function UserTableRow({
         rel="noreferrer"
         href={`https://www.google.com/maps?q=${a.lat},${a.lon}`}
       >
-        {a.address}
+        {a.adress}
       </a>
     </small>
   );
 
 
   // display stock dtatus function of table row
-  function stockStatus(i, visible) {
+//   function stockStatus(i, visible) {
     
-    if (!visible) return '';
-    switch (i) {
+//     if (!visible) return '';
+//     switch (i) {
     
-        case 0: return  <Label color='error'>Empty</Label>
-        case 1: return  <Label color='warning'>Low</Label>
-        case 3: return   <Label color='success'>Ok</Label>
-        default: return <span className="badge w-7 py-1 px-3 text-white badge-pill badge-info">?</span>
-    }
-}
+//         case 0: return  <Label color='error'>Empty</Label>
+//         case 1: return  <Label color='warning'>Low</Label>
+//         case 3: return   <Label color='success'>Ok</Label>
+//         default: return <span className="badge w-7 py-1 px-3 text-white badge-pill badge-info">?</span>
+//     }
+// }
 
 // display burnStatus function of table row
-function burnStatus(i, visible) {
-    if (!visible) return '';
-    switch (i) {
+// function burnStatus(i, visible) {
+//     if (!visible) return '';
+//     switch (i) {
 
-        case 1: return <i className="fa fa-fire fa-2x text-warning i-burn" title="Burning On"/>
-        case 2: return <i className="fa fa-exclamation-triangle fa-2x text-danger" title="Burning Error"/>
-        default: return ''
-    }
-}
+//         case 1: return <i className="fa fa-fire fa-2x text-warning i-burn" title="Burning On"/>
+//         case 2: return <i className="fa fa-exclamation-triangle fa-2x text-danger" title="Burning Error"/>
+//         default: return ''
+//     }
+// }
 
 // display lockStatus function of table row.
- function lockStatus(i,ser) {
+//  function lockStatus(i,ser) {
     
        
-    switch (i) {
-        case 0: return <i className="fa-solid fa-lock fa-2x" title="Door Close" style={{cursor:'pointer'}} />
-        case 1: return <i className="fa-solid fa-lock-open  fa-2x text-success" title="Door Open"/>
-         case 2: return <i className="fa-solid fa-lock-open fa-2x text-danger " title="Door Forced Open"/>
-        default: return ''
-    }
+//     switch (i) {
+//         case 0: return <i className="fa-solid fa-lock fa-2x" title="Door Close" style={{cursor:'pointer'}} />
+//         case 1: return <i className="fa-solid fa-lock-open  fa-2x text-success" title="Door Open"/>
+//          case 2: return <i className="fa-solid fa-lock-open fa-2x text-danger " title="Door Forced Open"/>
+//         default: return ''
+//     }
  
     
-}
+// }
 
 // const filterOnline = q => moment().diff(moment.utc((q.lastHeartbeatTime || q.lastOnTime).replace('Z', '')), 'minute') < 5;
   
 
 // converting integer to text amount function
-const amountText = amt => {
-  amt = amt || 0;
+// const amountText = amt => {
+//   amt = amt || 0;
 
-  if(amt>=10000000) {
-      const cr = parseInt(amt / 100000, 10) / 100;
-      const Cr = parseFloat(cr.toFixed(2));
-      return `${Cr} Cr`;
-  } 
-  if(amt>=1000000) {
-      const l = parseInt(amt / 1000 ,10) / 100;
-      const L = parseFloat(l.toFixed(6));
-      return  `${L} L`;
-  } 
-  if(amt>=1000) {
-      const k = parseInt(amt / 10 ,10) / 100;
-      const K = parseFloat(k.toFixed(2));
-      return  `${K} K`;
-  }
+//   if(amt>=10000000) {
+//       const cr = parseInt(amt / 100000, 10) / 100;
+//       const Cr = parseFloat(cr.toFixed(2));
+//       return `${Cr} Cr`;
+//   } 
+//   if(amt>=1000000) {
+//       const l = parseInt(amt / 1000 ,10) / 100;
+//       const L = parseFloat(l.toFixed(6));
+//       return  `${L} L`;
+//   } 
+//   if(amt>=1000) {
+//       const k = parseInt(amt / 10 ,10) / 100;
+//       const K = parseFloat(k.toFixed(2));
+//       return  `${K} K`;
+//   }
 
-  // Remove the unnecessary else statement
-  return amt;
-}
+//   // Remove the unnecessary else statement
+//   return amt;
+// }
 
 
 
@@ -252,66 +238,19 @@ const amountText = amt => {
         </TableCell>
 
         <TableCell>
-           <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label>
+           <Label color={(m.device_status==="Online"  && 'success') || 'error'}>{m.device_status}</Label>
         </TableCell>
 
-        {MachineType!=="RECD" && MachineType!=="Incinerator"&& <TableCell>{stockStatus(m.spiral_a_status, online(m))}</TableCell>}
-        {MachineType === "RECD" && (
-              <TableCell>
-                  {(() => {
-                      if ((m.spiral_a_status === 2 || m.spiral_a_status === 3 || m.spiral_a_status === 6 || m.spiral_a_status === 7) && online(m)) {
-                          return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
-                      }
-                      if (online(m)) {
-                          return <span>A:{m.doorCurrent}/B:{m.qtyCurrent}</span>;
-                      }
-                      return null;
-                  })()}
-              </TableCell>
-          )}
-           {MachineType!=="RECD" && MachineType!=="Vending" && <TableCell>{burnStatus(m.burn_status, online(m))}</TableCell>}
-           {MachineType === "RECD" && (
-              <TableCell>
-                  {(() => {
-                      if ((m.spiral_a_status>3 && m.spiral_a_status<8) && online(m)) {
-                          return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
-                      }
-                      if (online(m)) {
-                          return <span>{m.burnCycleCurrent}</span>;
-                      }
-                      return null;
-                  })()}
-              </TableCell>
-          )}
-           {MachineType!=="RECD" && <TableCell>{lockStatus(parseInt(m.last_status ,10),m.serial)}</TableCell>}
-           {MachineType === "RECD" && (
-              <TableCell>
-                  {(() => {
-                      if ((m.spiral_a_status>3 && m.spiral_a_status<8) && online(m)) {
-                          return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
-                      }
-                      if (online(m)) {
-                          return <span>{m.rssi}</span>;
-                      }
-                      return null;
-                  })()}
-              </TableCell>
-          )}
-
-            {MachineType === "RECD" && (
-              <TableCell >
-                  {(() => {
-                      if ((m.spiral_a_status===1 || m.spiral_a_status===3 || m.spiral_a_status===5 || m.spiral_a_status===7) && online(m)) {
-                          return <span className="badge py-1 px-3 badge-pill badge-danger">Error</span>;
-                      }
-                      if (online(m)) {
-                          return <span className="badge py-1 px-3 badge-pill badge-success">Ok</span>;
-                      }
-                      return null;
-                  })()}
-              </TableCell>
-          )}
-     
+       
+         <TableCell>
+         {G1output.length>2 ? G1output[4]:''}
+         </TableCell>
+          <TableCell>
+          {G2output.length>2 && G2output[0]===1 ? <Label color='success'>BOOST</Label>:<Label color='error'>FLOAT</Label>}
+          </TableCell>
+          <TableCell>
+         {G2output.length>2 && G2output[0].split('')[6] === 0 ? <Label color='success'>Online</Label>: <Label color='error'>Offline</Label>}
+           </TableCell>
         <TableCell>
       <button
         type="button"
@@ -323,20 +262,7 @@ const amountText = amt => {
       </button>
     </TableCell>
   
-      
-
-       
-      
-
-        {/* <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
-        </TableCell> */}
-
-        {/* <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell> */}
+   
       </TableRow>
 
       <Popover
@@ -353,13 +279,14 @@ const amountText = amt => {
          <table className="table" style={{fontSize:'14px'}}>
                             <tbody> 
                                   <tr><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
-                                <tr><th style={{color: '#444'}}>IMSI</th><td style={{color: '#444'}}>{m.sim_number}</td></tr>
-                                <tr><th style={{color: '#444'}}>RSSI</th><td style={{color: '#444'}}>{m.rssi}</td></tr>
-                                {MachineType!=="Incinerator" ?<tr><th style={{color: '#444'}}>Collection</th><td style={{color: '#444'}}>&#8377;&nbsp;{m.cashCurrent} <span className="text-muted">[ &#8377;&nbsp;{amountText(m.cashLife + m.cashCurrent)} ]</span></td></tr>:""}
-                                {MachineType!=="Incinerator" ?<tr><th style={{color: '#444'}}>Items Dispensed</th><td style={{color: '#444'}}>{m.qtyCurrent} <span className="text-muted">[ {amountText(m.qtyLife + m.qtyCurrent)} ]</span></td></tr>:""}
-                                
-                                {MachineType!=="Vending" ?<tr id="itemsBurntRow" ><th style={{color: '#444'}}>Items Burnt</th><td style={{color: '#444'}} >{m.doorCurrent} <span className="text-muted ">[ {amountText(m.doorLife + m.doorCurrent)} ]</span></td></tr>:""}
-                                 {MachineType!=="Vending" ?<tr id="burningCyclesRow"><th style={{color: '#444'}}>Burning Cycles</th><td style={{color: '#444'}}>{m.burnCycleCurrent} <span className="text-muted ">[ {amountText(m.burnCycleLife + m.burnCycleCurrent)} ]</span></td></tr>:""}
+                                <tr><th style={{color: '#444'}}>IP Voltage 1</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>IP Voltage 2</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>IP Voltage 3</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>OP Voltage 1</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[0]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>OP Voltage 2</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>OP Voltage 3</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[2]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>IP Frequency</th><td style={{color: '#444'}}>{G1output.length>2 ? G1output[5]:''}</td></tr>
+                             
                         
                                 <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartBeatTime)).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
                                <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartbeatTime ? moment.utc(m.lastHeartBeatTime).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
@@ -444,22 +371,8 @@ UserTableRow.propTypes = {
   key: PropTypes.any,
   sr:PropTypes.any,
   machineId: PropTypes.any,
-  serial: PropTypes.any,
-  addresss: PropTypes.any,
-  lat: PropTypes.any,
-  lon: PropTypes.any,
-  zone: PropTypes.any,
-  ward: PropTypes.any,
-  beat: PropTypes.any,
-  uid: PropTypes.any,
-  spiralAStatus: PropTypes.any,
-  spiralBStatus: PropTypes.any,
-  doorCurrent: PropTypes.any,
-  qtyCurrent: PropTypes.any,
-  burnCycleCurrent: PropTypes.any,
-  burStatus: PropTypes.any,
-  lastStatus: PropTypes.any,
-  rssi: PropTypes.any,
-  handleClick: PropTypes.func
-
+  G1output:PropTypes.any,
+  G2output:PropTypes.any,
+  G3output:PropTypes.any
+ 
 };

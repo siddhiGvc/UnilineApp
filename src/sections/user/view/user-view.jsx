@@ -37,7 +37,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
 
-const API = 'http://localhost:8080';
+const API = 'http://165.232.180.111:8080';
 
 // error || succes popup compnet defined here
 const Alert = React.forwardRef((props, ref) => (

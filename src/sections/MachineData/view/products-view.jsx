@@ -106,7 +106,7 @@ export default function ProductsView() {
 
 
   // filtering online machines
-  const filterOnline = q => q.light_status==="Online";
+  const filterOnline = q => q.device_status==="Online";
   const filterOnlineInverter = q => q.inverter_status==="Online";
   
   //  caheckin machine is online or not

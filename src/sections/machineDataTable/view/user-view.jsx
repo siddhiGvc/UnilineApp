@@ -134,19 +134,11 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'sr', label: 'Sr.No' },
-                  { id: 'machine', label: `${machineType==="RECD" ? "Machine Details":"Machine" }` },
-                  { id: 'status', label: 'Status' },
-                  ...(machineType !== "Incinerator"
-                  ? [{ id: 'stockStatus',  label: `${machineType==="RECD" ? "Temperature":"Stock Status" }`}]
-                  : []),
-                  ...(machineType !== "Vending"
-                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Pressure":"Burning Status" }` }]
-                  : []),
-                
-                  { id: 'doorStatus', label: `${machineType==="RECD" ? "Diffrential":"Door Status" }`},
-                  ...(machineType === "RECD"
-                  ? [  { id: 'burnStatus', label: `${machineType==="RECD" ? "Temper":"Burning Status" }` }]
-                  : []),
+                  { id: 'machine', label:"Device" },
+                  { id: 'devcie_status', label:"Device Status" },
+                  { id: 'devcie_status', label:"Temperature" },
+                  { id: 'devcie_status', label:"Battery Charge" },
+                  { id: 'devcie_status', label:"Inverter Status" },
                   { id: 'info', label: 'Info' },
                 
                   // { id: 'ward', label: 'Verified', align: 'center' },
@@ -164,6 +156,9 @@ export default function UserPage() {
                       machineId={row.machineId}
                       serial={row.serial}
                       addresss={row.address}
+                      G1output={row.G1.toString().split(',')}
+                      G2output={row.G2.toString().split(',')}
+                      G3output={row.G3.toString().split(',')}
                       lat={row.lat}
                       lon={row.lon}
                       zone={row.zone}

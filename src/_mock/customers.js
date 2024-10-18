@@ -1,7 +1,7 @@
 
 // const API = import.meta.env.VITE_REACT_APP_API;
 
-const API='http://localhost:8080'
+const API='http://165.232.180.111:8080'
 
 export const getCustomerData=async()=> {
   

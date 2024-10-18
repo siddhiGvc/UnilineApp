@@ -86,7 +86,7 @@ export default function AppView() {
 
   // filtering onlines machines
   const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
-  const filterInverterOnline = a => a.G2.length>2 && a.G2[0].split('')[6] === 0;
+  const filterInverterOnline = a => a.G2.toString().split(',').length>2 && a.G2[0].split('')[6] === 0;
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
