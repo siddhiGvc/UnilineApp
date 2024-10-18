@@ -17,7 +17,7 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 
 // const API =import.meta.env.VITE_REACT_APP_API;
-const API='http://localhost:8080'
+const API='http://165.232.180.111:8080'
 const GEOLOCATION=import.meta.env.VITE_REACT_APP_GEOLOCATION;
 
 // Alert Component defined here for popup
