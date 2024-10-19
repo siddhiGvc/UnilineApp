@@ -278,7 +278,7 @@ export default function UserTableRow({
            <b style={{fontSize: '1.20em',cursor:'pointer'}} >{m.uid} {m.serial}</b>
          <table className="table" style={{fontSize:'14px'}}>
                             <tbody> 
-                                  <tr><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
+                                <tr><th style={{color: '#444'}}>Status</th><td style={{color: '#444'}} >  <Label color={(!online(m)  && 'error') || 'success'}>{online(m) ? 'Online' : 'Offline'}</Label></td></tr>
                                 <tr><th style={{color: '#444'}}>IP Voltage 1</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}</td></tr>
                                 <tr><th style={{color: '#444'}}>IP Voltage 2</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}</td></tr>
                                 <tr><th style={{color: '#444'}}>IP Voltage 3</th><td style={{color: '#444'}}>{G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}</td></tr>
@@ -289,7 +289,7 @@ export default function UserTableRow({
                              
                         
                                 <tr><th style={{color: '#444'}}>On Since</th><td style={{color: '#444'}}>{moment.utc((m.lastOnTime || m.lastHeartBeatTime)).local().format('DD-MMM-YYYY hh:mm a')}</td></tr>
-                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartbeatTime ? moment.utc(m.lastHeartBeatTime).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
+                               <tr ><th style={{color: '#444'}}>Last Online At</th><td style={{color: '#444'}}>{m.lastHeartBeatTime ? moment.utc(m.lastHeartBeatTime).local().format('DD-MMM-YYYY hh:mm a') : 'NA'}</td></tr>
                             </tbody>
                         </table>
       </Popover>

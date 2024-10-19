@@ -86,7 +86,7 @@ export default function SideBar(){
                      <NavItem path="/dashboard" icon={ <i className="fa-solid fa-chart-line" />} title='Dashboard'/>
                 </li>
                  <li  className="ra mt-1">
-                      <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Machines'/>
+                      <NavItem path="/machines" icon={ <i className="fa-solid fa-fan" />} title='Uniline Devices'/>
                  </li>
                  <li className=" mt-1"> 
                         <NavItem  path="/machineData" icon={ <i className="fa-solid fa-database"/>} title='Device Data'/>

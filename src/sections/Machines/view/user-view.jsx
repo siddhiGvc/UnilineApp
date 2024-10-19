@@ -300,7 +300,7 @@ export default function MachinePage() {
     <Container maxWidth="xxl">
       {/* createMapping button */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Machines</Typography>
+        <Typography variant="h4">Uniline Devices</Typography>
         {/* <button type='button' className="btn btn-sm btn-warning mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Create
                         Mapping</button> */}
 
