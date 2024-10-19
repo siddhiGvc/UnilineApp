@@ -131,14 +131,14 @@ export default function SideBar(){
                  
                  
                  <li className="nav-item dropdown mt-1">
-                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {/* <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Reports
-                    </a>
+                    </a> */}
                     <div className="dropdown-menu row direction-col" aria-labelledby="navbarDropdown" >
                         <ul>
-                           <li className="mt-0">
+                           {/* <li className="mt-0">
                              <NavItem  color='#343957' path="/dailyReports" icon={ <i className="fa-regular fa-file-lines"/>} title='Daily Reports'/>
-                           </li>
+                           </li> */}
                            {/* <li  className="ra mt-0">
                             <NavItem color='#343957' path="/loginLogs" icon={ <i className="fa-solid fa-arrow-right-to-bracket" />} title='Login Logs'/>
                             </li> */}

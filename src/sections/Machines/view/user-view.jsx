@@ -66,7 +66,7 @@ export default function MachinePage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal,setOpenModal] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [message,setMessage]=useState("");
@@ -80,16 +80,16 @@ export default function MachinePage() {
       }, 5000); // Hide the alert after 5 seconds (5000 milliseconds)
   };
 
-  const handleModalOpen = () => {
+  // const handleModalOpen = () => {
    
  
-    setOpenModal(true);
-    // setTimeout(()=>{
+  //   setOpenModal(true);
+  //   // setTimeout(()=>{
          
-    //   $('#mdlPwd [name="name"]').val(row.name);
-    //   $('#mdlPwd [name="email"]').val(row.email);
-    // },200)
-  };
+  //   //   $('#mdlPwd [name="name"]').val(row.name);
+  //   //   $('#mdlPwd [name="email"]').val(row.email);
+  //   // },200)
+  // };
   const handleModalClose = () => {
     setOpenModal(false);
     setTimeout(()=>{
@@ -301,8 +301,8 @@ export default function MachinePage() {
       {/* createMapping button */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Machines</Typography>
-        <button type='button' className="btn btn-sm btn-warning mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Create
-                        Mapping</button>
+        {/* <button type='button' className="btn btn-sm btn-warning mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Create
+                        Mapping</button> */}
 
         {/* <Button variant="contained" color="inherit"  onClick={handleOpenMenu} startIcon={<Iconify icon="eva:plus-fill" />}>
           New User

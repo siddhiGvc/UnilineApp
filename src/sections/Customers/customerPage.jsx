@@ -358,19 +358,7 @@ export default function CustomerPage(){
                             <div className="invalid-feedback" />
                         </div>
                     </div>
-                      <div className="col-md-6">
-                        <div className="form-group my-2">
-                        <h6>Select Machine Type:</h6>
-                            <select className="form-control" name="MachineType" onChange={handleDataInputChange}>
-                                <option value="Combo">Combo</option>
-                                <option value="Vending">Vending</option>
-                                <option value="Incinerator">Incinerator</option>
-                                <option value="RECD">RECD</option>
-
-                            </select>
-                            <div className="invalid-feedback" />
-                        </div>
-                    </div>
+                  
                   
                   
                 </div>
