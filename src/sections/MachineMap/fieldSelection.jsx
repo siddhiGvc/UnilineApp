@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 
-import {zoneData,wardData,beatData,getAllData } from 'src/_mock/fildData';
+import {zoneData,wardData,beatData,getAllData} from 'src/_mock/fildData';
 import { GetClentInfoDetails,GetClentNameDetails} from 'src/_mock/customers';
 
 function FieldSelection({ sx, ...other }) {
@@ -17,10 +17,11 @@ function FieldSelection({ sx, ...other }) {
   const [wards,setWards]=useState([]);
   const [beats,setBeats]=useState([]);
   const [cInfo,setCInfo]=useState(["City","Zone","Ward","Beat"]);
-  const [cityName, setCitiesName] = useState(['Mumbai']);
+  const [cityName, setCitiesName] = useState(['Delhi']);
   const [zoneName,setZonesName]=useState([]);
   const [wardName,setWardsName]=useState([]);
   const [beatName,setBeatsName]=useState([]);
+  // const [machineType,setMachineType]=useState([]);
  
   // Other state variables for stock status, burn status, door status, etc.
 
@@ -28,19 +29,27 @@ function FieldSelection({ sx, ...other }) {
   useEffect(()=>{
     const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
   
-    console.log(UserInfo);
+    // console.log(UserInfo);
     if (!UserInfo.isAdmin) {
                                       
-      if (UserInfo.city){
+      if (UserInfo.City){
         
-       const Cities=(UserInfo.city).split(',')
+       const Cities=(UserInfo.City).split(',')
         setCitiesName(Cities);
         setCities(Cities);
         sessionStorage.setItem("cities",JSON.stringify(Cities));
         $('#city').remove();
       }
-
+      else{
+        const Cities=['Mumbai','Delhi','SS-UK','DoE-HAR']
+        sessionStorage.setItem("cities",JSON.stringify(Cities));
+      }
        
+  }
+  else{
+    const Cities=['Mumbai','Delhi','SS-UK','DoE-HAR']
+    sessionStorage.setItem("cities",JSON.stringify(Cities));
+
   }
   if(UserInfo.clientName)
   {
@@ -60,7 +69,7 @@ function FieldSelection({ sx, ...other }) {
      })
 
      GetClentNameDetails(obj).then((r)=>{
-         console.log(r);
+        //  console.log(r);
          const Data=r.data;
          $('.CInfo1').text(Data[0].CInfo1);
          if(Data[0].CInfo1===''){
@@ -88,13 +97,13 @@ function FieldSelection({ sx, ...other }) {
            setCInfo(CInfos)
      })
   }
-  
+
 
   },[])
  
  
  useEffect(()=>{
-  sessionStorage.setItem("cities",JSON.stringify(cityName));
+
   zoneData(cityName).then((res)=>{
     // console.log(res);
     setZones(res);
@@ -110,19 +119,11 @@ function FieldSelection({ sx, ...other }) {
   
   });
 
- 
-  
+  getAllData();
+
    
 
  },[cityName,zoneName,wardName,beatName])
-
-
- useEffect(()=>{
-
-  getAllData();
- },[beats])
-
- 
   
 
   useEffect(()=>{
@@ -270,7 +271,8 @@ useEffect(()=>{
                   return `${selected.length} Selected`
               }}
               >
-                  {
+                
+                {
                   cities.map((elem)=>
                      <MenuItem value={elem}>
                     <Checkbox checked={cityName.indexOf(elem) > -1} />
@@ -279,6 +281,7 @@ useEffect(()=>{
 
                   )
                 }
+             
               </Select>
               <button type='button' className="btn btn-sm btn-danger text-white my-auto" onClick={selectNoneCities}><i
                                     className="fa fa-times"/></button>

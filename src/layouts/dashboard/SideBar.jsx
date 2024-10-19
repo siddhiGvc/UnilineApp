@@ -91,6 +91,9 @@ export default function SideBar(){
                  <li className=" mt-1"> 
                         <NavItem  path="/machineData" icon={ <i className="fa-solid fa-database"/>} title='Device Data'/>
                   </li>
+                  <li className=" mt-1">
+                     <NavItem  path="/machineMap" icon={ <i className="fa-solid fa-location-dot"/>} title='Device Map'/>
+                 </li>
                 {/* <li  className=" mt-1">
                       <NavItem path="/MacTable" icon={ <i className="fa-solid fa-fan" />} title='Devices'/>
                  </li> */}
@@ -115,9 +118,7 @@ export default function SideBar(){
                        <NavItem  path="/customers" icon={ <i className="fa-solid fa-people-group"/>} title='Customers'/>
                   </li>
                 
-                  {/* <li className=" mt-1">
-                     <NavItem  path="/machineMap" icon={ <i className="fa-solid fa-location-dot"/>} title='Machine Map'/>
-                 </li> */}
+               
                  <li className="ra mt-1">
                      <NavItem  path="/user" icon={ <i className="fa-solid fa-users-line"/>} title='Users'/>
                  </li>
