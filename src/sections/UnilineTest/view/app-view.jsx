@@ -62,19 +62,19 @@ export default function AppView() {
 
 
   const max=100;
-  const G3command=useCallback(async()=>{
-    await sendG1(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+  const G3command=useCallback(async(MacID,SNoutput)=>{
+    await sendG1(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG1Output(res);
     
     })
-    await sendG2(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+    await sendG2(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG2Output(res);
     
     })
    
-    await sendG3(value1.MacID,value1.SNoutput,sessionStorage.getItem("name")).then((res)=>{
+    await sendG3(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG3Output(res);
      
@@ -82,7 +82,7 @@ export default function AppView() {
  
      
     
-  },[value1.MacID,value1.SNoutput])
+  },[])
 
   // const G1command=useCallback(()=>{
   
@@ -153,6 +153,24 @@ export default function AppView() {
 
   },[LoadData])
 
+  useEffect(()=>{
+    let Interval;
+    if(value1.MacID && value1.SNoutput) 
+      {
+    G3command(value1.MacID,value1.SNoutput);
+   //  G1command();
+   
+   Interval=setInterval(()=>{
+     //  LoadData();
+      G3command(value1.MacID,value1.SNoutput);
+     //  G1command();
+    
+   },15000)
+   }
+
+   return ()=>clearInterval(Interval)
+  },[value1.MacID,value1.SNoutput,G3command])
+
  
 
 
@@ -170,16 +188,7 @@ export default function AppView() {
       
     })
 
-   
-    G3command();
-   //  G1command();
-   
-   setInterval(()=>{
-     //  LoadData();
-      G3command();
-     //  G1command();
-    
-   },15000)
+ 
     
   };
   
