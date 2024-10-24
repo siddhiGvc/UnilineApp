@@ -54,6 +54,7 @@ export default function AppView() {
   const [options1,setOptions1]=useState([]);
   const [data,setData]=useState([])
   const [value]=useState(0);
+ 
   const [value1,setValue1]=useState({MacID:'',SNoutput:''});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [G1output,setG1Output]=useState([]);
@@ -172,6 +173,9 @@ export default function AppView() {
   },[value1.MacID,value1.SNoutput,G3command])
 
  
+  useEffect(()=>{
+    console.log(G2output.length>2 && G2output[2].split('')[0]);
+  },[G2output])
 
 
   const handleSelectChange1 = (elem) => {
@@ -391,7 +395,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
       <Grid container spacing={4} md={5}>
       
           <Grid xs={4} sm={4} md={6}>
-         <BoosterBar value={value} max={max} title='Battery Charge'/>
+         <BoosterBar value={G2output.length>2 && G2output[2].split('')[0]==='1' ? 100:0} max={max} title='Battery Charge'/>
          </Grid>
           <Grid xs={4} sm={4} md={6}>
          <BoosterBar value={value} max={max} title='UPS Load'/>
