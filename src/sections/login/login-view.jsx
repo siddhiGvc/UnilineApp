@@ -16,8 +16,8 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 
-// const API =import.meta.env.VITE_REACT_APP_API;
-const API='http://165.232.180.111:8080'
+const API =import.meta.env.VITE_REACT_APP_API;
+// const API='http://165.232.180.111:8080'
 const GEOLOCATION=import.meta.env.VITE_REACT_APP_GEOLOCATION;
 
 // Alert Component defined here for popup
@@ -70,7 +70,7 @@ export default function LoginView() {
 
       useEffect(()=>{
       
-        if(GEOLOCATION===true)
+        if(GEOLOCATION)
         {
           console.log(GEOLOCATION)
            getLatLon();
@@ -112,7 +112,7 @@ export default function LoginView() {
         }
 
       
-        fetch(`${API}/add/savelogin`,{
+        fetch(`${API}/unilineAdmin/savelogin`,{
         method:'POST',
         headers:{
         'Content-type':'application/json'

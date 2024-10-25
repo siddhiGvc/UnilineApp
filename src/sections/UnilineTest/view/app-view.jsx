@@ -345,11 +345,11 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
       </Grid>
      
       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[0].split('')[6] === 1 && G2output[1].split('')[7]===1? 
+        {G2output.length>2 && G2output[0].split('')[6] === '1' && G2output[1].split('')[7]==='1'? 
        <StatusLabel label="Mains On" isOn color='green' /> :  <StatusLabel label="Mains Off" isOn color='red' />}
      
       </Grid>
-      {G2output.length>2 && G2output[0].split('')[6] === 1  && G2output[1].split('')[7]===0 && 
+      {G2output.length>2 && G2output[0].split('')[6] === '1'  && G2output[1].split('')[7]==='0' && 
       <Grid xs={4} sm={4} md={4}>
        
        <StatusLabel label="Mains On-Inverter Bad" isOn color='orange' /> 
@@ -359,27 +359,27 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
      
  
        <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[1] ===1 ?
+        {G2output.length>2 && G2output[2].split('')[1] ==='1' ?
       <StatusLabel label="Unit Running" isOn={false} color='green' />:  <StatusLabel label="Emergency Stop" isOn={false} color='red' /> 
         }
        </Grid>
        <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[2] ===1 ?
+        {G2output.length>2 && G2output[2].split('')[2] ==='1' ?
         <StatusLabel label="DC Okay" isOn={false} color='green' />:<StatusLabel label="High DC" isOn={false} color='red' /> 
         }
        </Grid>
        <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[4] ===0 ?
+        {G2output.length>2 && G2output[2].split('')[4] ==='0' ?
        <StatusLabel label="No Overload" isOn={false} color='green' />: <StatusLabel label="Show Overload" isOn={false} color='red' /> 
         }
        </Grid>
        <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[6] ===0 ?
+        {G2output.length>2 && G2output[2].split('')[6] ==='0' ?
        <StatusLabel label="Temperature Okay" isOn={false} color='green' />: <StatusLabel label="Over Temperature" isOn={false} color='red' /> 
         }
        </Grid>
        <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[7] ===0 ?
+        {G2output.length>2 && G2output[2].split('')[7] ==='0' ?
         <StatusLabel label="Working" isOn={false} color='green' /> :<StatusLabel label="Short Circuit" isOn={false} color='red' />
         }
        </Grid>

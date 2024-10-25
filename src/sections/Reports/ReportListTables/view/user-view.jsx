@@ -159,7 +159,6 @@ export default function UserPage({users}) {
                   { id: 'location', label: 'Location (Lat/Lon)' },
                   { id: 'ipAddress', label: 'IP Address' },
                   { id: 'remark', label: 'Remark' },
-                  { id: 'machineNo', label: 'Machine' },
                   { id: 'date&Time', label: 'Date & Time' },
                  
           

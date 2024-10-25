@@ -85,7 +85,7 @@ export default function AppView() {
 
 
   // filtering onlines machines
-  const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 1;
   const filterInverterOnline = a => a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[6] === '0';
   
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
@@ -131,7 +131,7 @@ export default function AppView() {
         {/* total Machines */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Total Machines"
+            title="Total Devices"
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
@@ -140,7 +140,7 @@ export default function AppView() {
          {/* online machines */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Online Machines"
+            title="Online Devices"
             total= {pathName.filter(filterOnline).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}

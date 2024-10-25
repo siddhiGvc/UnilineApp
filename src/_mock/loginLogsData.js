@@ -14,7 +14,7 @@ export const LogInfo=async(startDate,endDate)=> {
         "Content-type":"application/json",
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/add/getloginfo`, { method: 'POST', headers ,body:JSON.stringify(obj) });
+      const response = await fetch(`${API}/unilineAdmin/getloginfo`, { method: 'POST', headers ,body:JSON.stringify(obj) });
       const json = await response.json();
       return json.data;
     } catch (error) {
@@ -82,7 +82,7 @@ export const LogInfo=async(startDate,endDate)=> {
     }
 
   
-    fetch(`${API}/add/savelogin`,{
+    fetch(`${API}/unilineAdmin/savelogin`,{
     method:'POST',
     headers:{
     'Content-type':'application/json'

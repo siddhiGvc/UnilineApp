@@ -2,14 +2,14 @@ import moment from "moment";
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 // import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 // import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 
 // import Label from 'src/components/label';
@@ -55,12 +55,9 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell component="th" scope="row" padding="none" align="center">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            {/* <Avatar alt={name} src="" /> */}
-            <Typography variant="subtitle2" noWrap>
+         
               {name}
-            </Typography>
-          </Stack>
+         
         </TableCell>
 
       
@@ -70,7 +67,7 @@ export default function UserTableRow({
      
         <TableCell align="center">{row.deviceModel}</TableCell>
         <TableCell align="center">{row.Remark}</TableCell>
-        <TableCell align="center">{row.MachineNumber}</TableCell>
+       
         <TableCell align="center">{moment(row.createdAt).format('DD-MMM-YYYY:HH-mm')}</TableCell>
       
 

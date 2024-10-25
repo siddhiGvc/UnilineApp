@@ -30,17 +30,13 @@ const [setRunningPause]=useState(false);
 const LoadMap=useCallback((center, locations ,LastCheckIn, LastLogOut ,LastLogIn, LastCheckOut)=>{
     console.log(LastCheckOut);
   
- let   LastCheckInTime ;
+ 
  let   LastLogOutTime ;
  let   LastLogInTime ;
- let    LastCheckOutTime;
+ 
 
 
 
-if(LastCheckIn.length !==0)
-{
-  LastCheckInTime = GetIndianTime( LastCheckIn[0].createdAt);
-}
 if(LastLogOut.length !==0)
 {
 
@@ -52,11 +48,7 @@ if(LastLogIn.length !==0)
 LastLogInTime =  GetIndianTime( LastLogIn[0].createdAt);
 }
 
-if(LastCheckOut.length !==0)
-{
 
- LastCheckOutTime =  GetIndianTime( LastCheckOut[0].createdAt);
-} 
 //  let Length = 0;
 //  let length=0;
 const locationsData = sessionStorage.getItem("Locations");
@@ -155,14 +147,7 @@ marker.bindPopup(`
                <th style="color: #444">Last LogOut :</th>
                <td style="color: #444">${LastLogOutTime || ''}</td>
            </tr>
-           <tr>
-               <th style="color: #444">Last CheckOut :</th>
-               <td style="color: #444">${LastCheckOutTime || ''}</br> <th>Sr.No.</th><td>${LastCheckOut.length>0 && LastCheckOut[0].MachineNumber || ''}</td>
-           </tr>
-           <tr>
-               <th style="color: #444">Last CheckIn :</th>
-               <td style="color: #444">${LastCheckInTime || ''}</br> <th>Sr.No.</th><td>${LastCheckIn.length>0 && LastCheckIn[0].MachineNumber || ''}</td>
-           </tr>
+        
            <tr>
                <th style="color: #444">Last LogIn :</th>
                <td style="color: #444">${LastLogInTime || ''}</td>

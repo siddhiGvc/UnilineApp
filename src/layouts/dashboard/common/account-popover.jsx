@@ -109,14 +109,8 @@ export default function AccountPopover() {
 
   // removing user credientials after logout
   const LogoOut=()=>{
-    sendLattLon("CheckOut", sessionStorage.getItem("chechInMachine")).then(()=>{
-      showAlertMessage();
-      setType('success');
-      setMessage("CheckOut done");
-      $('.checkIn').show();
-      $('.checkOut').hide();
-    });
-    setTimeout(()=>{
+   
+  
       sendLattLon("Logout").then(()=>{
         window.sessionStorage.removeItem("userInfo");
         window.sessionStorage.removeItem("token");
@@ -127,7 +121,7 @@ export default function AccountPopover() {
 
       })
 
-    },200)
+  
 
   }
 
