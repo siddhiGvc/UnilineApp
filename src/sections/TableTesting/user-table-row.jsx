@@ -416,15 +416,15 @@ function Component4({m,board}){
                                         </tr>
                                         <tr>
                                           <th>Company</th>
-                                          <td>{Ioutput.length>1 && Ioutput[4] }</td>
+                                          <td>{Ioutput.length>1 && Ioutput[1] }</td>
                                         </tr>
                                         <tr>
                                         <th>Model</th>
-                                         <td>{Ioutput.length>1 && Ioutput[10]}</td>
+                                         <td>{Ioutput.length>1 && Ioutput[2]}</td>
                                         </tr>
                                          <tr>
                                          <th>Version</th>
-                                         <td>{Ioutput.length>1 && Ioutput[11]}</td>
+                                         <td>{Ioutput.length>1 && Ioutput[3]}</td>
                                           </tr>
                                  
                                        

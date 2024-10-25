@@ -112,10 +112,10 @@ export default function AppView() {
     
        AllMacAddress().then((res)=>{
 
-        const filteredData=res.filter((elem)=> online(elem) );
+        // const filteredData=res.filter((elem)=> online(elem) );
         // setData(filteredData);
   
-        const formattedData = filteredData.map((option,i) => ({
+        const formattedData = res.map((option,i) => ({
           value: option.MacID,
           label: option.MacID,
           id:i
@@ -129,7 +129,7 @@ export default function AppView() {
           {
             // console.log(res[selectedOption1.id]);
           
-            setValue1(filteredData[selectedOption1.id]);
+            setValue1(res[selectedOption1.id]);
            
           }
          
@@ -339,7 +339,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
       </Grid>
  
       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[0].split('')[6] === 0? 
+        {G2output.length>2 && G2output[0].split('')[6] === '0'? 
        <StatusLabel label="Inverter On" isOn color='green' /> :  <StatusLabel label="Inverter Bad" isOn color='red' />}
      
       </Grid>
