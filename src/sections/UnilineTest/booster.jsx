@@ -8,6 +8,7 @@ const VerticalLinearProgress = styled(LinearProgress)(({ theme, value}) => ({
   transform: 'rotate(270deg)',
   width: 300,
   height: 100,
+  padding:10,
   justifyContent: 'center',
   alignItems: 'center',
   '& .MuiLinearProgress-bar': {
@@ -29,7 +30,8 @@ const BoosterBar = ({ value, max ,title}) => {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
-          marginTop: 10
+          marginTop: 10,
+         
         }}
       >
         {/* Progress Bar Box */}

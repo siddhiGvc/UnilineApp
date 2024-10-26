@@ -108,6 +108,8 @@ export default function ProductsView() {
   // filtering online machines
   const filterOnline = q => q.device_status==="Online";
   const filterOnlineInverter = q => q.inverter_status==="Online";
+  const filterBatteryLow = q => q.battery_status==="Low";
+  const filterBatteryShutDown = q => q.battery_status==="Shut Down";
   
   //  caheckin machine is online or not
   // const online = m => moment().diff(moment.utc((m.lastHeartBeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
@@ -157,7 +159,7 @@ export default function ProductsView() {
       <Grid   xs={12} md={12} lg={9.3} >
         <Stack  container spacing='1' display='flex' flexWrap='wrap' direction='row' justifyContent='space-evenly' >
           {/* total machines ui */}
-        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        <Grid  xs={12} sm={6} md={4}>
           <MachineCard
             title="Total Devices"
             total={data.dataAll.length}
@@ -165,16 +167,9 @@ export default function ProductsView() {
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
         </Grid>
-          {/* online machines ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
-          <MachineCard
-            title="Online Devices"
-            total={data.data.filter(filterOnline).length}
-            color="info"
-            icon={<img alt="icon" src="/assets/icons/online.png" />}
-          />
-        </Grid>
-        <Grid  xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        
+      
+        <Grid  xs={12} sm={6} md={4}>
           <MachineCard
             title="Total Inverters"
             total={data.dataAll.length}
@@ -182,13 +177,43 @@ export default function ProductsView() {
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
           />
         </Grid>
+
+        <Grid  xs={12} sm={6} md={4}>
+          <MachineCard
+            title="Battery Low"
+            total={data.data.filter(filterBatteryLow).length}
+            color="success"
+             icon={<img alt="icon" src="/assets/icons/LowStock.png" />}
+          />
+        </Grid>
+      
+
           {/* online machines ui */}
-        <Grid xs={12} sm={6} md={machineType==="Vending" ? 4 :3}>
+        <Grid xs={12} sm={6} md={4}>
+          <MachineCard
+            title="Online Devices"
+            total={data.data.filter(filterOnline).length}
+            color="info"
+            icon={<img alt="icon" src="/assets/icons/online.png" />}
+          />
+        </Grid>
+
+            {/* online machines ui */}
+         <Grid xs={12} sm={6} md={4}>
           <MachineCard
             title="Online Inverters"
             total={data.data.filter(filterOnlineInverter).length}
             color="info"
             icon={<img alt="icon" src="/assets/icons/online.png" />}
+          />
+        </Grid>
+
+        <Grid  xs={12} sm={6} md={4}>
+          <MachineCard
+            title="Low Battery Shut Down"
+            total={data.data.filter(filterBatteryShutDown).length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/EmptyStock.png" />}
           />
         </Grid>
          

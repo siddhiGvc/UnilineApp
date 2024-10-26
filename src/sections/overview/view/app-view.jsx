@@ -87,7 +87,9 @@ export default function AppView() {
   // filtering onlines machines
   const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 1;
   const filterInverterOnline = a => a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[6] === '0';
-  
+  const filterBatteryOkay= a=>!filterBatteryLow(a) && !filterBatteryLowShutDown(a);
+  const filterBatteryLow = a => a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[4] === '1';
+  const filterBatteryLowShutDown = a => a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[3] === '1';
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 
@@ -166,9 +168,9 @@ export default function AppView() {
         </Grid>
 
         {/* Machine Status */}
-        <Grid xs={12} md={6} lg={6}>
+        <Grid xs={12} md={4} lg={4}>
           <AppCurrentVisits
-            title="Machine Status"
+            title="Device Status"
             chart={{
               series: [
                 { label: 'Online', value:pathName.filter(filterOnline).length||0 },
@@ -184,7 +186,7 @@ export default function AppView() {
         </Grid>
         {/* Inverter Staus */}
 
-        <Grid xs={12} md={6} lg={6}>
+        <Grid xs={12} md={4} lg={4}>
           <AppCurrentVisits
             title="Inverter Status"
             chart={{
@@ -195,6 +197,27 @@ export default function AppView() {
               ],
               colors:[
                 theme.palette.success.main,
+                theme.palette.error.main,
+              ]
+            }}
+          />
+        </Grid>
+
+        {/* Battery Status */}
+
+        <Grid xs={12} md={4} lg={4}>
+          <AppCurrentVisits
+            title="Battery Status"
+            chart={{
+              series: [
+                { label: 'Okay', value:(pathName.filter(filterBatteryOkay).length)||0 },
+                { label: 'Low', value:(pathName.filter(filterBatteryLow).length) ||0},
+                { label: 'Low Battery Shut Down', value:(pathName.filter(filterBatteryLowShutDown).length) ||0},
+             
+              ],
+              colors:[
+                theme.palette.success.main,
+                theme.palette.warning.main,
                 theme.palette.error.main,
               ]
             }}

@@ -10,9 +10,9 @@ import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------
 
-const CHART_HEIGHT = 480;
+const CHART_HEIGHT = 400;
 
-const LEGEND_HEIGHT = 82;
+const LEGEND_HEIGHT = 80;
 
 const StyledChart = styled(Chart)(({ theme }) => ({
   height: CHART_HEIGHT,

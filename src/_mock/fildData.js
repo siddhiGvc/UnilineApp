@@ -19,10 +19,11 @@ export const getAllData = async () => {
       const beat=JSON.parse(sessionStorage.getItem("beats"))
       const machineStatus=JSON.parse(sessionStorage.getItem("machineStatus"));
       const inverterStatus=JSON.parse(sessionStorage.getItem("inverterStatus"));
+      const batteryStatus=JSON.parse(sessionStorage.getItem("batteryStatus"));
       // const stockStatus=JSON.parse(sessionStorage.getItem('stockStatus'));
       // const burn_status=JSON.parse(sessionStorage.getItem('burnStatus'))
   
-      const response = await fetch(`${API}/testingBoard/getData?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}&inverterStatus=${inverterStatus.join()}`, { method: 'GET', headers });
+      const response = await fetch(`${API}/testingBoard/getData?city=${city.join()}&zone=${zone.join()}&ward=${ward.join()}&beat=${beat.join()}&status=${machineStatus.join()}&inverterStatus=${inverterStatus.join()}&batteryStatus=${batteryStatus.join()}`, { method: 'GET', headers });
       const json = await response.json();
       // console.log(json.data);
 

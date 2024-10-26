@@ -327,7 +327,9 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             value={G1output.length>2 ? G1output[4]:''}
           />
         </Grid>
-        <Grid container md={7}>
+
+
+        <Grid container xs={6} sm={6} md={7}>
        <Grid xs={4} sm={4} md={4}>
         {G2output.length>2 && G2output.length>2 && G3output.length>2 ?
        <StatusLabel label="Communicating With UPS" isOn={false} color='green' /> :<StatusLabel label="Not Communicating With UPS" isOn={false} color='red' />
@@ -392,12 +394,12 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
      
       
        
-      <Grid container spacing={4} md={5}>
+      <Grid container spacing={4} xs={5} sm={5} md={5}>
       
-          <Grid xs={4} sm={4} md={6}>
+          <Grid xs={6} sm={6} md={6}>
          <BoosterBar value={G2output.length>2 && G2output[2].split('')[0]==='1' ? 100:0} max={max} title='Battery Charge'/>
          </Grid>
-          <Grid xs={4} sm={4} md={6}>
+          <Grid xs={6} sm={6} md={6}>
          <BoosterBar value={value} max={max} title='UPS Load'/>
          {/* <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '20px' }}>
         <button type="button" onClick={() => setValue(value + 10)} style={{ marginBottom: '10px' }}>Boost</button>

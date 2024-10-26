@@ -14,13 +14,8 @@ function StatusSelection({MachineType, sx, ...other }) {
   // const [mStatus] = useState(['Online', 'Offline']);
   const [machineStatus, setMachineStatus] = useState(['Online', 'Offline']);
   const [inverterStatus, setInverterStatus] = useState(['Online', 'Offline']);
-  // const [sStatus] = useState(['Ok', 'Low','Empty']);
-  const [stockStatus] = useState([]);
-  // const [bStatus] = useState(['Idle', 'Burning','Error']);
-  const [burnStatus] = useState([]);
-  // const [dStatus] = useState(['0', '1','2']);
-  const [doorStatus] = useState([]);
-  // Other state variables for stock status, burn status, door status, etc.
+  const [batteryStatus, setBatteryStatus] = useState(['Okay', 'Low','Shut Down']);
+ 
 
 
   useEffect(()=>{
@@ -34,9 +29,8 @@ function StatusSelection({MachineType, sx, ...other }) {
     }
     sessionStorage.setItem('machineStatus',JSON.stringify(machineStatus));
     sessionStorage.setItem('inverterStatus',JSON.stringify(inverterStatus));
-    sessionStorage.setItem('stockStatus',JSON.stringify(stockStatus));
-    sessionStorage.setItem('burnStatus',JSON.stringify(burnStatus));
-    sessionStorage.setItem('doorStatus',JSON.stringify(doorStatus));
+    sessionStorage.setItem('batteryStatus',JSON.stringify(batteryStatus));
+   
   
   })
   
@@ -51,6 +45,12 @@ function StatusSelection({MachineType, sx, ...other }) {
   const handleInverterStatusChange = (event) => {
     sessionStorage.setItem('inverterStatus',JSON.stringify(event.target.value));
     setInverterStatus(event.target.value);
+    getAllData();
+    // Handle other logic as needed
+  };
+  const handleBatteryStatusChange = (event) => {
+    sessionStorage.setItem('batteryStatus',JSON.stringify(event.target.value));
+    setBatteryStatus(event.target.value);
     getAllData();
     // Handle other logic as needed
   };
@@ -131,6 +131,33 @@ function StatusSelection({MachineType, sx, ...other }) {
                 <MenuItem value="Offline">
                   <Checkbox checked={inverterStatus.indexOf('Offline') > -1} />
                   Offline
+                </MenuItem>
+              </Select>
+            </div>
+          </div>
+        </div>
+        <div className="mt-2 pb-2 border-bottom-1">
+          <h5 className="text-primary d-inline">Battery Status</h5>
+          <div className="row">
+            <div className="col-12 d-flex">
+              <Select
+                multiple
+                value={batteryStatus}
+                onChange={handleBatteryStatusChange}
+                style={{ borderBlockStyle: 'inherit',height:'40px',width:'100%' }}
+                renderValue={(selected ) =>selected.join(',')}
+              >
+                 <MenuItem value="Okay">
+                  <Checkbox checked={batteryStatus.indexOf('Okay') > -1} />
+                  Battery Okay
+                </MenuItem>
+                <MenuItem value="Low">
+                  <Checkbox checked={batteryStatus.indexOf('Low') > -1} />
+                  Battery Low
+                </MenuItem>
+                <MenuItem value="Shut Down">
+                  <Checkbox checked={batteryStatus.indexOf('Shut Down') > -1} />
+                  Battery Low Shut Down
                 </MenuItem>
               </Select>
             </div>
