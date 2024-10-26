@@ -70,7 +70,7 @@ export default function LoginView() {
 
       useEffect(()=>{
       
-        if(GEOLOCATION)
+        if(GEOLOCATION===1)
         {
           console.log(GEOLOCATION)
            getLatLon();
