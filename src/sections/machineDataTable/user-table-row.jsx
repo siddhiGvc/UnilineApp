@@ -249,7 +249,7 @@ export default function UserTableRow({
           {G2output.length>2 && G2output[2].split('')[0]==='1' ? <Label color='success'>BOOST</Label>:<Label color='error'>FLOAT</Label>}
           </TableCell>
           <TableCell>
-         {G2output.length>2 && G2output[0].split('')[6] ==='0' ? <Label color='success'>Online</Label>: <Label color='error'>Offline</Label>}
+          <Label color={(m.device_status==="Online"  && 'success') || 'error'}>{m.inverter_status}</Label>
            </TableCell>
         <TableCell>
       <button
