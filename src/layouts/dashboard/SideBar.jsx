@@ -152,10 +152,10 @@ export default function SideBar(){
                            <li className="ra mt-0">
                              <NavItem  color='#343957' path="/paytmTransactions" icon={  <i className="fa-solid fa-credit-card" />} title='Paytm Transactions'/>
                              </li> */}
-                             {/* <li className="ra mt-0">
+                             <li className="ra mt-0">
                             <NavItem  color='#343957' path="/hourlyReport" icon={ <i className="fa-solid fa-clock" />} title='Hourly Report'/>
                             </li>
-                            <li className="mt-0">
+                            {/* <li className="mt-0">
                              <NavItem  color='#343957' path="/faultReport" icon={ <i className="fa-solid fa-wrench" />} title='Technician Report'/>
                              </li> */}
                              {/* <li className="ra mt-0">

@@ -11,8 +11,9 @@ export const GetHourlyData=async(date,time)=> {
         "Content-type":'application/json',
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/add/getHR`, { method: 'POST', headers,body:JSON.stringify(obj) });
+      const response = await fetch(`${API}/testingBoard/getHR`, { method: 'POST', headers,body:JSON.stringify(obj) });
       const json = await response.json();
+      console.log(json);
       return json;
     } catch (error) {
       console.error('Error fetching data:', error);

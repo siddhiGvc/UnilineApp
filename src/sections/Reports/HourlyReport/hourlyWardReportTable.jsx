@@ -66,30 +66,26 @@ export default function HourlyWardTable({data,data1,data2,data3,data4,data5}){
 
       const Percent=(m,t)=>(m/t*100).toFixed(2);
       const totalMachines = (d) => d.reduce((total, item) =>
-      total + parseInt(item.machinesTotal, 10), 0);
+      total + parseInt(item.deviceTotal, 10), 0);
     
-    const totalMachineOnline = (d) => d.reduce((total, item) =>
-      total + parseInt(item.machineOnline, 10), 0);
+    const totaldeviceOnline = (d) => d.reduce((total, item) =>
+      total + parseInt(item.deviceOnline, 10), 0);
 
-
-   const totalCollection =(d)=> d.reduce((total, item)=> 
-         total + parseInt(item.cashSales,10),0);
- 
-    const totalItemsDispends =(d)=> d.reduce((total, item)=> 
-         total + parseInt(item.qtySales,10),0);
-    
-    // const totalLowStock =(d)=> d.reduce((total, item)=> 
-    //     total + parseInt(item.machineLowStock,10),0);
    
-     const totalStockEmpty =(d)=> d.reduce((total, item)=> 
-        total + parseInt(item.machineEmpty,10),0);
+    
+    const totalInverterOnline = (d) => d.reduce((total, item) =>
+      total + parseInt(item.inverterOnline, 10), 0);
+
+    const totalBatteryLow =(d)=> d.reduce((total, item)=> 
+      total + parseInt(item.BatteryLow,10),0);
   
-     const totalBurningEnabled =(d)=> d.reduce((total, item)=> 
-        total +parseInt(item.burningSales,10),0);
+     const totalBatteryShutDown =(d)=> d.reduce((total, item)=> 
+        total + parseInt(item.BatteryShutDown,10),0);
+  
 
 
-        const getPercentageColor = (machineOnline, machinesTotal) => {
-          const percent = (machineOnline / machinesTotal) * 100;
+        const getPercentageColor = (deviceOnline, deviceTotal) => {
+          const percent = (deviceOnline / deviceTotal) * 100;
        
           let color;
 
@@ -126,43 +122,42 @@ export default function HourlyWardTable({data,data1,data2,data3,data4,data5}){
                               
                                <th >Sr No</th>
                                <th  className="type fixed_position">Ward</th>
-                               <th >TOTAL MACHINES</th>
+                               <th >TOTAL DEVICES</th>
                               <th colSpan="2" className="text-center " >OPENING BALANCE</th>
                               <th colSpan="1" className="text-center " >&gt; </th>
                               <th colSpan="1" className="text-center ">&gt;</th>
                               <th colSpan="1" className="text-center ">&gt;</th>
-                              <th colSpan="1" className="text-center">&gt;</th>
-                              
+                             
                               <th colSpan="2" className="text-center ">10:00 AM</th>
                               <th colSpan="1" className="text-center ">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
-                              <th colSpan="1" className="text-center">&gt;</th>
-                               <th colSpan="1" className="text-center">&gt;</th>
+                            
+                             
                               <th colSpan="2" className="text-center">12:00 PM</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
-                              <th colSpan="1" className="text-center">&gt;</th>
-                               <th colSpan="1" className="text-center">&gt;</th>
+                            
+                            
                               <th colSpan="2" className="text-center">2:00 PM</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
-                              <th colSpan="1" className="text-center">&gt;</th>
-                               <th colSpan="1" className="text-center">&gt;</th>
+                             
+                             
                               <th colSpan="2" className="text-center">4:00 PM</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
-                              <th colSpan="1" className="text-center">&gt;</th>
-                               <th colSpan="1" className="text-center">&gt;</th>
+                           
+                           
                               <th colSpan="2" className="text-center">6:00 PM</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
                               <th colSpan="1" className="text-center">&gt;</th>
-                              <th colSpan="1" className="text-center">&gt;</th>
-                               <th colSpan="1" className="text-center">&gt;</th>
+                            
+                            
                            
                              </tr>
                              <tr >
@@ -170,53 +165,43 @@ export default function HourlyWardTable({data,data1,data2,data3,data4,data5}){
                                   <th className="fixed_position"/>
                                     <th />
                                           
-                               <th>ONLINE MACHINES </th>
+                               <th>ONLINE DEVICES</th>
                                <th> ONLINE PERCENTAGE</th>
-                               <th >TOTAL ITEM DISPENSED</th>
-                              
-                               <th >COLLECTION</th>
-                               <th >STOCK EMPTY</th>
-                               <th >No. Of Napkin BURNT</th>
-                                 <th>ONLINE MACHINES </th>
-                               <th>ONLINE PERCENTAGE</th>
-                                <th >TOTAL ITEM DISPENSED</th>
-                               <th >ITEM DISPENSED FROM LAST REPORT</th>
-                               <th>COLLECTION</th>
-                              
-                               <th>STOCK EMPTY</th>
-                               <th>No. Of Napkin BURNT</th>
-                                 <th>ONLINE MACHINES </th>
-                               <th>ONLINE PERCENTAGE</th>
-                                <th >TOTAL ITEM DISPENSED</th>
-                               <th >ITEM DISPENSED FROM LAST REPORT</th>
-                               <th>COLLECTION</th>
-                             
-                               <th>STOCK EMPTY</th>
-                               <th>No. Of Napkin BURNT</th>
-                                 <th>ONLINE MACHINES </th>
-                               <th>ONLINE PERCENTAGE</th>
-                                <th >TOTAL ITEM DISPENSED</th>
-                               <th >ITEM DISPENSED FROM LAST REPORT</th>
-                               <th>COLLECTION</th>
-                              
-                               <th>STOCK EMPTY</th>
-                               <th>No. Of Napkin BURNT</th>
-                                 <th>ONLINE MACHINES </th>
-                               <th>ONLINE PERCENTAGE</th>
-                                 <th >TOTAL ITEM DISPENSED</th>
-                               <th >ITEM DISPENSED FROM LAST REPORT</th>
-                               <th>COLLECTION</th>
-                             
-                               <th>STOCK EMPTY</th>
-                               <th>No. Of Napkin BURNT</th>
-                               <th>ONLINE MACHINES </th>
-                               <th>ONLINE PERCENTAGE</th>
-                                <th >TOTAL ITEM DISPENSED</th>
-                               <th >ITEM DISPENSED FROM LAST REPORT</th>
-                               <th>COLLECTION</th>
+                               <th> ONLINE INVERTERS</th>
                             
-                               <th>STOCK EMPTY</th>
-                               <th>No. Of Napkin BURNT</th>
+                               <th >BATTERY LOW</th>
+                               <th >BATTERY SHUT DOWN</th>
+                               <th>ONLINE DEVICES</th>
+                               <th> ONLINE PERCENTAGE</th>
+                               <th> ONLINE INVERTERS</th>
+                            
+                               <th >BATTERY LOW</th>
+                               <th >BATTERY SHUT DOWN</th>
+
+                               <th>ONLINE DEVICES</th>
+                               <th> ONLINE PERCENTAGE</th>
+                               <th> ONLINE INVERTERS</th>
+                            
+                               <th >BATTERY LOW</th>
+                               <th >BATTERY SHUT DOWN</th>
+                               <th>ONLINE DEVICES</th>
+                               <th> ONLINE PERCENTAGE</th>
+                               <th> ONLINE INVERTERS</th>
+                            
+                               <th >BATTERY LOW</th>
+                               <th >BATTERY SHUT DOWN</th>
+                               <th>ONLINE DEVICES</th>
+                               <th> ONLINE PERCENTAGE</th>
+                               <th> ONLINE INVERTERS</th>
+                            
+                               <th >BATTERY LOW</th>
+                               <th >BATTERY SHUT DOWN</th>
+                               <th>ONLINE DEVICES</th>
+                               <th> ONLINE PERCENTAGE</th>
+                               <th> ONLINE INVERTERS</th>
+                            
+                               <th >BATTERY LOW</th>
+                               <th >BATTERY SHUT DOWN</th>
                              
                                
                              </tr>
@@ -230,125 +215,128 @@ export default function HourlyWardTable({data,data1,data2,data3,data4,data5}){
                     
                            {data && data.length>0 ?<><td >{i+1}</td>
                             <td   className="fixed_position">{m.ward}</td>
-                            <td  >{data[i].machinesTotal}</td>
-                            <td  >{data[i].machineOnline}</td>
-                            <td> <p style={getPercentageColor(data[i].machineOnline, data[i].machinesTotal)}>{Percent(data[i].machineOnline,data[i].machinesTotal)}%</p></td>
-                             <td >{data[i].qtySales}</td>
-                            <td >{data[i].cashSales}</td>
-                             <td  >{data[i].machineEmpty}</td>
-                            <td >{data[i].burningSales*8}</td></>:null}
+                            <td  >{data[i].deviceTotal}</td>
+                            <td  >{data[i].deviceOnline}</td>
+                            <td> <p style={getPercentageColor(data[i].deviceOnline, data[i].deviceTotal)}>{Percent(data[i].deviceOnline,data[i].deviceTotal)}%</p></td>
+                             <td >{data[i].inverterOnline}</td>
+                           
+                            <td >{data[i].BatteryLow}</td>
+                            <td  >{data[i].BatteryShutDown}</td>
+                           </>:null}
                             {/* ***** */}
 
-                            {data1 && data1.length>0 ? <><td  >{data1[i].machineOnline}</td>
-                            <td> <p style={getPercentageColor(data1[i].machineOnline, data[i].machinesTotal)}>{Percent(data1[i].machineOnline,data[i].machinesTotal)}%</p></td>
-                             <td >{data1[i].qtySales}</td>
-                             <td >{data1[i].qtySales - data[i].qtySales}</td>
-                            <td >{data1[i].cashSales}</td>
-                             <td  >{data1[i].machineEmpty}</td>
-                            <td >{data1[i].burningSales*8}</td></>:null}
+                            {data1 && data1.length>0 ? <><td  >{data1[i].deviceOnline}</td>
+                            <td> <p style={getPercentageColor(data1[i].deviceOnline, data[i].deviceTotal)}>{Percent(data1[i].deviceOnline,data[i].deviceTotal)}%</p></td>
+                             <td >{data1[i].inverterOnline}</td>
+                            
+                            <td >{data1[i].BatteryLow}</td>
+                             <td  >{data1[i].BatteryShutDown}</td>
+                            </>:null}
                              {/* ***** */}
 
-                             {data2 && data2.length>0 ? <> <td  >{data2[i].machineOnline}</td>
-                            <td> <p style={getPercentageColor(data2[i].machineOnline, data[i].machinesTotal)}>{Percent(data2[i].machineOnline,data[i].machinesTotal)}%</p></td>
-                             <td >{data2[i].qtySales}</td>
-                             <td >{data2[i].qtySales - data1[i].qtySales}</td>
-                            <td >{data2[i].cashSales}</td>
-                             <td  >{data2[i].machineEmpty}</td>
-                            <td >{data2[i].burningSales*8}</td></>:null}
+                             {data2 && data2.length>0 ? <> <td  >{data2[i].deviceOnline}</td>
+                            <td> <p style={getPercentageColor(data2[i].deviceOnline, data[i].deviceTotal)}>{Percent(data2[i].deviceOnline,data[i].deviceTotal)}%</p></td>
+                             <td >{data2[i].inverterOnline}</td>
+                        
+                            <td >{data2[i].BatteryLow}</td>
+                             <td  >{data2[i].BatteryShutDown}</td>
+                        </>:null}
                              {/* ***** */}
                              
-                             {data3 && data3.length>0 ? <> <td  >{data3[i].machineOnline}</td>
-                            <td> <p style={getPercentageColor(data3[i].machineOnline, data[i].machinesTotal)}>{Percent(data3[i].machineOnline,data[i].machinesTotal)}%</p></td>
-                             <td >{data3[i].qtySales}</td>
-                             <td >{data3[i].qtySales - data2[i].qtySales}</td>
-                            <td >{data3[i].cashSales}</td>
-                             <td  >{data3[i].machineEmpty}</td>
-                            <td >{data3[i].burningSales*8}</td></>:null}
+                             {data3 && data3.length>0 ? <> <td  >{data3[i].deviceOnline}</td>
+                            <td> <p style={getPercentageColor(data3[i].deviceOnline, data[i].deviceTotal)}>{Percent(data3[i].deviceOnline,data[i].deviceTotal)}%</p></td>
+                             <td >{data3[i].inverterOnline}</td>
+                           
+                            <td >{data3[i].BatteryLow}</td>
+                             <td  >{data3[i].BatteryShutDown}</td>
+                           </>:null}
                            
 
                              {/* ***** */}
 
-                             {data4 && data4.length>0 ? <> <td  >{data4[i].machineOnline}</td>
-                            <td> <p style={getPercentageColor(data4[i].machineOnline, data[i].machinesTotal)}>{Percent(data4[i].machineOnline,data[i].machinesTotal)}%</p></td>
-                             <td >{data4[i].qtySales}</td>
-                             <td >{data4[i].qtySales - data3[i].qtySales}</td>
-                            <td >{data4[i].cashSales}</td>
-                             <td  >{data4[i].machineEmpty}</td>
-                            <td >{data4[i].burningSales*8}</td></>:null}
+                             {data4 && data4.length>0 ? <> <td  >{data4[i].deviceOnline}</td>
+                            <td> <p style={getPercentageColor(data4[i].deviceOnline, data[i].deviceTotal)}>{Percent(data4[i].deviceOnline,data[i].deviceTotal)}%</p></td>
+                             <td >{data4[i].inverterOnline}</td>
+                          
+                            <td >{data4[i].BatteryLow}</td>
+                             <td  >{data4[i].BatteryShutDown}</td>
+                           </>:null}
 
                              {/* ***** */}
 
-                            {data5 && data5.length>0 ? <><td  >{data5[i].machineOnline}</td>
-                            <td> <p style={getPercentageColor(data5[i].machineOnline, data[i].machinesTotal)}>{Percent(data5[i].machineOnline,data[i].machinesTotal)}%</p></td>
-                             <td >{data5[i].qtySales}</td>
-                             <td >{data5[i].qtySales - data4[i].qtySales}</td>
-                            <td >{data5[i].cashSales}</td>
-                             <td  >{data5[i].machineEmpty}</td>
-                            <td >{data5[i].burningSales*8}</td></>:null}
+                            {data5 && data5.length>0 ? <><td  >{data5[i].deviceOnline}</td>
+                            <td> <p style={getPercentageColor(data5[i].deviceOnline, data[i].deviceTotal)}>{Percent(data5[i].deviceOnline,data[i].deviceTotal)}%</p></td>
+                             <td >{data5[i].inverterOnline}</td>
+                           
+                            <td >{data5[i].BatteryLow}</td>
+                             <td  >{data5[i].BatteryShutDown}</td>
+                           </>:null}
 
                 </tr>
+                
               
              )
+               
             }
-
-            <tr className="data">
+             <tr className="data">
               
-                  {data.length>0 ? <>
-                    <td colSpan="2" className="text-center"><b>Total</b></td>
-                          <td>{totalMachines(data)}</td>
-                          <td>{totalMachineOnline(data)}</td>
-                          <td style={getPercentageColor(totalMachineOnline(data),totalMachines(data))}>{Percent(totalMachineOnline(data),totalMachines(data))}%</td>
-                          <td>{totalItemsDispends(data)}</td>
-                          <td>{totalCollection(data)}</td>
-                          <td>{totalStockEmpty(data)}</td>
-                          <td>{totalBurningEnabled(data)}</td>
-                          </>:null}
-                    {data1.length>0 ? <>
-                          <td>{totalMachineOnline(data1)}</td>
-                          <td style={getPercentageColor(totalMachineOnline(data1),totalMachines(data))}>{Percent(totalMachineOnline(data1),totalMachines(data))}%</td>
-                          <td>{totalItemsDispends(data1)}</td>
-                          <td>{totalItemsDispends(data1)-totalItemsDispends(data)}</td>
-                          <td>{totalCollection(data1)}</td>
-                          <td>{totalStockEmpty(data1)}</td>
-                          <td>{totalBurningEnabled(data1)}</td>
-                    </>:null}
-                    {data2.length>0 ? <>
-                          <td>{totalMachineOnline(data2)}</td>
-                          <td style={getPercentageColor(totalMachineOnline(data2),totalMachines(data))}>{Percent(totalMachineOnline(data2),totalMachines(data))}%</td>
-                          <td>{totalItemsDispends(data2)}</td>
-                          <td>{totalItemsDispends(data2)-totalItemsDispends(data1)}</td>
-                          <td>{totalCollection(data2)}</td>
-                          <td>{totalStockEmpty(data2)}</td>
-                          <td>{totalBurningEnabled(data2)}</td>
-                    </>:null}
-                    {data3.length>0 ? <>
-                          <td>{totalMachineOnline(data3)}</td>
-                          <td style={getPercentageColor(totalMachineOnline(data3),totalMachines(data))}>{Percent(totalMachineOnline(data3),totalMachines(data))}%</td>
-                          <td>{totalItemsDispends(data3)}</td>
-                          <td>{totalItemsDispends(data3)-totalItemsDispends(data2)}</td>
-                          <td>{totalCollection(data3)}</td>
-                          <td>{totalStockEmpty(data3)}</td>
-                          <td>{totalBurningEnabled(data3)}</td>
-                    </>:null}
-                    {data4.length>0 ? <>
-                          <td>{totalMachineOnline(data4)}</td>
-                          <td style={getPercentageColor(totalMachineOnline(data4),totalMachines(data))}>{Percent(totalMachineOnline(data4),totalMachines(data))}%</td>
-                          <td>{totalItemsDispends(data4)}</td>
-                          <td>{totalItemsDispends(data4)-totalItemsDispends(data3)}</td>
-                          <td>{totalCollection(data4)}</td>
-                          <td>{totalStockEmpty(data4)}</td>
-                          <td>{totalBurningEnabled(data4)}</td>
-                    </>:null}
-                    {data5.length>0 ? <>
-                          <td>{totalMachineOnline(data5)}</td>
-                          <td style={getPercentageColor(totalMachineOnline(data5),totalMachines(data))}>{Percent(totalMachineOnline(data5),totalMachines(data))}%</td>
-                          <td>{totalItemsDispends(data5)}</td>
-                          <td>{totalItemsDispends(data5)-totalItemsDispends(data4)}</td>
-                          <td>{totalCollection(data5)}</td>
-                          <td>{totalStockEmpty(data5)}</td>
-                          <td>{totalBurningEnabled(data5)}</td>
-                    </>:null}
-             </tr>
+              {data.length>0 ? <>
+                <td colSpan="2" className="text-center"><b>Total</b></td>
+                      <td>{totalMachines(data)}</td>
+                      <td>{totaldeviceOnline(data)}</td>
+                      <td style={getPercentageColor(totaldeviceOnline(data),totalMachines(data))}>{Percent(totaldeviceOnline(data),totalMachines(data))}%</td>
+                      <td>{totalInverterOnline(data)}</td>
+                      <td>{totalBatteryLow(data)}</td>
+                      <td>{totalBatteryShutDown(data)}</td>
+                     
+                      </>:null}
+                {data1.length>0 ? <>
+                      <td>{totaldeviceOnline(data1)}</td>
+                      <td style={getPercentageColor(totaldeviceOnline(data1),totalMachines(data))}>{Percent(totaldeviceOnline(data1),totalMachines(data))}%</td>
+                      <td>{totalInverterOnline(data1)}</td>
+                    
+                      <td>{totalBatteryLow(data1)}</td>
+                      <td>{totalBatteryShutDown(data1)}</td>
+                      
+                </>:null}
+                {data2.length>0 ? <>
+                      <td>{totaldeviceOnline(data2)}</td>
+                      <td style={getPercentageColor(totaldeviceOnline(data2),totalMachines(data))}>{Percent(totaldeviceOnline(data2),totalMachines(data))}%</td>
+                      <td>{totalInverterOnline(data2)}</td>
+                     
+                      <td>{totalBatteryLow(data2)}</td>
+                      <td>{totalBatteryShutDown(data2)}</td>
+                     
+                </>:null}
+                {data3.length>0 ? <>
+                      <td>{totaldeviceOnline(data3)}</td>
+                      <td style={getPercentageColor(totaldeviceOnline(data3),totalMachines(data))}>{Percent(totaldeviceOnline(data3),totalMachines(data))}%</td>
+                      <td>{totalInverterOnline(data3)}</td>
+                      
+                      <td>{totalBatteryLow(data3)}</td>
+                      <td>{totalBatteryShutDown(data3)}</td>
+                      
+                </>:null}
+                {data4.length>0 ? <>
+                      <td>{totaldeviceOnline(data4)}</td>
+                      <td style={getPercentageColor(totaldeviceOnline(data4),totalMachines(data))}>{Percent(totaldeviceOnline(data4),totalMachines(data))}%</td>
+                      <td>{totalInverterOnline(data4)}</td>
+                    
+                      <td>{totalBatteryLow(data4)}</td>
+                      <td>{totalBatteryShutDown(data4)}</td>
+                     
+                </>:null}
+                {data5.length>0 ? <>
+                      <td>{totaldeviceOnline(data5)}</td>
+                      <td style={getPercentageColor(totaldeviceOnline(data5),totalMachines(data))}>{Percent(totaldeviceOnline(data5),totalMachines(data))}%</td>
+                      <td>{totalInverterOnline(data5)}</td>
+                    
+                      <td>{totalBatteryLow(data5)}</td>
+                      <td>{totalBatteryShutDown(data5)}</td>
+                      
+                </>:null}
+         </tr>
+         
 
         </tbody>
     </table>
