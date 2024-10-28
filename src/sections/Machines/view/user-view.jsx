@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import Select from 'react-select';
-import React, { useState,useEffect,} from 'react';
+// import Select from 'react-select';
+import React, { useState,useEffect, useCallback,} from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
+import { mapping } from 'src/_mock/AllMachines';
 import {AllMacAddress} from 'src/_mock/macAddress';
 import { GetClentNameDetails} from 'src/_mock/customers';
 
@@ -50,8 +51,8 @@ const style = {
 
 export default function MachinePage() {
   const[machines,setMachines]=useState([]);
-  const [selectedOption, setSelectedOption] = useState([]);
-  const [options,setOptions]=useState([]);
+  // const [selectedOption] = useState([]);
+  const [setOptions]=useState([]);
   const [cInfo,setCInfo]=useState(["City","Zone","Ward","Beat"]);
   
   const [page, setPage] = useState(0);
@@ -80,16 +81,16 @@ export default function MachinePage() {
       }, 5000); // Hide the alert after 5 seconds (5000 milliseconds)
   };
 
-  // const handleModalOpen = () => {
+  const handleModalOpen = () => {
    
  
-  //   setOpenModal(true);
-  //   // setTimeout(()=>{
+    setOpenModal(true);
+    // setTimeout(()=>{
          
-  //   //   $('#mdlPwd [name="name"]').val(row.name);
-  //   //   $('#mdlPwd [name="email"]').val(row.email);
-  //   // },200)
-  // };
+    //   $('#mdlPwd [name="name"]').val(row.name);
+    //   $('#mdlPwd [name="email"]').val(row.email);
+    // },200)
+  };
   const handleModalClose = () => {
     setOpenModal(false);
     setTimeout(()=>{
@@ -99,6 +100,37 @@ export default function MachinePage() {
       $('[name="installedOn"]').val('').trigger('change');
     },200)
   };
+
+
+  // input machines list loading function
+  const LoadMachineNameDDL = useCallback(() => {
+    console.log("select2function started");
+  
+    // Use Promise.all() to fetch data from AllMachines() API
+    AllMacAddress()
+      .then(response => {
+        console.log(response);
+        const data = response;
+  
+        // Transform data into the format expected by Select2
+        const formattedData = data.map(option => ({
+          value: option.serial,
+          label: option.serial
+        }));
+  
+        // Set the options for the dropdown
+        setOptions(formattedData);
+  
+        // Cleanup Select2 when the component unmounts
+        return () => {
+          $('#to').select2('destroy');
+        };
+      })
+      .catch(error => {
+        console.error('Error loading data:', error);
+      });
+  },[setOptions]);
+  
 
 
 
@@ -133,78 +165,59 @@ export default function MachinePage() {
   }
 
     LoadMachineNameDDL();
-  },[])
+  },[LoadMachineNameDDL])
 
 
-  // input machines list loading function
-  const LoadMachineNameDDL = () => {
-    console.log("select2function started");
   
-    // Use Promise.all() to fetch data from AllMachines() API
-    AllMacAddress()
-      .then(response => {
-        console.log(response);
-        const data = response;
-  
-        // Transform data into the format expected by Select2
-        const formattedData = data.map(option => ({
-          value: option.serial,
-          label: option.serial
-        }));
-  
-        // Set the options for the dropdown
-        setOptions(formattedData);
-  
-        // Cleanup Select2 when the component unmounts
-        return () => {
-          $('#to').select2('destroy');
-        };
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-      });
-  };
-  
-
 //  createMapping submit form function
   const SubmitForm=()=>{
    const obj={
-    machine: selectedOption.value,
-    uid: $('[name="uid"]').val(),
-    city: $('[name="city"]').val(),
-    installedOn: $('[name="installedOn"]').val(),
+    MacID: $('[name="MacID"]').val(),
+    SNoutput: $('[name="SN"]').val(),
+    City: $('[name="city"]').val(),
+    Zone: $('[name="zone"]').val(),
+    Ward: $('[name="ward"]').val(),
+    Beat: $('[name="beat"]').val(),
+    adress:$('[name="adress"]').val(),
+    lat:$('[name="lat"]').val(),
+    lon:$('[name="lon"]').val(),
    }
    
-   if (!obj.machine) {
+   if (!obj.MacID) {
     showAlertMessage();
     setType("warning");
-    setMessage("Invalid Machine Number") 
+    setMessage("MacId Is Required") 
      
      }
-   else if (!obj.uid) { 
+   else if (!obj.City) { 
     showAlertMessage();
     setType("warning");
-    setMessage("Invalid Uid") 
+    setMessage("City Is Required ") 
      
   }
-   else if (!obj.city) {
+   else if (!obj.Zone) {
 
     showAlertMessage();
     setType("warning");
-    setMessage("Please select city") 
+    setMessage("Zone Is Required ") 
     }
-   else if (!obj.installedOn) {
+   else if (!obj.Ward) {
     showAlertMessage();
     setType("warning");
-    setMessage("Please seclect date") 
+    setMessage("Ward Is Required ") 
     }
+    else if (!obj.Beat) {
+      showAlertMessage();
+      setType("warning");
+      setMessage("Beat Is Required ") 
+      }
     else{
-      // mapping(obj).then((r)=>{
-      //   showAlertMessage();
-      //   setType("success");
-      //   setMessage("Successfully Created") ;
-      //   handleModalClose();
-      // })
+      mapping(obj).then((r)=>{
+        showAlertMessage();
+        setType("success");
+        setMessage("Successfully Created") ;
+        handleModalClose();
+      })
     }
    
    
@@ -251,9 +264,9 @@ export default function MachinePage() {
   };
 
 
-  const handleSelectChange = (elem) => {
-    setSelectedOption(elem);
-  };
+  // const handleSelectChange = (elem) => {
+  //   setSelectedOption(elem);
+  // };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -301,8 +314,7 @@ export default function MachinePage() {
       {/* createMapping button */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Uniline Devices</Typography>
-        {/* <button type='button' className="btn btn-sm btn-warning mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Create
-                        Mapping</button> */}
+         <button type='button' className="btn btn-sm btn-success mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>Add Device</button>
 
         {/* <Button variant="contained" color="inherit"  onClick={handleOpenMenu} startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
@@ -402,63 +414,87 @@ export default function MachinePage() {
         <div className="modal-dialog" role="document">
         <div className="modal-content">
             <div className="modal-header">
-                <h5 className="modal-title">Create Mapping</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" onClick={handleModalClose}>&times;</span>
+                <h5 className="modal-title">ADD NEW DEVICE</h5>
+                <button type="button" className="close" data-dismiss="modal" onClick={handleModalClose}>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div className="modal-body">
                 <div className="row">
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>Machine No. (PCB No.):</h6>
-                            <Select
-                                name="machine"
-                                value={selectedOption}
-                                onChange={handleSelectChange}
-                                options={options}
-                                isSearchable // Equivalent to isSearchable={true}
-                                placeholder="Select option..."
-                            />
-                            {/* <input type="text" className="form-control" name="machine" /> */}
+                            <h6>MacID</h6>
+                            <input type="text" className="form-control" name="MacID" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>SerialNumber</h6>
+                            <input type="text" className="form-control" name="SN" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>City</h6>
+                            <input type="text" className="form-control" name="city" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                 
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Zone</h6>
+                            <input type="text" className="form-control" name="zone" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Ward</h6>
+                            <input type="text" className="form-control" name="ward" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Beat</h6>
+                            <input type="text" className="form-control" name="beat" />
+                            <div className="invalid-feedback" />
+                        </div>
+                    </div>
+                     <div className="col-md-6">
+                        <div className="form-group my-2">
+                            <h6>Address</h6>
+                            <input type="text" className="form-control" name="address" />
                             <div className="invalid-feedback"/>
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>UID:</h6>
-                            <input type="text" className="form-control" name="uid" />
+                            <h6>Lattitude</h6>
+                            <input type="text" className="form-control" name="lat" />
                             <div className="invalid-feedback"/>
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group my-2">
-                            <h6>City:</h6>
-                            <select className="form-control" name="city">
-                                <option value="Mumbai" selected>Mumbai</option>
-                                <option value="Delhi">Delhi</option>
-                                <option value="SS-UK">SS-UK</option>
-                                <option value="DoE-HAR">DoE-HAR</option>
-
-                            </select>
+                            <h6>Longitude</h6>
+                            <input type="text" className="form-control" name="lon" />
                             <div className="invalid-feedback"/>
                         </div>
                     </div>
-                    <div className="col-md-6">
-                        <div className="form-group my-2">
-                            <h6>Installed On:</h6>
-                            <input className="form-control" type="date" name="installedOn" />
-                            <div className="invalid-feedback"/>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
             <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={SubmitForm}>Save changes</button>
+                <button type="button" className="btn btn-primary" onClick={SubmitForm}>Add Device</button>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleModalClose}>Close</button>
             </div>
         </div>
     </div>
+    
 
         </Box>
         </Modal>

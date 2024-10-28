@@ -48,6 +48,14 @@ import {sendG1,sendG2,sendG3,AllMacAddress} from "../../../_mock/macAddress";
 // started function of dashboard ui here
 
 // const UserInfo=JSON.parse(sessionStorage.getItem("userInfo")) || [] ;
+
+
+const ERROR1 = import.meta.env.VITE_REACT_APP_ERROR1;
+const ERROR2 = import.meta.env.VITE_REACT_APP_ERROR2;
+const ERROR3 = import.meta.env.VITE_REACT_APP_ERROR3;
+const ERROR4 = import.meta.env.VITE_REACT_APP_ERROR4;
+const ERROR5 = import.meta.env.VITE_REACT_APP_ERROR5;
+
 export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName]=useState([]);
@@ -60,6 +68,9 @@ export default function AppView() {
   const [G1output,setG1Output]=useState([]);
   const [G2output,setG2Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
+
+
+  
 
 
   const max=100;
@@ -341,7 +352,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
       </Grid>
  
       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[0].split('')[6] === '0'? 
+        {G2output.length>2 && G2output[0].split('')[6] === '1'? 
        <StatusLabel label="Inverter On" isOn color='green' /> :  <StatusLabel label="Inverter Bad" isOn color='red' />}
      
       </Grid>
@@ -359,32 +370,30 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
       </Grid>
         }
      
- 
-       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[1] ==='1' ?
-      <StatusLabel label="Unit Running" isOn={false} color='green' />:  <StatusLabel label="Emergency Stop" isOn={false} color='red' /> 
-        }
-       </Grid>
-       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[2] ==='1' ?
-        <StatusLabel label="DC Okay" isOn={false} color='green' />:<StatusLabel label="High DC" isOn={false} color='red' /> 
-        }
-       </Grid>
-       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[4] ==='0' ?
-       <StatusLabel label="No Overload" isOn={false} color='green' />: <StatusLabel label="Show Overload" isOn={false} color='red' /> 
-        }
-       </Grid>
-       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[6] ==='0' ?
-       <StatusLabel label="Temperature Okay" isOn={false} color='green' />: <StatusLabel label="Over Temperature" isOn={false} color='red' /> 
-        }
-       </Grid>
-       <Grid xs={4} sm={4} md={4}>
-        {G2output.length>2 && G2output[2].split('')[7] ==='0' ?
-        <StatusLabel label="Working" isOn={false} color='green' /> :<StatusLabel label="Short Circuit" isOn={false} color='red' />
-        }
-       </Grid>
+     <Grid xs={4} sm={4} md={4}>
+  {(() => {
+    const errorChecks = {
+      1: ERROR1,
+      2: ERROR2,
+      4: ERROR3,
+      6: ERROR4,
+      7: ERROR5,
+    };
+
+    const errorLabel = Object.entries(errorChecks).find(
+      ([position]) => G2output.length > 2 && G2output[2].split('')[position] === '1'
+    );
+
+    return errorLabel 
+      ? <StatusLabel label={errorLabel[1]} isOn={false} color="red" />
+      : <StatusLabel label="Okay" isOn={false} color="green" />;
+  })()}
+</Grid>
+
+
+
+     
+       
         
        </Grid>
 
