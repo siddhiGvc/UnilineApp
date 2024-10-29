@@ -543,17 +543,15 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
                                 <tr><th style={{color: '#444'}}>Output - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[6].includes('/')?GFoutput[6].split('/')[0]:''}</td></tr>
                                 <tr><th style={{color: '#444'}}>Output - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[6].includes('/')?GFoutput[6].split('/')[1]:''}</td></tr>
                                 <tr><th style={{color: '#444'}}>Output Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[7]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Output Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[8]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>UPS Output Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[8]:''}</td></tr>
                              
-                             
+                                <tr><th style={{color: '#444'}}>UPS Battery Voltage</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[9]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Power Rating</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[10]:''}</td></tr>
                             </tbody>
               </table>
               
             </div>
-            <div className="modal-footer">
-              
-                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleModalClose}>Close</button>
-            </div>
+          
         </div>
     </div>
     
