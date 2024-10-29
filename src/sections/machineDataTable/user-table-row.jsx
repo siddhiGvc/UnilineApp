@@ -124,7 +124,7 @@ export default function UserTableRow({
 
   }
 
-  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+  const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 1;
 
 
   // address of machine table 

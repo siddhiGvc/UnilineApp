@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import moment from "moment";
 import Select from 'react-select';
 // import { faker } from '@faker-js/faker';
@@ -11,6 +12,10 @@ import { useState,useEffect,useCallback } from 'react';
 // import GaugeChart from 'react-gauge-chart';
 // import { useTheme } from '@mui/material/styles';
 // import {Card} from '@mui/material';
+import Box from '@mui/material/Box';
+import { Stack } from '@mui/system';
+import Modal from '@mui/material/Modal';
+import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -33,7 +38,7 @@ import StatusLabel from '../statusLabel';
 // import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {sendG1,sendG2,sendG3,AllMacAddress} from "../../../_mock/macAddress";
+import {sendI,sendG1,sendG2,sendG3,sendGF,AllMacAddress} from "../../../_mock/macAddress";
 // import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 
 
@@ -56,6 +61,20 @@ const ERROR3 = import.meta.env.VITE_REACT_APP_ERROR3;
 const ERROR4 = import.meta.env.VITE_REACT_APP_ERROR4;
 const ERROR5 = import.meta.env.VITE_REACT_APP_ERROR5;
 
+const style = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid white',
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+
 export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName]=useState([]);
@@ -68,13 +87,34 @@ export default function AppView() {
   const [G1output,setG1Output]=useState([]);
   const [G2output,setG2Output]=useState([]);
   const [G3output,setG3Output]=useState([]);
+  const [Ioutput,setIOutput]=useState([]);
+  const [GFoutput,setGFOutput]=useState([]);
+
+  const [openModal,setOpenModal] = useState(false);
 
 
   
 
+  const handleModalOpen = () => {
+   
+      setOpenModal(true);
+  
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+    setTimeout(()=>{
+      $('[name="machine"]').val('').trigger('change');
+      $('[name="uid"]').val('').trigger('change');
+      $('[name="city"]').val('Mumbai').trigger('change');
+      $('[name="installedOn"]').val('').trigger('change');
+    },200)
+  };
+  
+
 
   const max=100;
-  const G3command=useCallback(async(MacID,SNoutput)=>{
+  const command=useCallback(async(MacID,SNoutput)=>{
     await sendG1(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG1Output(res);
@@ -89,6 +129,18 @@ export default function AppView() {
     await sendG3(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
       console.log(res);
       setG3Output(res);
+     
+    })
+
+    await sendI(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setIOutput(res);
+     
+    })
+
+    await sendGF(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
+      console.log(res);
+      setGFOutput(res);
      
     })
  
@@ -169,19 +221,19 @@ export default function AppView() {
     let Interval;
     if(value1.MacID && value1.SNoutput) 
       {
-    G3command(value1.MacID,value1.SNoutput);
+    command(value1.MacID,value1.SNoutput);
    //  G1command();
    
    Interval=setInterval(()=>{
      //  LoadData();
-      G3command(value1.MacID,value1.SNoutput);
+      command(value1.MacID,value1.SNoutput);
      //  G1command();
     
    },15000)
    }
 
    return ()=>clearInterval(Interval)
-  },[value1.MacID,value1.SNoutput,G3command])
+  },[value1.MacID,value1.SNoutput,command])
 
  
   useEffect(()=>{
@@ -225,10 +277,11 @@ else{
   
  
 
-const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 10;
+const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 1;
 
   return (
     <Container maxWidth="xxl" >
+       
        <div className="row">
                     <div className="col-md-12">
                         <div className="form-group my-2">
@@ -244,11 +297,43 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
                         
                             <div className="invalid-feedback"/>
                         </div>
+                       
                     </div>
-                   
+                 
               </div>
-           
-        
+             
+              <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          
+
+<Typography variant="h5">
+  <Box component="span" sx={{ fontWeight: '400', fontSize: '1em', color: '#333' }}>
+    Company:
+  </Box> 
+  <Box component="span" sx={{ marginLeft: 1 }}>
+    {Ioutput.length > 2 ? Ioutput[1] : ''}
+  </Box>
+  <Box component="span" sx={{ fontWeight: '400', fontSize: '1em', color: '#333', marginLeft: 2 }}>
+    Model:
+  </Box> 
+  <Box component="span" sx={{ marginLeft: 1 }}>
+    {Ioutput.length > 3 ? `${Ioutput[2]} ${Ioutput[3]}` : ''}
+  </Box>
+  <Box component="span" sx={{ fontWeight: '400', fontSize: '1em', color: '#333', marginLeft: 2 }}>
+    Version:
+  </Box> 
+  <Box component="span" sx={{ marginLeft: 1 }}>
+    {Ioutput.length > 5 ? Ioutput[5] : ''}
+  </Box>
+</Typography>
+
+
+
+         <button type='button' className="btn btn-sm btn-success mx-2 text-white float-right" id="btn-mapping" onClick={handleModalOpen}>About Device</button>
+
+        {/* <Button variant="contained" color="inherit"  onClick={handleOpenMenu} startIcon={<Iconify icon="eva:plus-fill" />}>
+          New User
+        </Button> */}
+      </Stack>
       <Grid container spacing={3} >
         {/* total Machines */}
         <Grid xs={12} sm={6} md={3}>
@@ -421,155 +506,60 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
      
      
 
-        {/* Machine Status */}
-        {/* <Grid xs={12} md={6} lg={6}>
-          <AppCurrentVisits
-            title="Machine Status"
-            chart={{
-              series: [
-                { label: 'Online', value:pathName.filter(filterOnline).length||0 },
-                { label: 'Offline', value:(pathName.length - pathName.filter(filterOnline).length) ||0},
-             
-              ],
-              colors:[
-                theme.palette.success.main,
-                theme.palette.error.main,
-              ]
-            }}
-          />
-        </Grid> */}
-       
-        {/* Stcok Status */}
-        {/* <Grid xs={12} md={6} lg={6}>
-          <AppCurrentVisits
-            title="Stock Status"
-            chart={{
-              series: [
-                { label: 'Ok', value: pathName.filter(filterOnline).filter(m => m.spiral_a_status === 3).length ||0},  // Example color
-                { label: 'Low', value: pathName.filter(filterOnline).filter(m => m.spiral_a_status === 1).length ||0},
-                { label: 'Empty', value: pathName.filter(filterOnline).filter(m => m.spiral_a_status === 0).length ||0 },
-                { label: 'Unknown', value:pathName.filter(filterOnline).filter(m => m.spiral_a_status === 2).length ||0},
-              ],
-              colors:[
-                theme.palette.success.main,
-                theme.palette.warning.main,
-                theme.palette.error.main,
-                theme.palette.info.main,
-               
-               
-               ]
-             
-            }}
-          />
-        </Grid> */}
-     {/* </Grid> */}
-        {/* <Grid xs={12} md={6} lg={8}>
-          <AppConversionRates
-            title="Conversion Rates"
-            subheader="(+43%) than last year"
-            chart={{
-              series: [
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
-              ],
-            }}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
-          <AppCurrentSubject
-            title="Current Subject"
-            chart={{
-              categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
-              series: [
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
-              ],
-            }}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={8}>
-          <AppNewsUpdate
-            title="News Update"
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: faker.person.jobTitle(),
-              description: faker.commerce.productDescription(),
-              image: `/assets/images/covers/cover_${index + 1}.jpg`,
-              postedAt: faker.date.recent(),
-            }))}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
-          <AppOrderTimeline
-            title="Order Timeline"
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: [
-                '1983, orders, $4220',
-                '12 Invoices have been paid',
-                'Order #37745 from September',
-                'New order placed #XF-2356',
-                'New order placed #XF-2346',
-              ][index],
-              type: `order${index + 1}`,
-              time: faker.date.past(),
-            }))}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
-          <AppTrafficBySite
-            title="Traffic by Site"
-            list={[
-              {
-                name: 'FaceBook',
-                value: 323234,
-                icon: <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} />,
-              },
-              {
-                name: 'Google',
-                value: 341212,
-                icon: <Iconify icon="eva:google-fill" color="#DF3E30" width={32} />,
-              },
-              {
-                name: 'Linkedin',
-                value: 411213,
-                icon: <Iconify icon="eva:linkedin-fill" color="#006097" width={32} />,
-              },
-              {
-                name: 'Twitter',
-                value: 443232,
-                icon: <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={32} />,
-              },
-            ]}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={8}>
-          <AppTasks
-            title="Tasks"
-            list={[
-              { id: '1', name: 'Create FireStone Logo' },
-              { id: '2', name: 'Add SCSS and JS files if required' },
-              { id: '3', name: 'Stakeholder Meeting' },
-              { id: '4', name: 'Scoping & Estimations' },
-              { id: '5', name: 'Sprint Showcase' },
-            ]}
-          />
-        </Grid> */}
       </Grid>
+      <Modal
+        open={openModal}
+        onClose={handleModalClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={{ ...style, width: 500 }}>
+        <div className="modal-dialog" role="document">
+        <div className="modal-content">
+            <div className="modal-header">
+                <h5 className="modal-title">ABOUT DEVICE</h5>
+                <button type="button" className="close" data-dismiss="modal" onClick={handleModalClose}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div className="modal-body">
+            <table className="table" style={{fontSize:'14px'}}>
+                            <tbody> 
+                                
+                                <tr><th style={{color: '#444'}}>Load Phase1</th><td style={{color: '#444'}}>{G3output.length>2 ?  G3output[3].split('/')[0]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Load Phase2</th><td style={{color: '#444'}}>{G3output.length>2 ?  G3output[3].split('/')[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Load Phase3</th><td style={{color: '#444'}}>{G3output.length>2 ?  G3output[3].split('/')[2]:''}</td></tr>
+
+                                <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[0].includes('/')?GFoutput[0].split('!')[1].split('/')[0]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[0].includes('/')?GFoutput[0].split('!')[1].split('/')[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectifier Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectifier Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[2]:''}</td></tr>
+                               
+                                <tr><th style={{color: '#444'}}>Bypass - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[3].includes('/')?GFoutput[3].split('/')[0]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[3].includes('/')?GFoutput[3].split('/')[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[4]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[5]:''}</td></tr>
+
+                                <tr><th style={{color: '#444'}}>Output - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[6].includes('/')?GFoutput[6].split('/')[0]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Output - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[6].includes('/')?GFoutput[6].split('/')[1]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Output Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[7]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Output Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[8]:''}</td></tr>
+                             
+                             
+                            </tbody>
+              </table>
+              
+            </div>
+            <div className="modal-footer">
+              
+                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleModalClose}>Close</button>
+            </div>
+        </div>
+    </div>
+    
+
+        </Box>
+        </Modal>
     </Container>
   );
 }
