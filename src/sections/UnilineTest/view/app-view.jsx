@@ -38,7 +38,7 @@ import StatusLabel from '../statusLabel';
 // import AppCurrentVisits from '../app-current-visits';
 // import AppWebsiteVisits from '../app-website-visits';
 import AppWidgetSummary from '../app-widget-summary';
-import {sendI,sendG1,sendG2,sendG3,sendGF,AllMacAddress} from "../../../_mock/macAddress";
+import {AllMacAddress} from "../../../_mock/macAddress";
 // import { valueContainerCSS } from "react-select/dist/declarations/src/components/containers";
 
 
@@ -82,7 +82,7 @@ export default function AppView() {
   const [data,setData]=useState([])
   const [value]=useState(0);
  
-  const [value1,setValue1]=useState({MacID:'',SNoutput:''});
+  // const [setValue1]=useState({MacID:'',SNoutput:''});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
   const [G1output,setG1Output]=useState([]);
   const [G2output,setG2Output]=useState([]);
@@ -114,58 +114,41 @@ export default function AppView() {
 
 
   const max=100;
-  const command=useCallback(async(MacID,SNoutput)=>{
-    await sendG1(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
-      console.log(res);
-      setG1Output(res);
-    
-    })
-    await sendG2(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
-      console.log(res);
-      setG2Output(res);
-    
-    })
-   
-    await sendG3(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
-      console.log(res);
-      setG3Output(res);
-     
-    })
-
-    await sendI(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
-      console.log(res);
-      setIOutput(res);
-     
-    })
-
-    await sendGF(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
-      console.log(res);
-      setGFOutput(res);
-     
-    })
- 
-     
-    
-  },[])
-
-  // const G1command=useCallback(()=>{
-  
-  //   sendG1('E4:65:B8:14:A4:44','GVC-CUPS-4005',sessionStorage.getItem("name")).then((res)=>{
+  // const command=useCallback(async(MacID,SNoutput)=>{
+  //   await sendG1(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
   //     console.log(res);
   //     setG1Output(res);
-  //     setTimeout(()=>{
-  //          setG1Output([]);
-  //     },5000)
+    
   //   })
-  // },[])
-  // const [machineType]=useState('');
+  //   await sendG2(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
+  //     console.log(res);
+  //     setG2Output(res);
+    
+  //   })
+   
+  //   await sendG3(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
+  //     console.log(res);
+  //     setG3Output(res);
+     
+  //   })
 
-  // const [value, setValue] = useState(50); // Set default value at 50%
+  //   await sendI(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
+  //     console.log(res);
+  //     setIOutput(res);
+     
+  //   })
 
-  // const handleChange = (e) => {
-  //   setValue(e.target.value);
-  // };
+  //   await sendGF(MacID,SNoutput,sessionStorage.getItem("name")).then((res)=>{
+  //     console.log(res);
+  //     setGFOutput(res);
+     
+  //   })
  
+     
+    
+  // },[])
+
+  
 
   // calling for api data
   const LoadData=useCallback(()=>{
@@ -192,7 +175,13 @@ export default function AppView() {
           {
             // console.log(res[selectedOption1.id]);
           
-            setValue1(res[selectedOption1.id]);
+            // setValue1(res[selectedOption1.id]);
+            console.log(res[selectedOption1.id])
+            setG1Output(res[selectedOption1.id].G1.toString().split(','))
+            setG2Output(res[selectedOption1.id].G2.toString().split(','))
+            setG3Output(res[selectedOption1.id].G3.toString().split(','))
+            setIOutput(res[selectedOption1.id].I.toString().split(','))
+            setGFOutput(res[selectedOption1.id].GF.toString().split(','))
            
           }
          
@@ -211,29 +200,29 @@ export default function AppView() {
      LoadData();
       //  G1command();
      
-    },10000)
+    },2000)
 
     return ()=>clearInterval(interval);
 
   },[LoadData])
 
-  useEffect(()=>{
-    let Interval;
-    if(value1.MacID && value1.SNoutput) 
-      {
-    command(value1.MacID,value1.SNoutput);
-   //  G1command();
+  // useEffect(()=>{
+  //   let Interval;
+  //   if(value1.MacID && value1.SNoutput) 
+  //     {
+  //   command(value1.MacID,value1.SNoutput);
+  //  //  G1command();
    
-   Interval=setInterval(()=>{
-     //  LoadData();
-      command(value1.MacID,value1.SNoutput);
-     //  G1command();
+  //  Interval=setInterval(()=>{
+  //    //  LoadData();
+  //     command(value1.MacID,value1.SNoutput);
+  //    //  G1command();
     
-   },15000)
-   }
+  //  },15000)
+  //  }
 
-   return ()=>clearInterval(Interval)
-  },[value1.MacID,value1.SNoutput,command])
+  //  return ()=>clearInterval(Interval)
+  // },[value1.MacID,value1.SNoutput,command])
 
  
   useEffect(()=>{
@@ -415,6 +404,51 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
            {/* item dispensed */}
         <Grid xs={12} sm={6} md={3}>
            <AppWidgetSummary
+            title="Output Frequency"
+             text='F'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G1output.length>2 ? G1output[7]:''}
+          />
+        </Grid>
+
+        <Grid xs={12} sm={6} md={3}>
+        <AppWidgetSummary
+            title="Load 1"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>2 && G3output[3].includes('/')?G3output[3].split('/')[0]:''}
+          />
+        </Grid>
+         {/* online machines */}
+        <Grid xs={12} sm={6} md={3}>
+        <AppWidgetSummary
+            title="Load 2"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>2 && G3output[3].includes('/')?G3output[3].split('/')[1]:''}
+          />
+        </Grid>
+        {/* total collection */}
+        <Grid xs={12} sm={6} md={3}>
+        <AppWidgetSummary
+            title="Load 3"
+             text='Vsc'
+            total={pathName.length}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
+            value={G3output.length>2 && G3output[3].includes('/')?G3output[3].split('/')[2]:''}
+          />
+        </Grid>
+        
+           {/* item dispensed */}
+        <Grid xs={12} sm={6} md={3}>
+           <AppWidgetSummary
             title="Temperature"
              text='F'
             total={pathName.length}
@@ -526,9 +560,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             <table className="table" style={{fontSize:'14px'}}>
                             <tbody> 
                                 
-                                <tr><th style={{color: '#444'}}>Load Phase1</th><td style={{color: '#444'}}>{G3output.length>2 ?  G3output[3].split('/')[0]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Load Phase2</th><td style={{color: '#444'}}>{G3output.length>2 ?  G3output[3].split('/')[1]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Load Phase3</th><td style={{color: '#444'}}>{G3output.length>2 ?  G3output[3].split('/')[2]:''}</td></tr>
+                             
 
                                 <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[0].includes('/')?GFoutput[0].split('!')[1].split('/')[0]:''}</td></tr>
                                 <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[0].includes('/')?GFoutput[0].split('!')[1].split('/')[1]:''}</td></tr>
