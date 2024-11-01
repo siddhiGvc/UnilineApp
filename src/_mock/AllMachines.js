@@ -23,7 +23,7 @@ export const AllMachines=async()=> {
         'Content-type':'application/json',
         'x-token': sessionStorage.getItem('token'),
       });
-      const response = await fetch(`${API}/api/machine/createMapping`, { method: 'POST', headers ,body:JSON.sessionStorage(obj)});
+      const response = await fetch(`${API}/testingBoard/addDevice`, { method: 'POST', headers ,body:JSON.stringify(obj)});
       const json = await response.json();
       return json.data;
     } catch (error) {

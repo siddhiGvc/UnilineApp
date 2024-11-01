@@ -158,10 +158,10 @@ export default function AppView() {
     
        AllMacAddress().then((res)=>{
 
-        // const filteredData=res.filter((elem)=> online(elem) );
-        // setData(filteredData);
+        const filteredData=res.filter((elem)=> online(elem) );
+        setData(filteredData);
   
-        const formattedData = res.map((option,i) => ({
+        const formattedData = filteredData.map((option,i) => ({
           value: option.MacID,
           label: option.MacID,
           id:i
@@ -405,7 +405,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
         <Grid xs={12} sm={6} md={3}>
            <AppWidgetSummary
             title="Output Frequency"
-             text='F'
+             text='Hz'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}

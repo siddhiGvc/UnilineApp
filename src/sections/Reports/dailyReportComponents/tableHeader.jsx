@@ -31,7 +31,7 @@ export default function TableHeader({data,zones,wards,beats,numbDaysArray,startD
   
     useEffect(()=>{
 
-      
+        console.log(data);
         const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
       
       
@@ -55,7 +55,7 @@ export default function TableHeader({data,zones,wards,beats,numbDaysArray,startD
       }
     
     
-      },[])
+      },[data,startDate,endDate])
      
     const printData=()=> {
         const printContents = tblDataRef.current.outerHTML;
@@ -85,8 +85,8 @@ export default function TableHeader({data,zones,wards,beats,numbDaysArray,startD
     const numDays = useCallback(() =>
     checked ? moment(end()).diff(start(), 'day') + 2 : 0
   , [start, end, checked]);
-    const gt = k => data.machines.flatMap(m => Object.values(m.summary)).length ? data.machines.flatMap(m => Object.values(m.summary)).map(q => parseInt(q[k] ,10)).reduce((a, b) => a + b) : 0;
-    const gta = (k, i = 1) => (data.machines.flatMap(m => Object.values(m.summary)).length ? data.machines.flatMap(m => Object.values(m.summary)).map(q => parseInt(q[k],10)).reduce((a, b) => a + b) / ((checked ? numDays : 1) * (sr - 1)) : 0).toFixed(i);
+    const gt = k => data.flatMap(m => Object.values(m.summary)).length ? data.flatMap(m => Object.values(m.summary)).map(q => parseInt(q[k] ,10)).reduce((a, b) => a + b) : 0;
+    const gta = (k, i = 1) => (data.flatMap(m => Object.values(m.summary)).length ? data.flatMap(m => Object.values(m.summary)).map(q => parseInt(q[k],10)).reduce((a, b) => a + b) / ((checked ? numDays : 1) * (sr - 1)) : 0).toFixed(i);
     const perc = (a, b) => ((a * 100) / b > 100 ? 100 : (a * 100) / b).toFixed(1);
 
    
@@ -118,7 +118,7 @@ export default function TableHeader({data,zones,wards,beats,numbDaysArray,startD
                  {/* <td colSpan="3">BRIHANMUMBAI MUNICIPAL CORPORATION (BMC)</td> */}
                 <td colSpan="3"/>
                 <th colSpan="2">No. of Machines</th>
-                <td colSpan="3" className="count city">{data.counts.city}</td>
+                <td colSpan="3" className="count city">{data.City}</td>
                 <td colSpan="1" rowSpan="2" className="text-center"/>
             </tr>
             <tr>
@@ -131,19 +131,19 @@ export default function TableHeader({data,zones,wards,beats,numbDaysArray,startD
                 <th colSpan="2" className="CInfo2">{cInfo[1]}</th>
                 <td colSpan="3" className="list zone">{zones.length>0 ? zones.join():'ALL'}</td>
                 <th colSpan="2">No. of Machines</th>
-               <td colSpan="4" className="count zone">{data.counts.zone}</td>
+               <td colSpan="4" className="count zone">{data.Zone}</td>
             </tr>
             <tr>
                 <th colSpan="2" className="CInfo3">{cInfo[2]}</th>
                 <td colSpan="3" className="list ward">{wards.length>0 ? wards.join():'ALL'}</td>
                 <th colSpan="2">No. of Machines</th>
-                <td colSpan="4" className="count ward">{data.counts.ward}</td>
+                <td colSpan="4" className="count ward">{data.Ward}</td>
             </tr>
             <tr>
                 <th colSpan="2" className="CInfo4">{cInfo[3]}</th>
                 <td colSpan="3" className="list beat">{beats.length>0 ? beats.join():'ALL'}</td>
                 <th colSpan="2">No. of Machines</th>
-                <td colSpan="4" className="count beat">{data.counts.beat}</td>
+                <td colSpan="4" className="count beat">{data.Beat}</td>
             </tr>
             <tr>
                 <th colSpan="2">Report Generated</th>
@@ -219,9 +219,9 @@ export default function TableHeader({data,zones,wards,beats,numbDaysArray,startD
         </thead>
         <tbody>
           
-             {numbDaysArray && data.machines.length>0 && data.machines.map((m, i) => (
+             {numbDaysArray && data.length>0 && data.map((m, i) => (
                  <React.Fragment key={i}>
-                 {/* First row */}
+              
                  <tr className="data">
                    <td rowSpan={checked ? numDays()+1:1} className="text-center" style={{ verticalAlign: 'center' }}>{i + 1}</td>
                    <td rowSpan={checked ? numDays()+1:1} style={{ verticalAlign: 'center' }}>{m.uid}<br /><small className="text-muted">{m.serial}</small></td>

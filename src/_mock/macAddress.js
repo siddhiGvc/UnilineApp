@@ -23,11 +23,14 @@ export const AllMacAddress=async()=> {
     }
   }
 
-  export const ReportData=async(serialNumbers,startDate,endDate)=> {
+  export const ReportData=async(city,zone,ward,beat,serialNumbers,startDate,endDate)=> {
   
     try {
         const obj={
-         
+            city:city.join(),
+            zone:zone.join(),
+            ward:ward.join(),
+            beat:beat.join(),
             devices:serialNumbers.join(),
             startDate,
             endDate,
