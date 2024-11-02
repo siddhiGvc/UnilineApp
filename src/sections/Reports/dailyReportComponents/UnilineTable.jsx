@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 
 // import { create } from "jss";
 import PropTypes from 'prop-types';
-import React,{useRef,useState, useEffect} from 'react';
+import React,{useRef,useState, useEffect,useCallback} from 'react';
 
 import {GetClentNameDetails} from 'src/_mock/customers';
 
@@ -34,7 +34,7 @@ export default function UnilineTable({data,zones,wards,beats,startDate,endDate,n
   
     useEffect(()=>{
 
-        console.log(data.machines[0]);
+        console.log(numbDaysArray);
         const UserInfo=JSON.parse(sessionStorage.getItem("userInfo"));
       
       console.log(startDate,endDate)
@@ -58,7 +58,7 @@ export default function UnilineTable({data,zones,wards,beats,startDate,endDate,n
       }
     
     
-      },[setCInfo,startDate,endDate,data])
+      },[setCInfo,startDate,endDate,data,numbDaysArray])
      
     const printData=()=> {
         const printContents = tblDataRef.current.outerHTML;
@@ -79,6 +79,13 @@ export default function UnilineTable({data,zones,wards,beats,startDate,endDate,n
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
         XLSX.writeFile(wb, 'report.xlsx');
       };
+      
+      const start = useCallback(() => moment(startDate),[startDate]);
+      const end = useCallback(() => moment(endDate),[endDate]);
+
+      const numDays = useCallback(() =>
+         moment(end()).diff(start(), 'day') + 2 
+      , [start, end]);
 
 
     return   <div className="col-12" id="divData">
@@ -152,7 +159,15 @@ export default function UnilineTable({data,zones,wards,beats,startDate,endDate,n
                
             </tr>
         </thead>
-        <tbody />
+        <tbody>
+                 {numbDaysArray && data.machines.length > 0 && data.machines.map((m, i) =>(
+                 <tr>
+                    <td rowSpan={numDays+1} className="text-center" style={{ verticalAlign: 'center' }}>{i + 1}</td>
+                   <td rowSpan={numDays+1} style={{ verticalAlign: 'center' }}>{m.SNoutput}<br /><small className="text-muted">{m.MacID}</small></td>
+                  <td rowSpan={numDays+1} style={{ verticalAlign: 'center', whiteSpace: 'nowrap' }} >{cInfo[1]}: {m.Zone}<br />{cInfo[2]}: {m.Ward}<br />{cInfo[3]}: {m.Beat}</td>
+                 </tr>
+                 ))}
+        </tbody>
        
         
       </table>

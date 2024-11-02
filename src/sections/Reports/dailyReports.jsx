@@ -29,7 +29,8 @@ export default function DailyReports(){
     // const tblDataRef = useRef(null);
 
     const [reportData,setReportData]=useState(null);
-  
+    const [disable1,setDisable1]=useState(false);
+    const [disable2,setDisable2]=useState(false);
     const [startDate,setStartDate]=useState(moment().format('DD-MMM-YYYY'));
     const [endDate,setEndDate]=useState(moment().format('DD-MMM-YYYY'));
     const [cities,setCities] = useState(['Mumbai','Delhi','SS-UK','DoE-HAR']);
@@ -260,6 +261,7 @@ export default function DailyReports(){
           // Update the state with the calculated dates
           setStartDate(start);
           setEndDate(end);
+          setDisable2(true);
         };
         
 
@@ -290,6 +292,7 @@ export default function DailyReports(){
             setEndDate(eDate);
             // Ensure you have a state for month if you want to store it
             setMonth(m); 
+
         };
         
         
@@ -656,7 +659,7 @@ export default function DailyReports(){
                         <h5>Start Date:</h5>
                         <div className="row">
                             <div className="col-12 d-flex">
-                                <input type="date" className="form-control" defaultValue={moment().format('YYYY-MM-DD')} value={moment(startDate).format('YYYY-MM-DD')} name="startDate" min="2023-07-08" onChange={(e)=>setStartDate(e.target.value)} />
+                                <input type="date" className="form-control" defaultValue={moment().format('YYYY-MM-DD')} value={moment(startDate).format('YYYY-MM-DD')} name="startDate" min="2023-07-08" onChange={(e)=>{setStartDate(e.target.value); setDisable1(true);setDisable2(true)}} />
                             </div>
                         </div>
                     </div>
@@ -664,12 +667,12 @@ export default function DailyReports(){
                         <h5>End Date:</h5>
                         <div className="row">
                             <div className="col-12 d-flex">
-                                <input type="date" className="form-control" defaultValue={moment().format('YYYY-MM-DD')} value={moment(endDate).format('YYYY-MM-DD')} name="endDate" min="2023-07-08" onChange={(e)=>setEndDate(e.target.value)}/>
+                                <input type="date" className="form-control" defaultValue={moment().format('YYYY-MM-DD')} value={moment(endDate).format('YYYY-MM-DD')} name="endDate" min="2023-07-08" onChange={(e)=>{setEndDate(e.target.value); setDisable1(true);setDisable2(true)}}/>
                             </div>
                         </div>
                     </div>
 
-                    <div className="col-xl-3 col-lg-4 col-md-6 col-12 my-2">
+                    <div className="col-xl-3 col-lg-4 col-md-6 col-12 my-2"  hidden={disable1}>
                     <h5>Month:</h5>
                     <div className="row">
                         <div className="col-12 d-flex">
@@ -681,6 +684,7 @@ export default function DailyReports(){
                             name="month"
                             min="2023-07"
                             onChange={(e) => handleMonthChange(e)}
+                            hidden={disable1}
                         />
                         </div>
                     </div>
@@ -688,7 +692,7 @@ export default function DailyReports(){
 
                    
 
-                    <div className="col-xl-3 col-lg-4 col-md-6 col-12 my-2">
+                    <div className="col-xl-3 col-lg-4 col-md-6 col-12 my-2"  hidden={disable2}>
                     <h5>Week:</h5>
                     <div className="row">
                         <div className="col-12 d-flex">
@@ -700,6 +704,7 @@ export default function DailyReports(){
                             name="week"
                             min="2023-W27"
                             onChange={(e) => handleWeekChange(e)}
+                            hidden={disable2}
                         />
                         </div>
                     </div>
@@ -720,9 +725,9 @@ export default function DailyReports(){
                 
                
            {/* report teble ui */}
-           {reportData && reportData.machines.length >0 ? 
+           {reportData && reportData.data.machines.length >0 ? 
             <UnilineTable
-            data={reportData}
+            data={reportData.data}
             numbDaysArray={numbDaysArray}
             zones={zones.filter(item => !zoneName.includes(item))}
             wards={wards.filter(item => !wardName.includes(item))}
