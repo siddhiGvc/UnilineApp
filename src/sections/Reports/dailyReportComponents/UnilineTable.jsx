@@ -160,11 +160,11 @@ export default function UnilineTable({data,zones,wards,beats,startDate,endDate,n
             </tr>
         </thead>
         <tbody>
-                 {numbDaysArray && data.machines.length > 0 && data.machines.map((m, i) =>(
+                 {numbDaysArray && data.machines.length > 0 && numbDaysArray.map((m, i) =>(
                  <tr>
                     <td rowSpan={numDays+1} className="text-center" style={{ verticalAlign: 'center' }}>{i + 1}</td>
-                   <td rowSpan={numDays+1} style={{ verticalAlign: 'center' }}>{m.SNoutput}<br /><small className="text-muted">{m.MacID}</small></td>
-                  <td rowSpan={numDays+1} style={{ verticalAlign: 'center', whiteSpace: 'nowrap' }} >{cInfo[1]}: {m.Zone}<br />{cInfo[2]}: {m.Ward}<br />{cInfo[3]}: {m.Beat}</td>
+                   {/* <td rowSpan={numDays+1} style={{ verticalAlign: 'center' }}>{m.SNoutput}<br /><small className="text-muted">{m.MacID}</small></td>
+                  <td rowSpan={numDays+1} style={{ verticalAlign: 'center', whiteSpace: 'nowrap' }} >{cInfo[1]}: {m.Zone}<br />{cInfo[2]}: {m.Ward}<br />{cInfo[3]}: {m.Beat}</td> */}
                  </tr>
                  ))}
         </tbody>
