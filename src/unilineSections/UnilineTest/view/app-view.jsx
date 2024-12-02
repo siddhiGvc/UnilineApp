@@ -88,7 +88,7 @@ export default function AppView() {
   // const [data,setData]=useState([]);
   const [G1output,setG1Output]=useState([]);
   const [G2output,setG2Output]=useState([]);
-  const [G3output]=useState([]);
+  // const [G3output]=useState([]);
   
   const [GFoutput,setGFOutput]=useState([]);
 
@@ -335,7 +335,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={row?.IpVoltage1}
+            value={row.IpVoltage1}
           />
         </Grid>
          {/* online machines */}
@@ -463,11 +463,11 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
 
 
         <Grid container xs={6} sm={6} md={7}>
-       <Grid xs={4} sm={4} md={4}>
+       {/* <Grid xs={4} sm={4} md={4}>
         {G2output.length>2 && G2output.length>2 && G3output.length>2 ?
        <StatusLabel label="Communicating With UPS" isOn={false} color='green' /> :<StatusLabel label="Not Communicating With UPS" isOn={false} color='red' />
         }
-       </Grid>
+       </Grid> */}
 
        <Grid xs={4} sm={4} md={4}>
         {statusLabel}

@@ -86,10 +86,10 @@ export default function AppView() {
 
   // filtering onlines machines
   const filterOnline = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') < 1;
-  const filterInverterOnline = a => filterOnline(a) && a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[6] === '1';
+  const filterInverterOnline = a => filterOnline(a) && a.InverterStatus === '1';
   const filterBatteryOkay= a=>filterOnline(a) && !filterBatteryLow(a) && !filterBatteryLowShutDown(a);
-  const filterBatteryLow = a => filterOnline(a) && a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[4] === '1';
-  const filterBatteryLowShutDown = a =>filterOnline(a) &&  a.G2.toString().split(',').length>2 && a.G2.toString().split(',')[0].split('')[3] === '1';
+  const filterBatteryLow = a => filterOnline(a) && a.BatteryStatus === '1';
+  const filterBatteryLowShutDown = a =>filterOnline(a) &&  a.BatteryStatus === '1';
   // const online = m => moment().diff(moment.utc((m.lastHeartbeatTime || m.lastOnTime).replace('Z', '')), 'minute') < 5;
 
 

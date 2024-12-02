@@ -79,16 +79,18 @@ export default function AppView() {
   // const [cities,setCities]=useState([]);
   const [pathName]=useState([]);
   const [options1,setOptions1]=useState([]);
+  const [row,setRow]=useState({});
   const [data,setData]=useState([])
   const [value]=useState(0);
  
   // const [setValue1]=useState({MacID:'',SNoutput:''});
   const [selectedOption1, setSelectedOption1] = useState({id:-1});
+  // const [data,setData]=useState([]);
   const [G1output,setG1Output]=useState([]);
   const [G2output,setG2Output]=useState([]);
-  const [G3output,setG3Output]=useState([]);
-  const [Ioutput,setIOutput]=useState([]);
-  const [GFoutput,setGFOutput]=useState([]);
+  // const [G3output]=useState([]);
+  
+  // const [setGFOutput]=useState([]);
 
   const [openModal,setOpenModal] = useState(false);
 
@@ -176,12 +178,13 @@ export default function AppView() {
             // console.log(res[selectedOption1.id]);
           
             // setValue1(res[selectedOption1.id]);
-            console.log(res[selectedOption1.id])
+            console.log(res[selectedOption1.id]);
+            setRow(res[selectedOption1.id]);
             setG1Output(res[selectedOption1.id].G1.toString().split(','))
             setG2Output(res[selectedOption1.id].G2.toString().split(','))
-            setG3Output(res[selectedOption1.id].G3.toString().split(','))
-            setIOutput(res[selectedOption1.id].I.toString().split(','))
-            setGFOutput(res[selectedOption1.id].GF.toString().split(','))
+            // setG3Output(res[selectedOption1.id].G3.toString().split(','))
+            // setIOutput(res[selectedOption1.id].I.toString().split(','))
+            // setGFOutput(res[selectedOption1.id].GF.toString().split(','))
            
           }
          
@@ -299,19 +302,19 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
     Company:
   </Box> 
   <Box component="span" sx={{ marginLeft: 1 }}>
-    {Ioutput.length > 2 ? Ioutput[1] : ''}
+    {row?.Company}
   </Box>
   <Box component="span" sx={{ fontWeight: '400', fontSize: '1em', color: '#333', marginLeft: 2 }}>
     Model:
   </Box> 
   <Box component="span" sx={{ marginLeft: 1 }}>
-    {Ioutput.length > 3 ? `${Ioutput[2]} ${Ioutput[3]}` : ''}
+    {row?.Model}
   </Box>
   <Box component="span" sx={{ fontWeight: '400', fontSize: '1em', color: '#333', marginLeft: 2 }}>
     Version:
   </Box> 
   <Box component="span" sx={{ marginLeft: 1 }}>
-    {Ioutput.length > 5 ? Ioutput[5] : ''}
+    {row?.Version}
   </Box>
 </Typography>
 
@@ -327,34 +330,34 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
         {/* total Machines */}
         <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
-            title="Input Voltage"
+            title="Input Voltage 1"
             text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[0]:''}
+            value={row.IpVoltage1 || ''}
           />
         </Grid>
          {/* online machines */}
         <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
-            title="Input Voltage"
+            title="Input Voltage 2"
              text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[1]:''}
+            value={row?.IpVoltage2 || ''}
           />
         </Grid>
         {/* total collection */}
         <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
-            title="Input Voltage"
+            title="Input Voltage 3"
              text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[0].includes('!')?  G3output[0].split('!')[1].split('/')[2]:''}
+            value={row?.IpVoltage3 || ''}
           />
         </Grid>
            {/* item dispensed */}
@@ -365,39 +368,39 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G1output.length>2 ? G1output[5]:''}
+            value={row?.IpFrequency || ''}
           />
         </Grid>
         <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
-            title="Output Voltage"
+            title="Output Voltage 1"
              text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[0]:''}
+            value={row?.OpVoltage1 || ''}
           />
         </Grid>
          {/* online machines */}
         <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
-            title="Output Voltage"
+            title="Output Voltage 2"
              text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[1]:''}
+            value={row?.OpVoltage2 || ''} 
           />
         </Grid>
         {/* total collection */}
         <Grid xs={12} sm={6} md={3}>
         <AppWidgetSummary
-            title="Output Voltage"
+            title="Output Voltage 3"
              text='Vsc'
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[2].includes('/')?G3output[2].split('/')[2]:''}
+            value={row?.OpVoltage3 || ''}
           />
         </Grid>
         
@@ -409,7 +412,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G1output.length>2 ? G1output[7]:''}
+            value={row?.OpFrequency || ''}
           />
         </Grid>
 
@@ -420,7 +423,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[3].includes('/')?G3output[3].split('/')[0]:''}
+            value={row?.Load1 || ''}
           />
         </Grid>
          {/* online machines */}
@@ -431,7 +434,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[3].includes('/')?G3output[3].split('/')[1]:''}
+            value={row?.Load2 || ''}
           />
         </Grid>
         {/* total collection */}
@@ -442,7 +445,7 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
             total={pathName.length}
             color="success"
             icon={<img alt="icon" src="/assets/icons/machineInstalled.png" />}
-            value={G3output.length>2 && G3output[3].includes('/')?G3output[3].split('/')[2]:''}
+            value={row?.Load3 || ''}
           />
         </Grid>
         
@@ -460,11 +463,11 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
 
 
         <Grid container xs={6} sm={6} md={7}>
-       <Grid xs={4} sm={4} md={4}>
+       {/* <Grid xs={4} sm={4} md={4}>
         {G2output.length>2 && G2output.length>2 && G3output.length>2 ?
        <StatusLabel label="Communicating With UPS" isOn={false} color='green' /> :<StatusLabel label="Not Communicating With UPS" isOn={false} color='red' />
         }
-       </Grid>
+       </Grid> */}
 
        <Grid xs={4} sm={4} md={4}>
         {statusLabel}
@@ -562,23 +565,23 @@ const online = a => moment().diff(moment.utc((a.lastHeartBeatTime)), 'minute') <
                                 
                              
 
-                                <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[0].includes('/')?GFoutput[0].split('!')[1].split('/')[0]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[0].includes('/')?GFoutput[0].split('!')[1].split('/')[1]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Rectifier Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[1]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Rectifier Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[2]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Neutral</th><td style={{color: '#444'}}>{row?.RectifierNeutral ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectiier - Phase 2 Phase</th><td style={{color: '#444'}}>{row?.RectifierPhase ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectifier Topology</th><td style={{color: '#444'}}>{row?.RectifierTopology ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Rectifier Frequency</th><td style={{color: '#444'}}>{row?.RectifierFrequency ||''}</td></tr>
                                
-                                <tr><th style={{color: '#444'}}>Bypass - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[3].includes('/')?GFoutput[3].split('/')[0]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Bypass - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[3].includes('/')?GFoutput[3].split('/')[1]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Bypass Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[4]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Bypass Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[5]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass - Phase 2 Neutral</th><td style={{color: '#444'}}>{row?.BypassNeutral ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass - Phase 2 Phase</th><td style={{color: '#444'}}>{row?.RectifierPhase ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass Topology</th><td style={{color: '#444'}}>{row?.BypassTopology ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Bypass Frequency</th><td style={{color: '#444'}}>{row?.BypassFrequency ||''}</td></tr>
 
-                                <tr><th style={{color: '#444'}}>Output - Phase 2 Neutral</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[6].includes('/')?GFoutput[6].split('/')[0]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Output - Phase 2 Phase</th><td style={{color: '#444'}}>{GFoutput.length>2 && GFoutput[6].includes('/')?GFoutput[6].split('/')[1]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Output Topology</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[7]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>UPS Output Frequency</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[8]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Output - Phase 2 Neutral</th><td style={{color: '#444'}}>{row?.OutputNeutral ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Output - Phase 2 Phase</th><td style={{color: '#444'}}>{row?.OutputPhase || ''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Output Topology</th><td style={{color: '#444'}}>{row?.OutputTopology ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>UPS Output Frequency</th><td style={{color: '#444'}}>{row?.OutputFrequency ||''}</td></tr>
                              
-                                <tr><th style={{color: '#444'}}>UPS Battery Voltage</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[9]:''}</td></tr>
-                                <tr><th style={{color: '#444'}}>Power Rating</th><td style={{color: '#444'}}>{GFoutput.length>2 ?GFoutput[10]:''}</td></tr>
+                                <tr><th style={{color: '#444'}}>UPS Battery Voltage</th><td style={{color: '#444'}}>{row?.UpsBatteryVoltage ||''}</td></tr>
+                                <tr><th style={{color: '#444'}}>Power Rating</th><td style={{color: '#444'}}>{row?.PowerRating ||''}</td></tr>
                             </tbody>
               </table>
               
